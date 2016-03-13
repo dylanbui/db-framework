@@ -302,6 +302,25 @@ function create_uniqid($random_id_length = 10)
  */
 class Psr4Autoloader
 {
+
+    /*
+	 * @var object $instance
+	*/
+    private static $instance = null;
+
+    /**
+     * Return Singleton instance or create intitial instance
+     */
+
+    public static function getInstance()
+    {
+        if(is_null(static::$instance))
+        {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
     /**
      * An associative array where the key is a namespace prefix and the value
      * is an array of base directories for classes in that namespace.
@@ -448,10 +467,16 @@ class Psr4Autoloader
      */
     protected function requireFile($file)
     {
-        if (file_exists($file)) {
-            require $file;
-            return true;
+        if (empty($GLOBALS['__psr4_autoload_files'][$file])) {
+            if (file_exists($file)) {
+                require $file;
+                $GLOBALS['__psr4_autoload_files'][$file] = true;
+                return true;
+            }
+            return false;
         }
-        return false;
+        return true;
     }
 }
+
+return Psr4Autoloader::getInstance();
