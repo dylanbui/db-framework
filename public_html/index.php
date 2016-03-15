@@ -17,7 +17,7 @@
 // 	define ('__SITE_URL', str_replace('/'.basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']));
 
 	// __BASE_URL : /adv_mvc/
- 	define ('__BASE_URL', __SITE_URL);
+// 	define ('__BASE_URL', __SITE_URL);
  	// Co thu muc public_html 	
  	define ('__PUBLIC_HTML', __SITE_URL);
  	
@@ -40,7 +40,7 @@
 	define ('__DATA_PATH', __SITE_PATH . '/public_html/data/');
 	define ('__DATA_URL', __PUBLIC_HTML . 'data/');
 
-	define ('__CONTROLLER_NAMESPACE', 'App\Controller');
+//	define ('__CONTROLLER_NAMESPACE', 'App\Controller');
 
  //    // Load config files. Global config file
 	// require __SITE_PATH.'/app/libraries/Core/Psr4Autoloader.php';
@@ -150,9 +150,10 @@ class Application
     {
         // Load config files. Global config file
         require __SITE_PATH.'/vendor/autoload.php';
+        require __SITE_PATH.'/app/config/constants.php';
         $this->loader = require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
         // register the namspace
-        $this->loader->addNamespace(__CONTROLLER_NAMESPACE, __APP_PATH.'/controllers');
+        $this->loader->addNamespace('App\Controller', __APP_PATH.'/controllers');
         $this->loader->addNamespace('App\Lib', __SITE_PATH.'/app/libraries');
         $this->loader->addNamespace('App\Model', __SITE_PATH.'/app/models');
         $this->loader->addNamespace('App\Helper', __SITE_PATH.'/app/helpers');
@@ -173,7 +174,6 @@ class Application
         // Create configure object
         $config = \App\Lib\Core\Config::getInstance();
         $config->load(__SITE_PATH.'/app/config/config.php');
-        require __SITE_PATH.'/app/config/constants.php';
         define('APPLICATION_ENV', $config->config_values['application']['application_env']);
         // set the timezone
         date_default_timezone_set($config->config_values['application']['timezone']);
@@ -231,6 +231,7 @@ class Application
         // Initialize the FrontController
         $this->front = \App\Lib\Core\FrontController::getInstance();
         $this->front->setRegistry($this->registry);
+        $this->front->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
 
         /*
             // Cau hinh cho cac action nay chay dau tien

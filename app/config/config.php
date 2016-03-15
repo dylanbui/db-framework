@@ -4,9 +4,6 @@
 
 $config['application']['application_env'] 			= "development"; // Define application environment => 'production'; 'staging'; 'test'; 'development';
 $config['application']['default_uri'] 				= "site-index/home/index";
-$config['application']['admin_default_uri'] 		= "home/dashboard/show";
-$config['application']['admin_header_title'] 		= "FLATY Admin";
-$config['application']['admin_footer_title'] 		= "2015 © FLATY Admin Template.";
 // $config['application']['display_error_404'] 		= FALSE;
 // $config['application']['error_reporting'] 			= 0; // Neu = 0 : Khong hien thi bat cu thong bao nao
 // $config['application']['error_reporting'] 			= E_ALL; // Neu = 0 : Khong hien thi bat cu thong bao nao
@@ -28,7 +25,6 @@ $config['database_master']['db_name'] 				= "db-cms";
 $config['database_master']['db_username'] 			= "root";
 $config['database_master']['db_password'] 			= "";
 $config['database_master']['db_port'] 				= 3306;
-$config['database_master']['db_prefix'] 			= "z__";
 
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- SLAVE DATABASE ---//
@@ -56,7 +52,7 @@ $config['session']['regenerate'] 					= 300;
 $config['session']['expiration'] 					= 7200;
 $config['session']['gc_probability'] 				= 100;
 $config['session']['session_database'] 				= TRUE; //FALSE;
-$config['session']['table_name'] 					= $config['database_master']['db_prefix']."sessions";
+$config['session']['table_name'] 					= "z__sessions";
 $config['session']['primary_key'] 					= "session_id";
 
 // --- -------------------------------------------------------------------------------------------------- ---//

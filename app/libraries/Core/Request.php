@@ -19,8 +19,9 @@ final class Request
 	public function __construct($route  = 'index/index/index', $args = array())
 	{
 		$this->parseUri($route);
-		
-		$this->moduleNamespace = __CONTROLLER_NAMESPACE.'\\'.$this->upperCamelcase($this->module).'\\';
+
+		$this->moduleNamespace = FrontController::getInstance()->getDefaultControllerNamespace()
+            .'\\'.$this->upperCamelcase($this->module).'\\';
 		$this->class = $this->moduleNamespace.$this->upperCamelcase($this->controller).'Controller';		
 		$this->method = $this->lowerCamelcase($this->action).'Action';
 		$this->args = array_merge($this->args,$args);

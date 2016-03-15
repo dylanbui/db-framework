@@ -31,7 +31,7 @@ function current_site_url($uri = '')
 
 function site_url($uri = '')
 {
-    return __BASE_URL.ltrim($uri, '/');
+    return __SITE_URL.ltrim($uri, '/');
 }
 
 // Check varible existed or not
