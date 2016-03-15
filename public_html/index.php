@@ -40,7 +40,7 @@
 	define ('__DATA_PATH', __SITE_PATH . '/public_html/data/');
 	define ('__DATA_URL', __PUBLIC_HTML . 'data/');
 
-	define ('__CONTROLLER_NAMESPACE', 'App\Controller');	
+	define ('__CONTROLLER_NAMESPACE', 'App\Controller');
 
  //    // Load config files. Global config file
 	// require __SITE_PATH.'/app/libraries/Core/Psr4Autoloader.php';
@@ -79,45 +79,45 @@
 	// // set_error_handler('_exception_handler', $config->config_values['application']['error_reporting']);
 	// \App\Lib\Core\ErrorHandler::register();
 
-	$registry = null;
-	$config = null;
-	
-	require __SITE_PATH . '/admin/startup.php';	
-
-	$oBenchmark = new \App\Lib\Core\Benchmark();
-	$oBenchmark->mark('code_start');			
-
- 	/*** a new registry object ***/
- 	$registry = new \App\Lib\Core\Registry();
-
-	// Loader
-	$registry->oLoader = $loader;  	
-
- 	// Session
- 	$oSession = new \App\Lib\Session();
- 	$registry->oSession = $oSession;
-
- 	// Input
- 	$oInput = new \App\Lib\Input();
- 	$registry->oInput = $oInput; 	 	
- 	
-	// Response
-	$response = new \App\Lib\Core\Response();
-	$response->addHeader('Content-Type: text/html; charset=utf-8');
-	$registry->oResponse = $response; 
-
-	// Config
-	$registry->oConfig = $config; 
-	
-	// Parameter
-	$view = new \App\Lib\Core\View();
-    $view->setTemplateDir(__VIEW_PATH);
-    $view->setLayoutDir(__LAYOUT_PATH);
-	$registry->oView = $view;
-
-	// Initialize the FrontController
-	$front = \App\Lib\Core\FrontController::getInstance();
-	$front->setRegistry($registry);
+//	$registry = null;
+//	$config = null;
+//
+//	require __SITE_PATH . '/admin/startup.php';
+//
+//	$oBenchmark = new \App\Lib\Core\Benchmark();
+//	$oBenchmark->mark('code_start');
+//
+// 	/*** a new registry object ***/
+// 	$registry = new \App\Lib\Core\Registry();
+//
+//	// Loader
+//	$registry->oLoader = $loader;
+//
+// 	// Session
+// 	$oSession = new \App\Lib\Session();
+// 	$registry->oSession = $oSession;
+//
+// 	// Input
+// 	$oInput = new \App\Lib\Input();
+// 	$registry->oInput = $oInput;
+//
+//	// Response
+//	$response = new \App\Lib\Core\Response();
+//	$response->addHeader('Content-Type: text/html; charset=utf-8');
+//	$registry->oResponse = $response;
+//
+//	// Config
+//	$registry->oConfig = $config;
+//
+//	// Parameter
+//	$view = new \App\Lib\Core\View();
+//    $view->setTemplateDir(__VIEW_PATH);
+//    $view->setLayoutDir(__LAYOUT_PATH);
+//	$registry->oView = $view;
+//
+//	// Initialize the FrontController
+//	$front = \App\Lib\Core\FrontController::getInstance();
+//	$front->setRegistry($registry);
 	
 	/*
 		// Cau hinh cho cac action nay chay dau tien 
@@ -125,15 +125,128 @@
 	$front->addPreRequest(new Request('run/second/action'));
 	*/
 
-    $front->addPreRequest(new \App\Lib\Core\Request('member-manager/member/get-login-info'));
-	
-	$front->dispatch();
-	
-	// Output
-	$response->output();
+//    $front->addPreRequest(new \App\Lib\Core\Request('member-manager/member/get-login-info'));
+//
+//	$front->dispatch();
+//
+//	// Output
+//	$response->output();
+//
+//	if($config->config_values['application']['show_benchmark'])
+//	{
+//		$oBenchmark->mark('code_end');
+//		echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
+//	}
 
-	if($config->config_values['application']['show_benchmark'])
-	{
-		$oBenchmark->mark('code_end');
-		echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
-	}	
+
+
+class Application
+{
+    var $register;
+    var $loader;
+    var $front;
+
+    function __construct()
+    {
+        // Load config files. Global config file
+        require __SITE_PATH.'/vendor/autoload.php';
+        $this->loader = require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
+        // register the namspace
+        $this->loader->addNamespace(__CONTROLLER_NAMESPACE, __APP_PATH.'/controllers');
+        $this->loader->addNamespace('App\Lib', __SITE_PATH.'/app/libraries');
+        $this->loader->addNamespace('App\Model', __SITE_PATH.'/app/models');
+        $this->loader->addNamespace('App\Helper', __SITE_PATH.'/app/helpers');
+        // register the autoloader
+        $this->loader->register();
+    }
+
+    function loadRegister()
+    {
+        /*** a new registry object ***/
+        $this->registry = new \App\Lib\Core\Registry();
+        // Loader
+        $this->registry->oLoader = $this->loader;
+    }
+
+    function loadConfig()
+    {
+        // Create configure object
+        $config = \App\Lib\Core\Config::getInstance();
+        $config->load(__SITE_PATH.'/app/config/config.php');
+        require __SITE_PATH.'/app/config/constants.php';
+        define('APPLICATION_ENV', $config->config_values['application']['application_env']);
+        // set the timezone
+        date_default_timezone_set($config->config_values['application']['timezone']);
+        // register exception handler
+        \App\Lib\Core\ExceptionHandler::register();
+        // Loader
+        $this->registry->oConfig = $config;
+    }
+
+    function loadSession()
+    {
+        // Session
+        $oSession = new \App\Lib\Session();
+        $this->registry->oSession = $oSession;
+    }
+
+    function loadInput()
+    {
+        // Input
+        $oInput = new \App\Lib\Input();
+        $this->registry->oInput = $oInput;
+    }
+
+    function loadView()
+    {
+        // View
+        $view = new \App\Lib\Core\View();
+        $view->setTemplateDir(__VIEW_PATH);
+        $view->setLayoutDir(__LAYOUT_PATH);
+        $this->registry->oView = $view;
+    }
+
+    function loadResponse()
+    {
+        // Response
+        $response = new \App\Lib\Core\Response();
+        $response->addHeader('Content-Type: text/html; charset=utf-8');
+        $this->registry->oResponse = $response;
+    }
+
+    function run()
+    {
+        $this->loadRegister();
+
+        $this->loadConfig();
+
+        $this->loadSession();
+
+        $this->loadInput();
+
+        $this->loadView();
+
+        $this->loadResponse();
+
+        // Initialize the FrontController
+        $this->front = \App\Lib\Core\FrontController::getInstance();
+        $this->front->setRegistry($this->registry);
+
+        /*
+            // Cau hinh cho cac action nay chay dau tien
+        $front->addPreRequest(new Request('run/first/action'));
+        $front->addPreRequest(new Request('run/second/action'));
+        */
+
+        $this->front->addPreRequest(new \App\Lib\Core\Request('member-manager/member/get-login-info'));
+
+        $this->front->dispatch();
+
+        // Output
+        $this->registry->oResponse->output();
+    }
+}
+
+$app = new Application();
+$app->run();
+

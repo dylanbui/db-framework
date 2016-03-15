@@ -300,8 +300,28 @@ function create_uniqid($random_id_length = 10)
  *      <?php
  *      new \Foo\Bar\Qux\QuuxTest;
  */
-class Psr4Autoloader
+
+class Autoloader
 {
+
+    /*
+	 * @var object $instance
+	*/
+    private static $instance = null;
+
+    /**
+     * Return Singleton instance or create intitial instance
+     */
+
+    public static function getInstance()
+    {
+        if(is_null(static::$instance))
+        {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
     /**
      * An associative array where the key is a namespace prefix and the value
      * is an array of base directories for classes in that namespace.
@@ -460,4 +480,4 @@ class Psr4Autoloader
     }
 }
 
-return new Psr4Autoloader();
+return Autoloader::getInstance();
