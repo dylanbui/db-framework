@@ -139,6 +139,7 @@ class ExceptionHandler
 
         // remove view contents from buffer
 //        @ob_clean();
+        @ob_end_clean();
 
         ob_start();
         include(__LAYOUT_PATH.'/errors/'.$view_file);
