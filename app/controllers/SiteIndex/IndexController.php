@@ -3,7 +3,6 @@
 namespace App\Controller\SiteIndex;
 use App\Lib\Core\BaseController;
 use App\Helper\Captcha;
-//use App\Lib\PHPMailer;
 use App\Lib\Email;
 
 class IndexController extends BaseController
