@@ -100,6 +100,9 @@ class FrontController
         $this->_registry->oResponse->setOutput(
             $this->_registry->oView->getContent(),
             $this->_registry->oConfig->config_values['application']['config_compression']);
+
+        // -- echo html content --
+        $this->_registry->oResponse->output();
 	}
 	
 	public function getCurrentRequest()

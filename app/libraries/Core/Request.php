@@ -29,18 +29,9 @@ final class Request
 	
 	private function parseUri($route)
 	{
-//		$config = Config::getInstance();
-		
 		// removes the trailing slash
-//		$route = preg_replace("/\/$/", '', $route);
 // 		/this/that/theother/ => this/that/theother
 		$route = trim($route, '/');
-		
-		// get the default uri
-//		if(empty($route))
-//			$route = $config->config_values['application']['default_uri'];
-			
-//		$path = '';
 		$parts = explode('/', str_replace('../', '', $route));
 
         $module = array_shift($parts);
@@ -57,50 +48,9 @@ final class Request
         if(empty($action))
             return;
         $this->action = $action;
-
         $this->args = $parts;
-
-        // -- Tam thoi dong de kiem tra ham --
-		
-//		$i = 0;
-//		foreach ($parts as $part)
-//		{
-////			$path .= $part;
-//			if($i == 0)
-//			{
-////				$this->module = $path;
-//                $this->module = $part;
-////				$path .= '/';
-//				array_shift($parts);
-//				$i++;
-//				continue;
-//			}
-//			$this->controller = $part;
-//			array_shift($parts);
-//			break;
-//		}
-//
-//		// Neu controller la rong . Route co dang [module]/
-//		if(empty($this->controller))
-//		{
-//			$this->controller = 'index';
-//		}
-//
-//		$method = array_shift($parts);
-//
-//		if ($method) {
-//			$this->action = $this->method = $method;
-//		} else {
-//			$this->action = $this->method = 'index';
-//		}
-//
-//		$this->args = $parts;
 	}
-	
-	// public function getFile() {
-	// 	return $this->file;
-	// }
-	
+
 	public function getClass() {
 		return $this->class;
 	}
@@ -108,14 +58,6 @@ final class Request
 	public function getMethod() {
 		return $this->method;
 	}
-	
-	// public function getDirTemplate() {
-	// 	return $this->dir_template;
-	// }
-	
-	// public function getFileTemplate() {
-	// 	return $this->dir_template  . '/' . $this->method . '.phtml';
-	// }
 
     public function setArgs($args) {
         $this->args = $args;
@@ -178,7 +120,6 @@ final class Request
 	//// e.g. "this_method_name" -> "ThisMethodName" 
 	private function upperCamelcase($string)
 	{
-//		return preg_replace('/(?:^|-)(.?)/e',"strtoupper('$1')",$string);
         // -- User for php 5.6 -> 7 --
         return preg_replace_callback(
             '/(?:^|-)(.?)/',
@@ -191,7 +132,6 @@ final class Request
 	//// e.g. "this_method_name" -> "thisMethodName" 
 	private function lowerCamelcase($string)
 	{
-//		return preg_replace('/-(.?)/e',"strtoupper('$1')",$string);
         // -- User for php 5.6 -> 7 --
         return preg_replace_callback(
             '/-(.?)/',
@@ -199,24 +139,5 @@ final class Request
             $string
         );
 	}	
-
-	// camelcase (lower or upper) to hyphen 
-	// e.g. "thisMethodName" -> "this_method_name" 
-	// e.g. "ThisMethodName" -> "this_method_name"
-	// Of course these aren't 100% symmetric.  For example...
-	//  * this_is_a_string -> ThisIsAString -> this_is_astring
-	//  * GetURLForString -> get_urlfor_string -> GetUrlforString 
-	private function camelcaseToHyphen($string)
-	{
-//		return strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1-$2", $string));
-        // -- User for php 5.6 -> 7 --
-        return preg_replace_callback(
-            '/([^A-Z])([A-Z])/',
-            function($match) { return $match[1].'-'.$match[2]; },
-            $string
-        );
-
-	}
-
 }
 ?>

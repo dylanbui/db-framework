@@ -49,31 +49,6 @@ define('TB_EX_CONTENT_CAT_PATH', _TB_PREFIX . '_ex_content_cat_path');
 define('TB_EX_PRODUCT', _TB_PREFIX . '_ex_product');
 define('TB_EX_PRODUCT_CAT', _TB_PREFIX . '_ex_product_cat');
 
-
-// define('TB_OPTIONS', _TB_PREFIX . 'options');
-// define('TB_OPTIONS_LN', _TB_PREFIX . 'options_ln');
-// define('TB_HTML', _TB_PREFIX . 'html');
-// define('TB_HTML_LN', _TB_PREFIX . 'html_ln');
-
-// define('TB_CONFIGURE_MODULE', _TB_PREFIX . 'configure_mod');
-// define('TB_COMMENT', _TB_PREFIX . 'comment');
-
-
-
-// define('TB_MEMBER_DETAIL', _TB_PREFIX . 'member_detail');
-
-
-// define('CONFIG_FACEBOOK_GROUP_ID', '6');
-// define('CONFIG_CALTEX2013_GROUP_ID', '7');
-// define('CODE_CALTEX2013_GIFT_QUANTUM_1', 'caltex2013_gift_quatum_1');
-// define('CODE_CALTEX2013_GIFT_QUANTUM_2', 'caltex2013_gift_quatum_2');
-// define('CODE_CALTEX2013_LIMIT_GIFT_PER_USER', 'caltex2013_limit_gift_per_user');
-// define('CODE_CALTEX2013_LIMIT_WIN_IN_EVENT', 'caltex2013_limit_win_in_event');
-
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

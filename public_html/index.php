@@ -148,12 +148,13 @@ class Application
 
     function __construct()
     {
-        // Load config files. Global config file
+        // Load constants file
         require __SITE_PATH.'/vendor/autoload.php';
         require __SITE_PATH.'/app/config/constants.php';
+
         $this->loader = require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
         // register the namspace
-        $this->loader->addNamespace('App\Controller', __APP_PATH.'/controllers');
+        $this->loader->addNamespace('App\Controller', __SITE_PATH.'/app/controllers');
         $this->loader->addNamespace('App\Lib', __SITE_PATH.'/app/libraries');
         $this->loader->addNamespace('App\Model', __SITE_PATH.'/app/models');
         $this->loader->addNamespace('App\Helper', __SITE_PATH.'/app/helpers');
@@ -216,6 +217,9 @@ class Application
 
     function run()
     {
+        $oBenchmark = new \App\Lib\Core\Benchmark();
+        $oBenchmark->mark('code_start');
+
         $this->loadRegister();
 
         $this->loadConfig();
@@ -243,8 +247,13 @@ class Application
 
         $this->front->dispatch();
 
-        // Output
-        $this->registry->oResponse->output();
+        // -- Chi de tam --
+        if($this->registry->oConfig->config_values['application']['show_benchmark'])
+        {
+            $oBenchmark->mark('code_end');
+            echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
+        }
+
     }
 }
 

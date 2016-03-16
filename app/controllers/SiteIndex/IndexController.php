@@ -3,7 +3,7 @@
 namespace App\Controller\SiteIndex;
 use App\Lib\Core\BaseController;
 use App\Helper\Captcha;
-use App\Lib\PHPMailer;
+//use App\Lib\PHPMailer;
 use App\Lib\Email;
 
 class IndexController extends BaseController
@@ -50,7 +50,7 @@ class IndexController extends BaseController
 
         $this->oView->returnSentMail = null;
         if ($this->oInput->isPost()) {
-            $mail = new PHPMailer(); // create a new object
+            $mail = new \PHPMailer(); // create a new object
             $mail->IsSMTP(); // enable SMTP
 //            $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
             $mail->SMTPAuth = true; // authentication enabled

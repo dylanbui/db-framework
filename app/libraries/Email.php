@@ -22,7 +22,7 @@ class Email
 
 	function sendWithSmtpConfig($cfg)
 	{
-		$mail = new PHPMailer();
+		$mail = new \PHPMailer();
         $mail->IsSMTP();
 		$mail->CharSet = 'UTF-8';
         $mail->IsHTML(true);
