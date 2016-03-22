@@ -16,27 +16,11 @@ define('TB_CONTENT_CATS', _TB_PREFIX . 'content_cat');
 define('TB_PRODUCTS', _TB_PREFIX . 'product');
 define('TB_PRODUCT_CATS', _TB_PREFIX . 'product_cat');
 define('TB_GALLERY', _TB_PREFIX . 'gallery');
-// define('TB_CONFIGURES', _TB_PREFIX . 'configure');
-// define('TB_CONFIGURE_CATS', _TB_PREFIX . 'configure_cat');
 define('TB_CONFIGURE_SYSTEM', _TB_PREFIX . 'configure');
 define('TB_CONFIGURE_SYSTEM_GROUP', _TB_PREFIX . 'configure_group');
 define('TB_LANGUAGE', _TB_PREFIX . 'language');
 define('TB_MEMBER', _TB_PREFIX . 'member');
 define('TB_CONTACT', _TB_PREFIX . 'contact');
-
-define('TB_URL_ALIAS', _TB_PREFIX . 'url_alias');
-
-// --- -------------------------------------------------------------------------------------------------- ---//
-// --- PAGE MODULE TABLE ---//
-
-define('TB_PAGE_CONTENT', _TB_PREFIX . 'page_content');
-define('TB_PAGE_CONTENT_LN', _TB_PREFIX . 'page_content_ln');
-define('TB_PAGE_CONTENT_OPTIONS', _TB_PREFIX . 'page_content_options');
-define('TB_PAGE_CATEGORY', _TB_PREFIX . 'page_category');
-define('TB_PAGE_CATEGORY_LN', _TB_PREFIX . 'page_category_ln');
-define('TB_PAGE_CATEGORY_PATH', _TB_PREFIX . 'page_category_path');
-define('TB_PAGE_CONFIGURE', _TB_PREFIX . 'page_configure');
-define('TB_PAGE_GALLERY', _TB_PREFIX . 'page_gallery');
 
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- EXAMPLE MODULE TABLE ---//

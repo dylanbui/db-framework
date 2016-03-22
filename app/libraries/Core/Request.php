@@ -4,10 +4,8 @@ namespace App\Lib\Core;
 
 final class Request 
 {
-	// protected $file;
 	protected $class;
 	protected $method;
-	// protected $dir_template;
 	protected $moduleNamespace;
 
     // -- Default value --

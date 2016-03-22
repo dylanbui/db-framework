@@ -23,7 +23,7 @@ class Acl
 	* @return	object	Instance of Acl_Role
 	*
 	*/
-	public function addRole( $name )
+	public function addRole($name)
 	{
 		$role = new Acl_Role;
 		$role->name = $name;
@@ -43,7 +43,7 @@ class Acl
 	* @return	object	Instance of Acl_Resource
 	*
 	*/
-	public function addResource( $name, array $allowed )
+	public function addResource($name, array $allowed)
 	{
 		$resource = new Acl_Resource;
 		$resource->name = $name;
@@ -63,9 +63,9 @@ class Acl
 	* @return	bool
 	*
 	*/
-	public function isAllowed( $role, $resource )
+	public function isAllowed($role, $resource)
 	{
-		return in_array( $role->name, $resource->allowed );
+		return in_array($role->name, $resource->allowed);
 	}
 
 
@@ -78,13 +78,13 @@ class Acl
 	* @return	resource
 	*
 	*/
-	public function getResource( $name )
+	public function getResource($name)
 	{
 		$resource = null;
 		
 		foreach ($this->resources as $r)
 		{
-			if ( $r->getName() == $name )
+			if ($r->getName() == $name)
 			{
 				$resource = $r;
 				break;
@@ -102,7 +102,7 @@ class Acl
 	* @return	role
 	*
 	*/
-	public function getRole( $name )
+	public function getRole($name)
 	{
 		foreach ($this->roles as $r)
 		{
@@ -140,9 +140,9 @@ class Acl_Role
 	* @param	string	$value
 	*
 	*/
-	public function __set( $name, $value )
+	public function __set($name, $value)
 	{
-		switch( $name )
+		switch($name)
 		{
 			case 'name':
 			case 'permissions':
@@ -163,7 +163,7 @@ class Acl_Role
 	* @return	string
 	*
 	*/	
-	public function __get( $name )
+	public function __get($name)
 	{
 		switch( $name )
 		{
