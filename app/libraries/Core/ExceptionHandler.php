@@ -137,15 +137,21 @@ class ExceptionHandler
                 $view_file = 'error_500.phtml'; // -- Permission Deny --
         }
 
+        // -- TODO: Luc chay duoc luc khong --
+        $view = new \App\Lib\Core\View();
+        $content = $view->parser(__LAYOUT_PATH.'/errors/'.$view_file, array('error'=>$error));
+        echo $content;
+        exit();
+
         // remove view contents from buffer
 //        @ob_clean();
-        @ob_end_clean();
-
-        ob_start();
-        include(__LAYOUT_PATH.'/errors/'.$view_file);
-        $contents = ob_get_contents();
-        ob_end_clean();
-        echo $contents;
-        die();
+//        @ob_end_clean();
+//
+//        ob_start();
+//        include(__LAYOUT_PATH.'/errors/'.$view_file);
+//        $contents = ob_get_contents();
+//        ob_end_clean();
+//        echo $contents;
+//        die();
     }
 }
