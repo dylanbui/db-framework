@@ -5,7 +5,6 @@
 
 namespace App\Lib\Core;
 
-
 /**
  * Class Error
  * @package Phalcon\Error
@@ -99,17 +98,32 @@ class ExceptionHandler
             static::handle(new Error($options));
         });
 
-        set_exception_handler(function (\Exception $e) {
-            $options = [
-                'type'        => $e->getCode(),
-                'message'     => $e->getMessage(),
-                'file'        => $e->getFile(),
-                'line'        => $e->getLine(),
-                'isException' => true,
-                'exception'   => $e,
-            ];
-            static::handle(new Error($options));
-        });
+        if(is_php(7.0)) {
+            set_exception_handler(function (\Throwable $e) {
+                $options = [
+                    'type'        => $e->getCode(),
+                    'message'     => $e->getMessage(),
+                    'file'        => $e->getFile(),
+                    'line'        => $e->getLine(),
+                    'isException' => true,
+                    'exception'   => $e,
+                ];
+                static::handle(new Error($options));
+            });
+
+        } else {
+            set_exception_handler(function (\Exception $e) {
+                $options = [
+                    'type'        => $e->getCode(),
+                    'message'     => $e->getMessage(),
+                    'file'        => $e->getFile(),
+                    'line'        => $e->getLine(),
+                    'isException' => true,
+                    'exception'   => $e,
+                ];
+                static::handle(new Error($options));
+            });
+        }
 
         register_shutdown_function(function () {
             if (!is_null($options = error_get_last())) {
@@ -140,8 +154,7 @@ class ExceptionHandler
         // -- TODO: Luc chay duoc luc khong --
         @ob_end_clean();
         $view = new \App\Lib\Core\View();
-        $content = $view->parser(__LAYOUT_PATH.'/errors/'.$view_file, array('error'=>$error));
-        echo $content;
+        echo $view->parser(__LAYOUT_PATH.'/errors/'.$view_file, array('error'=>$error));
 //        die($content);
 //        exit();
 
