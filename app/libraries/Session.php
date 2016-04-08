@@ -21,7 +21,7 @@ use App\Lib\Core\Config;
 //use App\Lib\Core\Database\Connection;
 use App\Lib\Core\DbConnection;
 
-final class Session 
+final class Session implements \SessionHandlerInterface
 {
 	public $match_ip			= FALSE;			//Require user IP to match?
 	public $match_fingerprint	= TRUE;				//Require user agent fingerprint to match?
@@ -107,11 +107,11 @@ final class Session
      * @access public 
      * @return void
      */
-    public function __destruct()
-    {
-        // Close session
-        session_write_close();
-    }	
+//    public function __destruct()
+//    {
+//        // Close session
+//        session_write_close();
+//    }
 
 	/**
 	 * Start the current session, if already started - then destroy and create a new session!
@@ -125,31 +125,17 @@ final class Session
 		//If there is a class to handle CRUD of the sessions
 		if($this->session_database) 
 		{
-			// Register non-native driver as the session handler
-	        session_set_save_handler( 
-	            array( &$this, "open" ), 
-	            array( &$this, "close" ),
-	            array( &$this, "read" ),
-	            array( &$this, "write"),
-	            array( &$this, "destroy"),
-	            array( &$this, "gc" )
-	        );
-	        
-			// Create connect to database
+            // -- User for php > 5.4 --
+            session_set_save_handler($this, TRUE);
+            // Create connect to database
             $this->_conn = DbConnection::getInstance();
 		}
 		
 		// Start the session!
-//		session_start();
-        try {
-            session_start();
-        } catch(\Exception $e) {
-            session_regenerate_id();
-            session_start();
-        }
+		session_start();
 
 		//Check the session to make sure it is valid
-		if( ! $this->check()) 
+		if(!$this->check())
 		{
 			//Destroy invalid session and create a new one
 			return $this->create();
@@ -268,13 +254,12 @@ final class Session
 
 	/**
  	* Default session handler for storing sessions in the database.
- 	**/ 
-	
-	/**
 	 * Record the current sesion_id for later
+     * @param   string
+     * @param   string
 	 * @return boolean
 	 */
-	public function open() 
+    public function open($save_path, $name)
 	{
 		//Store the current ID so if it is changed we will know!
 		$this->session_id = session_id();
@@ -295,6 +280,7 @@ final class Session
 	/**
 	 * Attempt to read a session from the database.
 	 * @param	string	$id
+     * @return  string
 	 */
 	public function read($id = NULL) 
 	{
@@ -311,11 +297,27 @@ final class Session
 	 *
 	 * @param	string	$id
 	 * @param	string 	$data
+     * @return  bool
 	 */
 	public function write($id = NULL, $data = '') 
 	{
+		/*
+		 * Case 2: We check to see if the session already exists. If it does
+		 * then we need to update it. If not, then we create a new entry.
+		 */
+//        if($this->session_id && $this->session_id != $id)
+//		{
+//	    	$this->_conn->query("UPDATE {$this->table_name} SET data = '{$data}' WHERE {$this->primary_key} = '{$id}'");
+//		}
+//		else
+//		{
+//			$this->_conn->query("INSERT INTO {$this->table_name}({$this->primary_key},data) VALUES('{$id}','{$data}')");
+//		}
+//        return TRUE;
+
 		$time = date('Y-m-d H:i:s', time());
 		$this->_conn->query("REPLACE `{$this->table_name}` (`{$this->primary_key}`,`last_activity`,`data`) VALUES('{$id}','{$time}','{$data}')");
+        return TRUE;
 	}
 
 	/**
@@ -331,8 +333,10 @@ final class Session
 
 	/**
 	 * Garbage collector method to remove old sessions
+     * @param   int
+     * @return  bool
 	 */
-	public function gc() 
+    public function gc($maxlifetime)
 	{
 		//The max age of a session
 		$time = date('Y-m-d H:i:s', time() - $this->expiration);

@@ -101,31 +101,6 @@ function real_escape_string($str)
     return addslashes($str);
 }
 
-function ip_address()
-{
-    static $ip = FALSE;
-    
-    if( $ip ) {
-        return $ip;
-    }
-    //Get IP address - if proxy lets get the REAL IP address
-
-    if (!empty($_SERVER['REMOTE_ADDR']) AND !empty($_SERVER['HTTP_CLIENT_IP'])) {
-        $ip = $_SERVER['HTTP_CLIENT_IP'];
-    } elseif (!empty($_SERVER['REMOTE_ADDR'])) {
-        $ip = $_SERVER['REMOTE_ADDR'];
-    } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-        $ip = $_SERVER['HTTP_CLIENT_IP'];
-    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    } else {
-        $ip = '0.0.0.0';
-    }
-
-    //Clean the IP and return it
-    return $ip = preg_replace('/[^0-9\.]+/', '', $ip);
-}
-
 /**
  * Create a encryption string
  *
@@ -187,6 +162,53 @@ function create_uniqid($random_id_length = 10)
     return $rnd_id;
 }
 
+function ip_address()
+{
+    static $ip = FALSE;
+
+    if( $ip ) {
+        return $ip;
+    }
+    //Get IP address - if proxy lets get the REAL IP address
+
+    if (!empty($_SERVER['REMOTE_ADDR']) AND !empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['REMOTE_ADDR'])) {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = '0.0.0.0';
+    }
+
+    //Clean the IP and return it
+    return $ip = preg_replace('/[^0-9\.]+/', '', $ip);
+}
+
+/**
+ * Determines if the current version of PHP is greater then the supplied value
+ *
+ * Since there are a few places where we conditionally test for PHP > 5
+ * we'll set a static variable.
+ *
+ * @access	public
+ * @param	string
+ * @return	bool
+ */
+function is_php($version = '5.0.0')
+{
+    static $_is_php;
+    $version = (string)$version;
+
+    if ( ! isset($_is_php[$version]))
+    {
+        $_is_php[$version] = (version_compare(PHP_VERSION, $version) < 0) ? FALSE : TRUE;
+    }
+
+    return $_is_php[$version];
+}
 
 /**
  * An example of a general-purpose implementation that includes the optional
