@@ -138,14 +138,16 @@ class ExceptionHandler
         }
 
         // -- TODO: Luc chay duoc luc khong --
+        @ob_end_clean();
         $view = new \App\Lib\Core\View();
         $content = $view->parser(__LAYOUT_PATH.'/errors/'.$view_file, array('error'=>$error));
         echo $content;
-        exit();
+//        die($content);
+//        exit();
 
         // remove view contents from buffer
 //        @ob_clean();
-//        @ob_end_clean();
+
 //
 //        ob_start();
 //        include(__LAYOUT_PATH.'/errors/'.$view_file);
