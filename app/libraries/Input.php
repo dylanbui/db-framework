@@ -40,8 +40,13 @@ class Input
 		}
 	
 		return $data;
-	}	
-	
+	}
+
+    public function isPost()
+    {
+        return !empty($_POST);
+    }
+
 	public function post($name,$default_value = NULL)
 	{
 		if (!isset($this->_post[$name]) || $this->_post[$name] == "")
@@ -50,12 +55,7 @@ class Input
 		}
 		return $this->_post[$name];
 	}
-	
-	public function isPost()
-	{
-		return !empty($_POST);
-	}
-	
+
 	public function get($name,$default_value = NULL)
 	{
 		if (!isset($this->_get[$name]) || $this->_get[$name] == "")

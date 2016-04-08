@@ -182,6 +182,11 @@ class HomeController extends BaseController
         return $this->forward('site-index/index/captcha');
     }
 
+    public function syntaxErrorAction()
+    {
+        $this->oView->forward_title = "Demo loi xay ra";
+        $this->renderView('site-index/home/syntax-error');
+    }
 
 	private function display($path)
 	{

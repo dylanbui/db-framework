@@ -51,8 +51,7 @@ final class Session implements \SessionHandlerInterface
 	
 	/**
 	 * Configure some default session setting and then start the session.
-	 * @param	array	$config
-	 * @return	void
+	 * @param   array
 	 */
 	public function __construct($params = array()) 
 	{
@@ -101,18 +100,6 @@ final class Session implements \SessionHandlerInterface
 		
 	}
 
-    /**
-     * Destructor
-     *
-     * @access public 
-     * @return void
-     */
-//    public function __destruct()
-//    {
-//        // Close session
-//        session_write_close();
-//    }
-
 	/**
 	 * Start the current session, if already started - then destroy and create a new session!
 	 * @return void
@@ -125,8 +112,23 @@ final class Session implements \SessionHandlerInterface
 		//If there is a class to handle CRUD of the sessions
 		if($this->session_database) 
 		{
-            // -- User for php > 5.4 --
-            session_set_save_handler($this, TRUE);
+            if (is_php('5.4'))
+            {
+                // -- User for php > 5.4 --
+                session_set_save_handler($this, TRUE);
+            }
+            else
+            {
+                session_set_save_handler(
+                    array($this, 'open'),
+                    array($this, 'close'),
+                    array($this, 'read'),
+                    array($this, 'write'),
+                    array($this, 'destroy'),
+                    array($this, 'gc')
+                );
+                register_shutdown_function('session_write_close');
+            }
             // Create connect to database
             $this->_conn = DbConnection::getInstance();
 		}
@@ -273,6 +275,11 @@ final class Session implements \SessionHandlerInterface
 	 */
 	public function close() 
 	{
+        // -- Close DB Connection --
+        if (!is_null($this->_conn)) {
+            $this->_conn->close();
+            $this->_conn = NULL;
+        }
 		return TRUE;
 	}
 
@@ -461,9 +468,7 @@ final class Session implements \SessionHandlerInterface
 			{
 				$new_name = $this->flashdata_key.':old:'.$parts[1];
 				$this->userdata[$new_name] = $value;
-// 				$this->set_userdata($new_name, $value);
 				unset($this->userdata[$name]);
-// 				$this->unset_userdata($name);
 			}
 		}
 	}
@@ -479,12 +484,10 @@ final class Session implements \SessionHandlerInterface
 	
 	function _flashdata_sweep()
 	{
-// 		$userdata = $this->all_userdata();
 		foreach ($this->userdata as $key => $value)
 		{
 			if (strpos($key, ':old:'))
 			{
-// 				$this->unset_userdata($key);
 				unset($this->userdata[$key]);
 			}
 		}

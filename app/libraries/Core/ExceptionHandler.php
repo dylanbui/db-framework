@@ -98,32 +98,18 @@ class ExceptionHandler
             static::handle(new Error($options));
         });
 
-        if(is_php(7.0)) {
-            set_exception_handler(function (\Throwable $e) {
-                $options = [
-                    'type'        => $e->getCode(),
-                    'message'     => $e->getMessage(),
-                    'file'        => $e->getFile(),
-                    'line'        => $e->getLine(),
-                    'isException' => true,
-                    'exception'   => $e,
-                ];
-                static::handle(new Error($options));
-            });
-
-        } else {
-            set_exception_handler(function (\Exception $e) {
-                $options = [
-                    'type'        => $e->getCode(),
-                    'message'     => $e->getMessage(),
-                    'file'        => $e->getFile(),
-                    'line'        => $e->getLine(),
-                    'isException' => true,
-                    'exception'   => $e,
-                ];
-                static::handle(new Error($options));
-            });
-        }
+        // -- From PHP 7.0 using \Throwable instead \Exception -- (\Throwable $e) {}
+        set_exception_handler(function ($e) {
+            $options = [
+                'type'        => $e->getCode(),
+                'message'     => $e->getMessage(),
+                'file'        => $e->getFile(),
+                'line'        => $e->getLine(),
+                'isException' => true,
+                'exception'   => $e,
+            ];
+            static::handle(new Error($options));
+        });
 
         register_shutdown_function(function () {
             if (!is_null($options = error_get_last())) {
