@@ -484,12 +484,10 @@ class Validation
 	}
 
 	/**
-	*
+    *
 	* Define the error message
-	*
-	* @access	private
-	* @param	array	$options
-	*
+	* @access	public
+    * @return  string
 	*/
 	public function errorMessage()
 	{

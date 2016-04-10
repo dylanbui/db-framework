@@ -1,7 +1,7 @@
 <?php
 /**
  * Session Class
- *
+ * Link : https://github.com/Xeoncross/micromvc/blob/c2eb579463f9462a3aa941d91d4f85ecd0551e81/libraries/session.php
  * Class for adding extra session security protection as well as new ways to
  * store sessions (such as databases).
  *
@@ -18,7 +18,6 @@
 namespace App\Lib;
 
 use App\Lib\Core\Config;
-//use App\Lib\Core\Database\Connection;
 use App\Lib\Core\DbConnection;
 
 final class Session implements \SessionHandlerInterface
@@ -45,7 +44,7 @@ final class Session implements \SessionHandlerInterface
 	public $gc_probability		= 100;				//Chance (in 100) that old sessions will be removed
 
 	// Store $_SESSION
-	public $userdata = array();
+	public $userdata            = array();
 	
 	var $flashdata_key			= 'flash';
 	
@@ -132,7 +131,15 @@ final class Session implements \SessionHandlerInterface
             // Create connect to database
             $this->_conn = DbConnection::getInstance();
 		}
-		
+
+//        try {
+//            session_start();
+//        } catch(\Exception $e)
+//        {
+//            session_regenerate_id();
+//            session_start();
+//        }
+
 		// Start the session!
 		session_start();
 
@@ -190,12 +197,13 @@ final class Session implements \SessionHandlerInterface
 		if(empty($_SESSION['last_activity'])) 
 		{
 			$_SESSION['last_activity'] = time();
-		} 
+		}
 		//Check to see if the session needs to be regenerated
 		elseif($_SESSION['last_activity'] + $this->expiration < time()) 
 		{
 			//Generate a new session id and a new cookie with the updated id
-			session_regenerate_id();
+//			session_regenerate_id(TRUE);
+            session_regenerate_id();
 
 			//Store new time that the session was generated
 			$_SESSION['last_activity'] = time();
@@ -277,7 +285,6 @@ final class Session implements \SessionHandlerInterface
 	{
         // -- Close DB Connection --
         if (!is_null($this->_conn)) {
-            $this->_conn->close();
             $this->_conn = NULL;
         }
 		return TRUE;

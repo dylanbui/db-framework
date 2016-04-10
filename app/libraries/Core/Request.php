@@ -14,13 +14,18 @@ final class Request
 	protected $action = 'index';
     protected $args = array();
 
-	public function __construct($route  = 'index/index/index', $args = array())
+	public function __construct($route  = 'index/index/index', $args = array(), $moduleNamespace = NULL)
 	{
 		$this->parseUri($route);
 
-		$this->moduleNamespace = FrontController::getInstance()->getDefaultControllerNamespace()
-            .'\\'.$this->upperCamelcase($this->module).'\\';
-		$this->class = $this->moduleNamespace.$this->upperCamelcase($this->controller).'Controller';		
+        // -- Default $moduleNamespace get form FrontController --
+        if (is_null($moduleNamespace))
+		    $this->moduleNamespace = FrontController::getInstance()->getDefaultControllerNamespace();
+        else
+            $this->moduleNamespace = $moduleNamespace;
+
+        $this->moduleNamespace .= '\\'.$this->upperCamelcase($this->module).'\\';
+		$this->class = $this->moduleNamespace.$this->upperCamelcase($this->controller).'Controller';
 		$this->method = $this->lowerCamelcase($this->action).'Action';
 		$this->args = array_merge($this->args,$args);
 	}

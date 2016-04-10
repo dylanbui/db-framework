@@ -162,6 +162,15 @@ function create_uniqid($random_id_length = 10)
     return $rnd_id;
 }
 
+//Check to see if it is an ajax request
+function is_ajax_request()
+{
+    if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 function ip_address()
 {
     static $ip = FALSE;

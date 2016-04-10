@@ -156,8 +156,7 @@ class Pdo
         }
     }
 
-    // Perform an INSERT query
-    public function insert($sql, $data = array()) {
+    public function exec($sql, $data = array()) {
         try {
             // Prepare the SQL statement
             $this->stmt = $this->pdo->prepare($sql);
@@ -173,19 +172,25 @@ class Pdo
         }
     }
 
+
+    // Perform an INSERT query
+    public function insert($sql, $data = array()) {
+        return $this->exec($sql, $data);
+    }
+
     // Perform an UPDATE query
     public function update($sql, $data = array()) {
-        return $this->insert($sql, $data);
+        return $this->exec($sql, $data);
     }
 
     // Perform a REPLACE query
     public function replace($sql, $data = array()) {
-        return $this->insert($sql, $data);
+        return $this->exec($sql, $data);
     }
 
     // Perform a DELETE query
     public function delete($sql, $data = array()) {
-        return $this->insert($sql, $data);
+        return $this->exec($sql, $data);
     }
 
     public function errno()
