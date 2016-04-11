@@ -5,7 +5,6 @@
 
 namespace App\Lib\Core;
 
-
 /**
  * Class Error
  * @package Phalcon\Error
@@ -99,7 +98,8 @@ class ExceptionHandler
             static::handle(new Error($options));
         });
 
-        set_exception_handler(function (\Exception $e) {
+        // -- From PHP 7.0 using \Throwable instead \Exception -- (\Throwable $e) {}
+        set_exception_handler(function ($e) {
             $options = [
                 'type'        => $e->getCode(),
                 'message'     => $e->getMessage(),
@@ -138,14 +138,15 @@ class ExceptionHandler
         }
 
         // -- TODO: Luc chay duoc luc khong --
+        @ob_end_clean();
         $view = new \App\Lib\Core\View();
-        $content = $view->parser(__LAYOUT_PATH.'/errors/'.$view_file, array('error'=>$error));
-        echo $content;
-        exit();
+        echo $view->parser(__LAYOUT_PATH.'/errors/'.$view_file, array('error'=>$error));
+//        die($content);
+//        exit();
 
         // remove view contents from buffer
 //        @ob_clean();
-//        @ob_end_clean();
+
 //
 //        ob_start();
 //        include(__LAYOUT_PATH.'/errors/'.$view_file);

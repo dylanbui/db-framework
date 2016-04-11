@@ -124,6 +124,24 @@ class IndexController extends BaseController
 		$this->renderView('site-index/index/links');
 	}
 
+    public function formDemoAction()
+    {
+        if ($this->oInput->isPost()) {
+            if(is_null($this->oInput->post('name', NULL)))
+            {
+                echo "<pre>";
+                print_r('du lieu post');
+                echo "</pre>";
+                exit();
+            }
+        }
+
+        $this->oView->title = 'PHPMailer Service';
+        $this->oView->sub_title = 'Use PHPMailer Class';
+        $this->renderView('site-index/index/form-demo');
+    }
+
+
     public function linksItemAction()
     {
         echo "<pre>";
