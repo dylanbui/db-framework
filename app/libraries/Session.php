@@ -132,14 +132,6 @@ final class Session implements \SessionHandlerInterface
             $this->_conn = DbConnection::getInstance();
 		}
 
-//        try {
-//            session_start();
-//        } catch(\Exception $e)
-//        {
-//            session_regenerate_id();
-//            session_start();
-//        }
-
 		// Start the session!
 		session_start();
 
