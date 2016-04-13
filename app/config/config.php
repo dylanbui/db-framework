@@ -91,7 +91,7 @@ $config['logging']['log_file'] 						= "/tmp/ngukho.log";
 |
 */
 
-$config['cache']['cache_path'] 						= '/public_html/cache/';
+$config['cache']['cache_path'] 						= NULL; //'/public_html/cache/';
 $config['cache']['life_time'] 						= 60;
 
 /*

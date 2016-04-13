@@ -302,11 +302,11 @@ class File
             {
                 if (@is_dir($source_dir.$file) AND strncmp($file, '.', 1) !== 0 AND $top_level_only === FALSE)
                 {
-                    get_dir_file_info($source_dir.$file.DIRECTORY_SEPARATOR, $top_level_only, TRUE);
+                    $this->get_dir_file_info($source_dir.$file.DIRECTORY_SEPARATOR, $top_level_only, TRUE);
                 }
                 elseif (strncmp($file, '.', 1) !== 0)
                 {
-                    $_filedata[$file] = get_file_info($source_dir.$file);
+                    $_filedata[$file] = $this->get_file_info($source_dir.$file);
                     $_filedata[$file]['relative_path'] = $relative_path;
                 }
             }

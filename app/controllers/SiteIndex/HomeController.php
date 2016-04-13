@@ -188,17 +188,51 @@ class HomeController extends BaseController
         $this->renderView('site-index/home/syntax-error');
     }
 
-	private function display($path)
-	{
-		foreach ($this->children as $child) {
-			$param_name = str_replace("-", "_", $child->getAction());
-			$this->oView->{$param_name} = Module::run($child);
-		}		
-		
-		$this->oView->main_content = $this->oView->fetch($path);
-		$result = $this->oView->renderLayout($this->_layout_path);
-		$this->oResponse->setOutput($result, $this->oConfig->config_values['application']['config_compression']);		
-	}
+    public function saveCacheAction()
+    {
+        $cache_name = "my_cache_data";
+        $data = array(
+            'cache_1' => "Thong tin cache tai day",
+            'cache_2' => array('mang cahe 1', 'mang cahe 2')
+        );
+
+        $this->oCache->set($cache_name, $data, array('main'));
+        $this->oCache->set('ten_gi_ke_no', $data, array('second'));
+
+        $this->oView->dataCache = $data;
+        $this->renderView('site-index/home/save-cache');
+    }
+
+    public function loadCacheAction()
+    {
+        $cache_name = "my_cache_data";
+
+//        $this->oCache->delete($cache_name);
+        $this->oCache->delete_by_tag(array('main', 'second'));
+
+        $data = $this->oCache->get($cache_name);
+
+        if(empty($data))
+            $data = "Cache nay khong ton tai";
+
+        $this->oView->dataCache = $data;
+        $this->oView->cacheInfo = $this->oCache->cache_info();
+
+        $this->renderView('site-index/home/load-cache');
+    }
+
+
+//	private function display($path)
+//	{
+//		foreach ($this->children as $child) {
+//			$param_name = str_replace("-", "_", $child->getAction());
+//			$this->oView->{$param_name} = Module::run($child);
+//		}
+//
+//		$this->oView->main_content = $this->oView->fetch($path);
+//		$result = $this->oView->renderLayout($this->_layout_path);
+//		$this->oResponse->setOutput($result, $this->oConfig->config_values['application']['config_compression']);
+//	}
 
 
 }

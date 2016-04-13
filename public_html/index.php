@@ -207,6 +207,24 @@ class Application
         $this->registry->oView = $view;
     }
 
+    function loadCache()
+    {
+        $config_cache = $this->registry->oConfig->config_values['cache'];
+        $config_cache['cache_path'] = __SITE_PATH.'/public_html/cache_copy/';
+        $cache = new \App\Lib\Cache($config_cache);
+
+//        echo "<pre>";
+//        print_r($cache->_cache_path);
+//        echo "</pre>";
+//
+//        echo "<pre>";
+//        print_r($cache->cache_info());
+//        echo "</pre>";
+//        exit();
+
+        $this->registry->oCache = $cache;
+    }
+
     function loadResponse()
     {
         // Response
@@ -229,6 +247,8 @@ class Application
         $this->loadInput();
 
         $this->loadView();
+
+        $this->loadCache();
 
         $this->loadResponse();
 
