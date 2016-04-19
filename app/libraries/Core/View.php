@@ -184,7 +184,7 @@ class View
         }
 
 		if(is_null($layout_path))
-            $layout_path = $this->layout_dir . "/{$this->_default_layout_path}/default.phtml";
+            $layout_path = $this->layout_dir . "/{$this->_default_layout_path}.phtml";
 		else
             $layout_path = $this->layout_dir . '/' . $layout_path . '.phtml';
 			

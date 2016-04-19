@@ -208,7 +208,7 @@ class HomeController extends BaseController
         $cache_name = "my_cache_data";
 
 //        $this->oCache->delete($cache_name);
-        $this->oCache->delete_by_tag(array('main', 'second'));
+//        $this->oCache->delete_by_tag(array('main', 'second'));
 
         $data = $this->oCache->get($cache_name);
 

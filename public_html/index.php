@@ -22,10 +22,11 @@
  	define ('__PUBLIC_HTML', __SITE_URL);
  	
  	// ---- Khong Thay Doi ---- // 	
- 	define ('__ASSET_URL', __PUBLIC_HTML.'assets/');
- 	define ('__IMAGE_URL', __ASSET_URL.'images/');
- 	define ('__CSS_URL', __ASSET_URL.'css/');
- 	define ('__JS_URL', __ASSET_URL.'js/');
+ 	define ('__ASSET_URL', __PUBLIC_HTML.'assets');
+    define ('__COMPONENT_URL', __ASSET_URL.'/plugins');
+ 	define ('__IMAGE_URL', __ASSET_URL.'/images');
+ 	define ('__CSS_URL', __ASSET_URL.'/css');
+ 	define ('__JS_URL', __ASSET_URL.'/js');
  	
 	// the application directory path 
 	define ('__APP_PATH', __SITE_PATH.'/app');
@@ -201,7 +202,7 @@ class Application
     function loadView()
     {
         // View
-        $view = new \App\Lib\Core\View();
+        $view = new \App\Lib\Core\View('default/bootstrap');
         $view->setTemplateDir(__VIEW_PATH);
         $view->setLayoutDir(__LAYOUT_PATH);
         $this->registry->oView = $view;
@@ -210,7 +211,7 @@ class Application
     function loadCache()
     {
         $config_cache = $this->registry->oConfig->config_values['cache'];
-        $config_cache['cache_path'] = __SITE_PATH.'/public_html/cache_copy/';
+        $config_cache['cache_path'] = __SITE_PATH.'/public_html/cache/';
         $cache = new \App\Lib\Cache($config_cache);
 
 //        echo "<pre>";
