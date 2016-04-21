@@ -15,6 +15,8 @@ class HomeController extends BaseController
 	public function __construct()
 	{
 		parent::__construct();
+
+        $this->oView->menuGroup = 'content';
 		
 		$this->_cfg_upload_file = array();
 		$this->_cfg_upload_file['upload_path'] = __UPLOAD_DATA_PATH;
@@ -190,6 +192,8 @@ class HomeController extends BaseController
 
     public function saveCacheAction()
     {
+        $this->oView->menuGroup = 'cache';
+
         $cache_name = "my_cache_data";
         $data = array(
             'cache_1' => "Thong tin cache tai day",
@@ -205,6 +209,8 @@ class HomeController extends BaseController
 
     public function loadCacheAction()
     {
+        $this->oView->menuGroup = 'cache';
+
         $cache_name = "my_cache_data";
 
 //        $this->oCache->delete($cache_name);

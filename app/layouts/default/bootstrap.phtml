@@ -6,11 +6,19 @@
     <title>Dashboard with Off-canvas Sidebar</title>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="<?= __COMPONENT_URL; ?>/bootstrap/bootstrap.min.css" rel="stylesheet">
+<!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet">-->
+    <link href="<?= __COMPONENT_URL; ?>/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
     <link href="<?= __CSS_URL; ?>/bootstrap_styles.css" rel="stylesheet">
+
+    <!-- script references -->
+    <script src="<?= __COMPONENT_URL?>/jquery/jquery.min.js"></script>
+    <script src="<?= __COMPONENT_URL?>/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -22,13 +30,28 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="<?= site_url(); ?>">DB Framework</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="#">Settings</a></li>
                 <li><a href="#">Profile</a></li>
+
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+
                 <li><a href="#">Help</a></li>
             </ul>
             <form class="navbar-form navbar-right">
@@ -40,53 +63,227 @@
 
 <div class="container-fluid">
 
-    <div class="row row-offcanvas row-offcanvas-left">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div class="panel-group" id="accordion">
 
-        <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
+                            </span>Content</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse <?= df($menuGroup) == 'content' ? 'in' : ''; ?>">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-pencil text-primary"></span>
+                                        <a href="<?= site_url('site-index/home/render'); ?>">Render Action</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-flash text-success"></span>
+                                        <a href="<?= site_url('site-index/index/captcha'); ?>">Captcha Demo</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file text-info"></span>
+                                        <a href="<?= site_url('site-index/home/forward-demo'); ?>">Forward To Captcha Demo</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-comment text-success"></span>
+                                        <a href="<?= site_url('site-index/home/ckeditor'); ?>">CKEditor</a>
+                                        <span class="badge">42</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview</a></li>
-                <li><a href="http://bootstrapzero.com" target="_ext">Themes</a></li>
-                <li><a href="http://bootstrap.theme.cards" target="_ext">Analytics</a></li>
-                <li><a href="https://wrapbootstrap.com?ref=skelly" target="_ext">Export</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="">Nav item</a></li>
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-                <li><a href="">More navigation</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-            </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix"><span class="glyphicon glyphicon-folder-close">
+                            </span>Database</a>
+                        </h4>
+                    </div>
+                    <div id="collapseSix" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-pencil text-primary"></span>
+                                        <a href="<?= __SITE_URL ?>paging/page/paginator">Paging</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-flash text-success"></span>
+                                        <a href="<?= __SITE_URL ?>database/model">Normal Database</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file text-info"></span>
+                                        <a href="<?= __SITE_URL ?>pdo-database/pdo-model">PDO Model Database</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-comment text-success"></span>
+                                        <a href="<?= __SITE_URL ?>active-record/active-record">Active Record Database</a>
+                                        <span class="badge">42</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-        </div><!--/span-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-th">
+                            </span>Demo Router</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <a href="<?= current_site_url('load/Vat-the-roi-xuong-Viet-Nam-co-the-la-cau-khong-gian-post616168.html'); ?>">Demo router</a> <span class="label label-success">$ 320</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="<?= current_site_url('links/content/load-data-test/nhung-bi-mat-lon-nhat-ve-phat-xit-duc-duoc-phat-hien-3271796.html'); ?>">Router Other Links</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="<?= current_site_url('page-module/content/load-data-test'); ?>">Page Module SEO Test</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="<?= current_site_url('site-index/index/show-config-web'); ?>">Show Web Configure</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="col-sm-9 col-md-10 main">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                <span class="glyphicon glyphicon-user"></span>Exception Handler
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <a href="<?= current_site_url('site-index/home/syntax-error'); ?>">Demo PHP Syntax error</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="<?= __SITE_URL ?>active-record/active-record">Demo Exception Error</a> <span class="label label-info">5</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-            <?php echo !empty($errorMsg) ? "<div class='error'>{$errorMsg}</div>" : ''; ?>
-            <?php echo $main_content; ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+                                <span class="glyphicon glyphicon-file"></span>Email
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseSeven" class="panel-collapse collapse <?= df($menuGroup) == 'email' ? 'in' : ''; ?>">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-usd"></span>
+                                        <a href="<?= site_url('site-index/index/sent-email'); ?>">Sent Email - PHPMailer</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <a href="<?= site_url('site-index/index/sent-email-smtp'); ?>">Sent Email - Email Class</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                <span class="glyphicon glyphicon-file"></span>Cache
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse <?= df($menuGroup) == 'cache' ? 'in' : ''; ?>">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-usd"></span>
+                                        <a href="<?= current_site_url('site-index/home/save-cache'); ?>">Demo Save Cache</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        <a href="<?= current_site_url('site-index/home/load-cache'); ?>">Demo Load Cache</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-sm-9 col-md-9 main">
+            <div class="main-content">
+                <?php echo !empty($errorMsg) ? "<div class='error'>{$errorMsg}</div>" : ''; ?>
+                <?php echo $main_content; ?>
+            </div>
         </div><!--/row-->
     </div>
 </div><!--/.container-->
 
 <footer>
-    <p class="pull-right">Powered By <a href="mailto:buivantienduc@yahoo.com">Bui Van Tien Duc</a> ©2016</p>
+<!--    <p class="pull-right">Powered By <a href="mailto:buivantienduc@yahoo.com">Bui Van Tien Duc</a> ©2016</p>-->
+    Powered By <a href="mailto:buivantienduc@yahoo.com">Bui Van Tien Duc</a> ©2016
 </footer>
 
-<!-- script references -->
-<script src="<?= __COMPONENT_URL?>/jquery/jquery.min.js"></script>
-<script src="<?= __COMPONENT_URL?>/bootstrap/bootstrap.min.js"></script>
 
 <script language="JavaScript">
     $(document).ready(function() {
-        $('[data-toggle=offcanvas]').click(function() {
-            $('.row-offcanvas').toggleClass('active');
-        });
     });
 </script>
 
