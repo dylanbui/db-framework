@@ -1,18 +1,23 @@
+<link rel="stylesheet" href="<?= __CSS_URL; ?>/paging.css">
+
+
 <h1><?= $title; ?></h1>
 
 <a href="<?= $add_link; ?>" >Add Data</a>
 
 <br><br>
 
-<table width="100%" border="1" cellpadding="1" cellspacing="1">
-<tr>
-	<th>ID
-	<th>First Name
-	<th>Last Name
-	<th>Email
-	<th>Address
-	<th>Action
-</tr>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>ID
+            <th>First Name
+            <th>Last Name
+            <th>Email
+            <th>Address
+            <th>Action
+        </tr>
+    </thead>
 
 <?php
 	foreach ($rs as $row) :
@@ -33,9 +38,7 @@
 
 </table>	
 
-
 <?php
-	echo "<br>";
 	echo $pages->display_pages(); // Optional call which will display the page numbers after the results.
 	echo $pages->display_jump_menu(); // Optional displays the page jump menu
 ?>

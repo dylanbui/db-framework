@@ -12,6 +12,7 @@ Class ModelController Extends BaseController
 	function __construct()
 	{
 		parent::__construct();
+        $this->oView->menuGroup = 'database';
 	}
 	
 	public function indexAction($offset = 0) 
@@ -48,7 +49,7 @@ Class ModelController Extends BaseController
 	
 	public function deleteAction($id)
 	{
-	    $db = Db::getInstance();
+        $db = DbConnection::getInstance();
 	    $row = $db->selectOneRow("SELECT * FROM ".TB_EX_USER." WHERE user_id = " . $id);
 	    if(!empty($row))
 	    {
@@ -137,7 +138,7 @@ Class ModelController Extends BaseController
 
 
 //			$sql = "INSERT INTO ".TB_EX_USER."(first_name,last_name,email,address) VALUES('{$_POST['first_name']}','{$_POST['last_name']}','{$_POST['email']}','{$_POST['address']}')";
-	    	$db = Db::getInstance();
+            $db = DbConnection::getInstance();
 //	    	$db->query($sql);
 
             $sql = "INSERT INTO ".TB_EX_USER."(first_name,last_name,email,address) VALUES(:first_name,:last_name,:email,:address)";
@@ -156,7 +157,7 @@ Class ModelController Extends BaseController
 	
 	public function editAction($id)
 	{
-		$db = Db::getInstance();
+        $db = DbConnection::getInstance();
 		$this->oView->title = 'Normal Edit Form';
 		$this->oView->link = site_url('database/model/edit/' . $id);
 	    $row = $db->selectOneRow("SELECT * FROM ".TB_EX_USER." WHERE user_id = " . $id);

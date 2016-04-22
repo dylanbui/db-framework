@@ -13,6 +13,7 @@ Class PdoModelController Extends BaseController
 	function __construct()
 	{
 		parent::__construct();
+        $this->oView->menuGroup = 'database';
 	}
 	
 	public function indexAction()

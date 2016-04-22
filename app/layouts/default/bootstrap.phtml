@@ -16,7 +16,7 @@
     <link href="<?= __CSS_URL; ?>/bootstrap_styles.css" rel="stylesheet">
 
     <!-- script references -->
-    <script src="<?= __COMPONENT_URL?>/jquery/jquery.min.js"></script>
+    <script src="<?= __COMPONENT_URL?>/jquery/jquery-1.9.1.min.js"></script>
     <script src="<?= __COMPONENT_URL?>/bootstrap-3.3.6/js/bootstrap.min.js"></script>
 
 </head>
@@ -114,7 +114,7 @@
                             </span>Database</a>
                         </h4>
                     </div>
-                    <div id="collapseSix" class="panel-collapse collapse">
+                    <div id="collapseSix" class="panel-collapse collapse <?= df($menuGroup) == 'database' ? 'in' : ''; ?>">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
@@ -283,8 +283,9 @@
 
 
 <script language="JavaScript">
-    $(document).ready(function() {
-    });
+    var siteUrl = '<?= site_url(); ?>'
+    UI.Facebook.init('<?= _FB_APP_ID; ?>');
+    $(document).ready(function() { });
 </script>
 
 
