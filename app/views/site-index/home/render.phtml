@@ -4,7 +4,9 @@
 <?= $title_aaa; ?>
 
 <p>Hien thi phan duoc render vao<p>
-
+<b>Request('site-index/home/child-first') => <?= $child_first; ?></b>
+<br>
+<b>Request('site-index/home/child-second') => <?= $child_second; ?></b>
 <br>
 
 <?= $part_render; ?>
@@ -12,8 +14,6 @@
 <br>
 
 RENDER lai 1 lan nua trong code template
-
-<? //Module::run(new Request('site/home/part-render',array('Title duoc truyen vao AGAIN')));?>
 
 <?= \App\Lib\Core\Request::staticRun(new \App\Lib\Core\Request('site-index/home/part-render',array('Title duoc truyen vao AGAIN')));?>
 

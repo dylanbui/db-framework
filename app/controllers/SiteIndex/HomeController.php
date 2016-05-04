@@ -7,11 +7,9 @@ use App\Lib\Core\Request;
 
 class HomeController extends BaseController
 {
-
 	var $_cfg_upload_file;
 	var $_cfg_thumb_image;
-	var $children;
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -29,8 +27,6 @@ class HomeController extends BaseController
 		$this->_cfg_thumb_image['maintain_ratio'] = TRUE;
 		$this->_cfg_thumb_image['width'] = 175;
 		$this->_cfg_thumb_image['height'] = 0;
-		
-		$this->children = array();
 	}
 
 	public function indexAction() 
@@ -134,17 +130,15 @@ class HomeController extends BaseController
 	{
 		$this->oSession->userdata['c'] = 2000;
 		$this->oView->title_aaa = 'Day la trang dung chuc nang renderAction --- '.$this->oSession->userdata['test'];
-//		$this->oView->part_render = Module::run(new Request('site/home/part-render',array('Title duoc truyen vao '.$this->oSession->userdata['c'])));
+
         $this->oView->part_render = Request::staticRun(new Request('site-index/home/part-render',array('Title duoc truyen vao '.$this->oSession->userdata['c'])));
-//		$this->oView->part_render = Module::run('site/home/part-render/buivantienduc');		
-		$this->renderView('site-index/home/render');
+
+        $this->_children[] = new Request('site-index/home/child-first');
+        $this->_children[] = new Request('site-index/home/child-second',array('Title duoc truyen vao site/home/child-second'));
+
+        $this->renderView('site-index/home/render');
 	}
 
-	public function checkLoginAction()
-	{
-// 		return new Request('site/home/deny',array('Title duoc truyen vao - DENY'));		
-	}	
-	
 	public function firstAction()
 	{
 		$this->oView->param_first = "Thong tin load tu firstAction";
@@ -190,6 +184,12 @@ class HomeController extends BaseController
         $this->renderView('site-index/home/syntax-error');
     }
 
+    public function dynamicUrlAction()
+    {
+        $this->oView->title = 'Dynamically change URL using Push and Popstate';
+        $this->renderView('site-index/home/dynamic_url');
+    }
+
     public function saveCacheAction()
     {
         $this->oView->menuGroup = 'cache';
@@ -226,19 +226,5 @@ class HomeController extends BaseController
 
         $this->renderView('site-index/home/load-cache');
     }
-
-
-//	private function display($path)
-//	{
-//		foreach ($this->children as $child) {
-//			$param_name = str_replace("-", "_", $child->getAction());
-//			$this->oView->{$param_name} = Module::run($child);
-//		}
-//
-//		$this->oView->main_content = $this->oView->fetch($path);
-//		$result = $this->oView->renderLayout($this->_layout_path);
-//		$this->oResponse->setOutput($result, $this->oConfig->config_values['application']['config_compression']);
-//	}
-
 
 }

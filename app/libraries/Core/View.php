@@ -57,20 +57,12 @@ class View
 
     /**
 	 * Adds a variable that can be used by the templates.
-	 *
 	 * Adds a new array index to the variable property. This
 	 * new array index will be treated as a variable by the templates.
-	 *
 	 * @param string $name The variable name to use in the template
-	 *
 	 * @param string $value The content you assign to $name
-	 *
 	 * @access public
-	 *
 	 * @return void
-	 *
-	 * @see getVars, $variables
-	 *
 	 */
 	public function __set($name, $value)
 	{
@@ -78,14 +70,10 @@ class View
 	}
 	
 	/**
-	 * @Returns names of all the added variables
-	 *
 	 * Returns a numeral array containing the names of all
 	 * added variables.
-	 *
 	 * @access public
 	 * @return array
-	 * @see addVar, $variables
 	 */
 	public function getVars()
 	{
@@ -96,6 +84,7 @@ class View
     /**
      * Set template dir
      * @access public
+     * @param string $template_dir
      * @return none
      */
     public function setTemplateDir($template_dir)
@@ -106,11 +95,23 @@ class View
     /**
      * Set layout dir
      * @access public
+     * @param string $layout_dir
      * @return none
      */
     public function setLayoutDir($layout_dir)
     {
         $this->layout_dir = $layout_dir;
+    }
+
+    /**
+     * Set status layout
+     * @access public
+     * @param bool $bool
+     * @return none
+     */
+    public function setEnableLayout($bool)
+    {
+        $this->_disableLayout = $bool;
     }
 
     /**
@@ -184,9 +185,9 @@ class View
         }
 
 		if(is_null($layout_path))
-            $layout_path = $this->layout_dir . "/{$this->_default_layout_path}.phtml";
+            $layout_path = $this->layout_dir."/{$this->_default_layout_path}.phtml";
 		else
-            $layout_path = $this->layout_dir . '/' . $layout_path . '.phtml';
+            $layout_path = $this->layout_dir.'/'.$layout_path.'.phtml';
 			
 		if (file_exists($layout_path) == false)
 		{
