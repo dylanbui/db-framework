@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="<?= __CSS_URL; ?>/paging.css">
+
+<h1><?= $title; ?></h1>
+
+<br><br>
+
+<div class="row">
+    <div class="col-sm-5 col-md-5 form-group">
+        <select class="form-control" onchange="location='<?= site_url('site-index/atm/list/'); ?>'+this.value;">
+                <option value="0">-- Hien tat ca --</option>
+            <?php foreach ($arrAtmBank as $row) : ?>
+                <option value="<?= $row['bank_id']; ?>" <?= $row['bank_id'] == $bank_id ? 'selected' : ''; ?>>
+                    <?= h($row['name']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>ID
+        <th>Bank Name
+        <th>Address
+        <th>Action
+    </tr>
+    </thead>
+    <?php foreach ($arrAtmAddress as $row) : ?>
+        <tr>
+            <td><?= $row['address_id']; ?>
+            <td><?= h($row['name']); ?>
+            <td><?= h($row['address']); ?>
+            <td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+<?php
+    echo "<br>";
+    echo $pages->display_pages(); // Optional call which will display the page numbers after the results.
+    echo $pages->display_jump_menu(); // Optional displays the page jump menu
+?>
+
+
+<?php if (!empty($arrAtmAddressRelation)) : ?>
+
+    <!--Những điểm đặt ATM của các ngân hàng khác nhưng vẫn có thể dùng thẻ Agribank - Ngân hàng nông nghiệp và phát triển nông thôn-->
+    <!--Số lượng máy ATM là 4832-->
+    <h3>Những điểm đặt ATM của các ngân hàng khác nhưng vẫn có thể dùng thẻ <?= $rowAtmBank['code']; ?> - <?= $rowAtmBank['name']; ?></h3>
+    <h4>Số lượng máy ATM là <?= count($arrAtmAddressRelation); ?></h4>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID
+            <th>Bank Name
+            <th>Address
+            <th>Action
+        </tr>
+        </thead>
+
+        <?php foreach ($arrAtmAddressRelation as $row) : ?>
+            <tr>
+                <td><?= $row['address_id']; ?>
+                <td><?= h($row['name']); ?>
+                <td><?= h($row['address']); ?>
+                <td>
+            </tr>
+        <?php endforeach; ?>
+
+    </table>
+<?php endif; ?>

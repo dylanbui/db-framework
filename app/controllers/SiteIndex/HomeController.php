@@ -40,9 +40,6 @@ class HomeController extends BaseController
 	public function tinymceAction()
 	{
 		$this->oView->title = 'Welcome to Bui Van Tien Duc MVC RENDER';
-
-		// redirect('http://google.com');
-
 		$this->renderView('site-index/home/tinymce');
 	}
 

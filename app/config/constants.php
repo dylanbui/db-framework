@@ -21,6 +21,14 @@ define('TB_CONFIGURE_SYSTEM_GROUP', _TB_PREFIX . 'configure_group');
 define('TB_LANGUAGE', _TB_PREFIX . 'language');
 define('TB_MEMBER', _TB_PREFIX . 'member');
 define('TB_CONTACT', _TB_PREFIX . 'contact');
+define('TB_DISTRICTS', _TB_PREFIX . 'districts');
+define('TB_CITIES', _TB_PREFIX . 'cities');
+
+// --- -------------------------------------------------------------------------------------------------- ---//
+// --- ATM INFORMATION ---//
+
+define('TB_ATM_ADDRESS', _TB_PREFIX . 'atm_addresses');
+define('TB_BANKS', _TB_PREFIX . 'banks');
 
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- EXAMPLE MODULE TABLE ---//
