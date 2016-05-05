@@ -50,7 +50,7 @@ use App\Helper\File as FileHandler;
 
 class Cache {
 
-	var $_life_time = 600;
+	var $_life_time = 600; // 10 minute
 	var $_cache_path;
 	var $_cache_handler_filepath;
 
@@ -68,7 +68,7 @@ class Cache {
 		if (isset($cfg['life_time']))
 			$life_time = $cfg['life_time'];
 		
-		$this->_default_life_time = ($life_time == '') ? 60 : intval($life_time);
+		$this->_life_time = ($life_time == '') ? 600 : intval($life_time);
 		$this->_cache_path = ($path == '') ? __SITE_PATH.'/public_html/cache/' : $path;
 		
 		// Setup cache handler

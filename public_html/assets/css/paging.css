@@ -1,32 +1,41 @@
 .paginate {
-font-family: Arial, Helvetica, sans-serif;
-font-size: .7em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .7em;
 }
+
+/* The CSS */
+.select_item{
+
+}
+
 a.paginate {
-border: 1px solid #000080;
-padding: 2px 6px 2px 6px;
-text-decoration: none;
-color: #000080;
+    border: 1px solid #000080;
+    /*padding: 2px 6px 2px 6px;*/
+    padding: 6px 12px;
+    text-decoration: none;
+    color: #000080;
 }
 a.paginate:hover {
-background-color: #000080;
-color: #FFF;
-text-decoration: underline;
+    background-color: #000080;
+    color: #FFF;
+    text-decoration: underline;
 }
-a.current {
-border: 1px solid #000080;
-font: bold .7em Arial,Helvetica,sans-serif;
-padding: 2px 6px 2px 6px;
-cursor: default;
-background:#000080;
-color: #FFF;
-text-decoration: none;
+a.paginate.current {
+    border: 1px solid #000080;
+    font: bold .7em Arial,Helvetica,sans-serif;
+    /*padding: 2px 6px 2px 6px;*/
+    padding: 6px 12px;
+    cursor: default;
+    background:#000080;
+    color: #FFF;
+    text-decoration: none;
 }
-span.inactive {
-border: 1px solid #999;
-font-family: Arial, Helvetica, sans-serif;
-font-size: .7em;
-padding: 2px 6px 2px 6px;
-color: #999;
-cursor: default;
+.paginate.inactive {
+    border: 1px solid #999;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .7em;
+    /*padding: 2px 6px 2px 6px;*/
+    padding: 6px 12px;
+    color: #999;
+    cursor: default;
 }
