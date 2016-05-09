@@ -82,6 +82,7 @@ function mysql_to_fulldate($date)
     return date("Y-m-d H:i:s", strtotime($date));
 }
 
+// -- Ex : mysql_to_unix_timestamp('2016-11-20 00:00:00'); => Phai dung dinh dang--
 function mysql_to_unix_timestamp($date)
 {
     if(empty($date) || $date=='0000-00-00 00:00:00')
@@ -89,10 +90,32 @@ function mysql_to_unix_timestamp($date)
     return strtotime($date);
 }
 
-function string_to_datetime($str_date, $str_format)
+function convert_unix_timestamp_to_datetime($unixtimestamp, $str_format = 'd/m/Y H:i:s')
+{
+    $myDateTime = new \DateTime();
+    $myDateTime->setTimestamp($unixtimestamp);
+    return  $myDateTime->format($str_format);
+}
+
+function convert_string_to_mysql_datetime($str_date, $str_format = 'd/m/Y H:i:s')
 {
     // PHP 5.3 and up
-    $myDateTime = DateTime::createFromFormat($str_format, $str_date);
+//    $str_date = str_replace('/', '-', $str_date);
+    $myDateTime = \DateTime::createFromFormat($str_format, $str_date);
+    // -- If dont have H:i:s, it auto give a value 12:00:00  --
+    return  $myDateTime->format('Y-m-d H:i:s');
+    // -- Ex --
+//    $date = \DateTime::createFromFormat('d/m/Y H:i:s', "24/04/2012 20:44:50");
+//    echo $date->format('Y-m-d H:i:s');
+}
+
+// -- Ex : convert_string_to_unix_timestamp("20/11/2016 00:00:00", "d/m/Y H:i:s"); --
+// -- Chu dong truyen vao gia tri format --
+function convert_string_to_unix_timestamp($str_date, $str_format = 'd/m/Y H:i:s')
+{
+    // PHP 5.3 and up
+//    $str_date = str_replace('/', '-', $str_date);
+    $myDateTime = \DateTime::createFromFormat($str_format, $str_date);
     return $myDateTime->getTimestamp();
 }
 
