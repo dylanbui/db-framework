@@ -90,23 +90,33 @@ function mysql_to_unix_timestamp($date)
     return strtotime($date);
 }
 
+// -- Tutorial : http://php.net/manual/en/class.datetime.php --
+
 function convert_unix_timestamp_to_datetime($unixtimestamp, $str_format = 'd/m/Y H:i:s')
 {
-    $myDateTime = new \DateTime();
-    $myDateTime->setTimestamp($unixtimestamp);
-    return  $myDateTime->format($str_format);
+//    $myDateTime = new \DateTime();
+//    $myDateTime->setTimestamp($unixtimestamp);
+//    return  $myDateTime->format($str_format);
+
+    // -- Su dung bang ham --
+    // date_create() <==> new \DateTime()
+    $myDateTime = date_timestamp_set(date_create(), $unixtimestamp);
+    return date_format($myDateTime, $str_format);
 }
 
 function convert_string_to_mysql_datetime($str_date, $str_format = 'd/m/Y H:i:s')
 {
     // PHP 5.3 and up
-//    $str_date = str_replace('/', '-', $str_date);
-    $myDateTime = \DateTime::createFromFormat($str_format, $str_date);
-    // -- If dont have H:i:s, it auto give a value 12:00:00  --
-    return  $myDateTime->format('Y-m-d H:i:s');
+//    $myDateTime = \DateTime::createFromFormat($str_format, $str_date);
+//    // -- If dont have H:i:s, it auto give a value 12:00:00  --
+//    return  $myDateTime->format('Y-m-d H:i:s');
     // -- Ex --
 //    $date = \DateTime::createFromFormat('d/m/Y H:i:s', "24/04/2012 20:44:50");
 //    echo $date->format('Y-m-d H:i:s');
+
+    // -- Su dung bang ham --
+    $myDateTime = date_create_from_format($str_format, $str_date);
+    return date_format($myDateTime, 'Y-m-d H:i:s');
 }
 
 // -- Ex : convert_string_to_unix_timestamp("20/11/2016 00:00:00", "d/m/Y H:i:s"); --
@@ -114,9 +124,19 @@ function convert_string_to_mysql_datetime($str_date, $str_format = 'd/m/Y H:i:s'
 function convert_string_to_unix_timestamp($str_date, $str_format = 'd/m/Y H:i:s')
 {
     // PHP 5.3 and up
-//    $str_date = str_replace('/', '-', $str_date);
-    $myDateTime = \DateTime::createFromFormat($str_format, $str_date);
-    return $myDateTime->getTimestamp();
+//    $myDateTime = \DateTime::createFromFormat($str_format, $str_date);
+//    return $myDateTime->getTimestamp();
+
+    // -- Su dung bang ham --
+    $myDateTime = date_create_from_format($str_format, $str_date);
+    return date_timestamp_get($myDateTime);
+}
+
+function convert_string_datetime_from_format_to_format($str_date, $from_format = 'd/m/Y H:i:s', $to_format = 'Y-m-d H:i:s')
+{
+    // -- Su dung bang ham --
+    $myDateTime = date_create_from_format($from_format, $str_date);
+    return date_format($myDateTime, $to_format);
 }
 
 function real_escape_string($str)

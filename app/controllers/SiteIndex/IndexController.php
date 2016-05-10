@@ -24,6 +24,8 @@ class IndexController extends BaseController
 	
 	public function captchaAction()
 	{
+        $this->oView->menuGroup = 'content';
+
         $cap = new Captcha();
 		
 		$vals = array(
@@ -116,6 +118,16 @@ class IndexController extends BaseController
         $this->oView->sub_title = 'Use Email Class';
         $this->renderView('site-index/index/sent_email');
     }
+
+    public function demoDatetimeAction()
+    {
+        $this->oView->menuGroup = 'content';
+//        $date = \DateTime::createFromFormat('d/m/Y H:i:s', "24/04/2012 20:44:50");
+//        echo $date->format('Y-m-d H:i:s');
+//        echo "<br>";
+//        echo $date->getTimestamp();
+        $this->renderView('site-index/index/demo-datetime');
+    }
 	
 	public function linksAction($other_link)
 	{
@@ -143,25 +155,26 @@ class IndexController extends BaseController
 
     public function linksItemAction()
     {
-
         $val_1 = mysql_to_unix_timestamp('2016-11-20 00:00:00');
-        $val_2 = convert_string_to_unix_timestamp("20/11/2016 00:00:00", "d/m/Y H:i:s");
-
         echo "111<pre>";
         print_r($val_1);
         echo "</pre>";
+
+        $val_2 = convert_string_to_unix_timestamp("20/11/2016 00:00:00", "d/m/Y H:i:s");
         echo "222<pre>";
         print_r($val_2);
         echo "</pre>";
 
-        echo "<pre>";
+        echo "333<pre>";
         print_r(convert_string_to_mysql_datetime("24/04/2012 20:44:50", 'd/m/Y H:i:s'));
         echo "</pre>";
 
-//        1479574800
-
-        echo "<pre>";
+        echo "444<pre>";
         print_r(convert_unix_timestamp_to_datetime(1479574800));
+        echo "</pre>";
+
+        echo "555<pre>";
+        print_r(convert_string_datetime_from_format_to_format("18/07/2016 20:44:50", 'd/m/Y H:i:s', 'd*m*y H::i::s'));
         echo "</pre>";
 
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "24/04/2012 20:44:50");
