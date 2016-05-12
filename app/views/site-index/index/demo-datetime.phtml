@@ -1,0 +1,33 @@
+<h1>Demo DateTime Class</h1>
+
+<?php
+
+$val_1 = mysql_to_unix_timestamp('2016-11-20 00:00:00');
+echo "mysql_to_unix_timestamp('2016-11-20 00:00:00')";
+echo "<pre>";
+print_r($val_1);
+echo "</pre>";
+
+$val_2 = convert_string_to_unix_timestamp("20/11/2016 00:00:00", "d/m/Y H:i:s");
+echo "convert_string_to_unix_timestamp('20/11/2016 00:00:00', 'd/m/Y H:i:s')";
+echo "<pre>";
+print_r($val_2);
+echo "</pre>";
+
+echo "convert_string_to_mysql_datetime('24/04/2012 20:44:50', 'd/m/Y H:i:s')";
+echo "<pre>";
+print_r(convert_string_to_mysql_datetime("24/04/2012 20:44:50", 'd/m/Y H:i:s'));
+echo "</pre>";
+
+echo "convert_unix_timestamp_to_datetime(1479574800)";
+echo "<pre>";
+print_r(convert_unix_timestamp_to_datetime(1479574800));
+echo "</pre>";
+
+echo "convert_string_datetime_from_format_to_format('18/07/2016 20:44:50', 'd/m/Y H:i:s', 'd*m*y H::i::s')";
+echo "<pre>";
+print_r(convert_string_datetime_from_format_to_format("18/07/2016 20:44:50", 'd/m/Y H:i:s', 'd*m*y H::i::s'));
+echo "</pre>";
+
+?>
+
