@@ -132,14 +132,6 @@ final class Session implements \SessionHandlerInterface
             $this->_conn = DbConnection::getInstance();
 		}
 
-//        try {
-//            session_start();
-//        } catch(\Exception $e)
-//        {
-//            session_regenerate_id();
-//            session_start();
-//        }
-
 		// Start the session!
 		session_start();
 
@@ -258,9 +250,8 @@ final class Session implements \SessionHandlerInterface
 // 		//Create an MD5 has and return it
 // 		return md5(implode("\0", $key));
 		$secure_word = 'a39ccdef11305d5999dbccddcf4';
-		return md5($secure_word.$_SERVER['HTTP_USER_AGENT']);		
+		return md5($secure_word.$_SERVER['HTTP_USER_AGENT']);
 	}
-
 
 	/**
  	* Default session handler for storing sessions in the database.
@@ -299,7 +290,6 @@ final class Session implements \SessionHandlerInterface
 	public function read($id = NULL) 
 	{
 		$time = date('Y-m-d H:i:s', time() - $this->expiration);
-		
 		//Select the session
 		$row = $this->_conn->query("SELECT * FROM {$this->table_name} WHERE {$this->primary_key} = '{$id}' AND last_activity > '{$time}' ");
 		return (!empty($row)) ? $row[0]['data'] : '';
@@ -315,23 +305,36 @@ final class Session implements \SessionHandlerInterface
 	 */
 	public function write($id = NULL, $data = '') 
 	{
-		/*
-		 * Case 2: We check to see if the session already exists. If it does
-		 * then we need to update it. If not, then we create a new entry.
-		 */
-//        if($this->session_id && $this->session_id != $id)
-//		{
-//	    	$this->_conn->query("UPDATE {$this->table_name} SET data = '{$data}' WHERE {$this->primary_key} = '{$id}'");
-//		}
-//		else
-//		{
-//			$this->_conn->query("INSERT INTO {$this->table_name}({$this->primary_key},data) VALUES('{$id}','{$data}')");
-//		}
-//        return TRUE;
+        $time = date('Y-m-d H:i:s', time());
 
-		$time = date('Y-m-d H:i:s', time());
-		$this->_conn->query("REPLACE `{$this->table_name}` (`{$this->primary_key}`,`last_activity`,`data`) VALUES('{$id}','{$time}','{$data}')");
+        // -- Ways 1 : For mysql and sqlite --
+        /*
+         * Case 1: The session we are now being told to write does not match
+         * the session we were given at the start. This means that the ID was
+         * regenerated sometime durring the script and we need to update that
+         * old session id to this new value. The other choice is to delete
+         * the old session first - but that wastes resources.
+         */
+        //If the session was not empty at start && regenerated sometime durring the page
+        if($this->session_id && $this->session_id != $id) {
+            $this->_conn->query("UPDATE {$this->table_name} SET data = '{$data}', last_activity = '{$time}' WHERE {$this->primary_key} = '{$id}'");
+            return TRUE;
+        }
+        /*
+         * Case 2: We check to see if the session already exists. If it does
+         * then we need to update it. If not, then we create a new entry.
+         */
+        $sSql = "SELECT COUNT(*) AS TotalRow FROM " . $this->table_name. " WHERE {$this->primary_key} = '{$id}'";
+        if($this->_conn->selectOneRow($sSql)['TotalRow']) {
+            $this->_conn->query("UPDATE {$this->table_name} SET data = '{$data}', last_activity = '{$time}' WHERE {$this->primary_key} = '{$id}'");
+        } else {
+			$this->_conn->query("INSERT INTO {$this->table_name}({$this->primary_key},last_activity,data) VALUES('{$id}','{$time}','{$data}')");
+        }
         return TRUE;
+
+        // -- Ways 2 : Only for mysql --
+//		$this->_conn->query("REPLACE `{$this->table_name}` (`{$this->primary_key}`,`last_activity`,`data`) VALUES('{$id}','{$time}','{$data}')");
+//        return TRUE;
 	}
 
 	/**
