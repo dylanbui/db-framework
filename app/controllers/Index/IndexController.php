@@ -29,5 +29,16 @@ class IndexController extends BaseController
         $this->renderView('site-index/home/index');
     }
 
+    public function loadJsonAction()
+    {
+        $data['val_1'] = 'Welcome to index/index/loadNewestListingAction MVC';
+        $data['val_2'] = 'Welcome to index/index/loadNewestListingAction MVC';
+        $data['val_3'] = 'Welcome to index/index/loadNewestListingAction MVC';
+        $data['val_4'] = 'Welcome to index/index/loadNewestListingAction MVC';
+        $data['val_5'] = array('name' => 'Tien Duc', 'value' => 'Gia tri');
+
+        $this->oResponse->setOutputJson($data, 3);
+    }
+
 	
 }

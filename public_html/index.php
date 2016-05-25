@@ -1,6 +1,4 @@
 <?php
-	header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
-
 	// define('ENV_PRODUCTION', 'production');
 	// define('ENV_STAGING', 'staging');
 	// define('ENV_TEST', 'test');
@@ -230,7 +228,7 @@ class Application
     {
         // Response
         $response = new \App\Lib\Core\Response();
-        $response->addHeader('Content-Type: text/html; charset=utf-8');
+        $response->addHeader('Content-Type:text/html; charset=utf-8');
         $this->registry->oResponse = $response;
     }
 

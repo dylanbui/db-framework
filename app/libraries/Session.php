@@ -307,34 +307,34 @@ final class Session implements \SessionHandlerInterface
 	{
         $time = date('Y-m-d H:i:s', time());
 
-        // -- Ways 1 : For mysql and sqlite --
-        /*
-         * Case 1: The session we are now being told to write does not match
-         * the session we were given at the start. This means that the ID was
-         * regenerated sometime durring the script and we need to update that
-         * old session id to this new value. The other choice is to delete
-         * the old session first - but that wastes resources.
-         */
-        //If the session was not empty at start && regenerated sometime durring the page
-        if($this->session_id && $this->session_id != $id) {
-            $this->_conn->query("UPDATE {$this->table_name} SET data = '{$data}', last_activity = '{$time}' WHERE {$this->primary_key} = '{$id}'");
-            return TRUE;
-        }
-        /*
-         * Case 2: We check to see if the session already exists. If it does
-         * then we need to update it. If not, then we create a new entry.
-         */
-        $sSql = "SELECT COUNT(*) AS TotalRow FROM " . $this->table_name. " WHERE {$this->primary_key} = '{$id}'";
-        if($this->_conn->selectOneRow($sSql)['TotalRow']) {
-            $this->_conn->query("UPDATE {$this->table_name} SET data = '{$data}', last_activity = '{$time}' WHERE {$this->primary_key} = '{$id}'");
-        } else {
-			$this->_conn->query("INSERT INTO {$this->table_name}({$this->primary_key},last_activity,data) VALUES('{$id}','{$time}','{$data}')");
-        }
-        return TRUE;
+//        // -- Ways 1 : For mysql and sqlite --
+//        /*
+//         * Case 1: The session we are now being told to write does not match
+//         * the session we were given at the start. This means that the ID was
+//         * regenerated sometime durring the script and we need to update that
+//         * old session id to this new value. The other choice is to delete
+//         * the old session first - but that wastes resources.
+//         */
+//        //If the session was not empty at start && regenerated sometime durring the page
+//        if($this->session_id && $this->session_id != $id) {
+//            $this->_conn->query("UPDATE {$this->table_name} SET data = '{$data}', last_activity = '{$time}' WHERE {$this->primary_key} = '{$id}'");
+//            return TRUE;
+//        }
+//        /*
+//         * Case 2: We check to see if the session already exists. If it does
+//         * then we need to update it. If not, then we create a new entry.
+//         */
+//        $sSql = "SELECT COUNT(*) AS TotalRow FROM " . $this->table_name. " WHERE {$this->primary_key} = '{$id}'";
+//        if($this->_conn->selectOneRow($sSql)['TotalRow']) {
+//            $this->_conn->query("UPDATE {$this->table_name} SET data = '{$data}', last_activity = '{$time}' WHERE {$this->primary_key} = '{$id}'");
+//        } else {
+//			$this->_conn->query("INSERT INTO {$this->table_name}({$this->primary_key},last_activity,data) VALUES('{$id}','{$time}','{$data}')");
+//        }
+//        return TRUE;
 
         // -- Ways 2 : Only for mysql --
-//		$this->_conn->query("REPLACE `{$this->table_name}` (`{$this->primary_key}`,`last_activity`,`data`) VALUES('{$id}','{$time}','{$data}')");
-//        return TRUE;
+		$this->_conn->query("REPLACE `{$this->table_name}` (`{$this->primary_key}`,`last_activity`,`data`) VALUES('{$id}','{$time}','{$data}')");
+        return TRUE;
 	}
 
 	/**

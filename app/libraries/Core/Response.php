@@ -7,6 +7,11 @@ final class Response
 	private $headers = array(); 
 	private $output;
 	private $level = 0;
+
+    public function __construct()
+    {
+        header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
+    }
 	
 	public function addHeader($header) 
 	{
@@ -72,5 +77,25 @@ final class Response
 		
 		echo $ouput;
 	}
+
+    public function setOutputJson($output, $level = 0)
+    {
+        // -- Encode to Json --
+        $output = json_encode($output);
+
+        if ($level)
+            $output = $this->compress($output, $level);
+
+        $this->addHeader("Content-Type: application/json;charset=utf-8");
+
+        if (!headers_sent()) {
+            foreach ($this->headers as $header) {
+                header($header, TRUE);
+            }
+        }
+
+        echo $output;
+        exit();
+    }
 }
 ?>
