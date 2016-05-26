@@ -93,12 +93,43 @@ class View
     }
 
     /**
+     * Set layout path
+     * @access public
+     * @param string $layout_path
+     * @return none
+     */
+    public function setLayoutDir($layout_path)
+    {
+        $this->_default_layout_path = $layout_path;
+    }
+
+    /**
+     * Get layout path
+     * @access public
+     * @return string
+     */
+    public function getLayoutDir()
+    {
+        return $this->_default_layout_path;
+    }
+
+    /**
+     * Get layout dir
+     * @access public
+     * @return string
+     */
+    public function getLayoutPath()
+    {
+        return $this->layout_dir;
+    }
+
+    /**
      * Set layout dir
      * @access public
      * @param string $layout_dir
      * @return none
      */
-    public function setLayoutDir($layout_dir)
+    public function setLayoutPath($layout_dir)
     {
         $this->layout_dir = $layout_dir;
     }
