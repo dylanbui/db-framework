@@ -93,24 +93,14 @@ class View
     }
 
     /**
-     * Set layout path
+     * Set layout dir
      * @access public
-     * @param string $layout_path
+     * @param string $layout_dir
      * @return none
      */
-    public function setLayoutDir($layout_path)
+    public function setLayoutDir($layout_dir)
     {
-        $this->_default_layout_path = $layout_path;
-    }
-
-    /**
-     * Get layout path
-     * @access public
-     * @return string
-     */
-    public function getLayoutDir()
-    {
-        return $this->_default_layout_path;
+        $this->layout_dir = $layout_dir;
     }
 
     /**
@@ -118,20 +108,31 @@ class View
      * @access public
      * @return string
      */
-    public function getLayoutPath()
+    public function getLayoutDir()
     {
         return $this->layout_dir;
     }
 
     /**
-     * Set layout dir
+     * Get layout path
      * @access public
-     * @param string $layout_dir
+     * @return string
+     */
+    public function getLayoutPath()
+    {
+        return $this->_default_layout_path;
+
+    }
+
+    /**
+     * Set layout path
+     * @access public
+     * @param string $layout_path
      * @return none
      */
-    public function setLayoutPath($layout_dir)
+    public function setLayoutPath($layout_path)
     {
-        $this->layout_dir = $layout_dir;
+        $this->_default_layout_path = $layout_path;
     }
 
     /**
@@ -158,6 +159,7 @@ class View
     /**
      * Set content html
      * @access public
+     * @param string $content
      * @return none
      */
     public function setContent($content)
@@ -242,11 +244,11 @@ class View
 		// -- Khong can khi dang o trong view => $this la chinh no --
 		// $args['_view'] = $this;
 		
-		/*** extract all the variables ***/
-		extract($args);
-	
 		if (file_exists($template_file))
 		{
+            /*** extract all the variables ***/
+            extract($args);
+
 			ob_start();
 			include($template_file);
 			$output = ob_get_contents();

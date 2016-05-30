@@ -1,19 +1,20 @@
 <h1><?= $title; ?></h1>
 <p>Tutorial : http://hawkee.com/snippet/9940/ <p>
 <br>
-    <a href="#" data-location="/inbox/12">Email Item 12</a>
+    <a class="dynamic-url" href="#" data-location="/inbox/12">Email Item 12</a>
 <br>
-    <a href="#" data-location="/inbox/13">Email Item 13</a>
+    <a class="dynamic-url" href="#" data-location="/inbox/13">Email Item 13</a>
 <br>
 
 <script language="JavaScript">
 
-    $('a').click(function (e) {
+    $('a.dynamic-url').click(function (e) {
         e.preventDefault();
         // Detect if pushState is available
         if(history.pushState) {
             history.pushState(null, null, $(this).attr('data-location')); // URL is now /inbox/N
             // showMailItem(); // example function to show email based on link clicked
+            console.log('Vao day : ' + $(this).attr('data-location'));
         }
         return false;
     });
