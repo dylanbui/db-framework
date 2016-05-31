@@ -77,9 +77,9 @@ $config['mail']['smtp_debug'] 					    = 0; // debugging: 1 = errors and message
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- LOGGER ---//
 
-$config['logging']['log_level'] 					= 200;
+$config['logging']['log_level'] 					= 200; // Chi ghi nhung log co log_level >= 200
 $config['logging']['log_handler'] 					= "file";
-$config['logging']['log_file'] 						= "/tmp/ngukho.log";
+$config['logging']['log_dir'] 						= "/public_html/logs";
 
 /*
 |--------------------------------------------------------------------------

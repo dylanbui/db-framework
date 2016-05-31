@@ -3,7 +3,9 @@
 namespace App\Controller\SiteIndex;
 
 use App\Lib\Core\BaseController;
+use App\Lib\Core\Config;
 use App\Lib\Core\Request;
+use App\Lib\Logger;
 
 class HomeController extends BaseController
 {
@@ -223,5 +225,27 @@ class HomeController extends BaseController
 
         $this->renderView('site-index/home/load-cache');
     }
+
+    public function loadLoggerAction()
+    {
+        $this->oView->menuGroup = 'cache';
+
+        Logger::debugLog( "This is a DEBUG log message", 210, __FILE__, __LINE__ );
+        Logger::auditLog( "This is an AUDIT log message", 220, __FILE__, __LINE__ );
+        Logger::errorLog( "This is an ERROR log message", 220, __FILE__, __LINE__ );
+        Logger::warningLog( "This is an WARNING log message", 220, __FILE__, __LINE__ );
+
+        $config = Config::getInstance();
+        $log_file = __SITE_PATH.rtrim($config->config_values['logging']['log_dir'], '/');
+        $log_file .= '/log-'.date('Y-m-d').'.log';
+        $content_log = file_get_contents($log_file);
+
+        $this->oView->log_file = $log_file;
+        $this->oView->content_log = $content_log;
+
+        $this->renderView('site-index/home/load-logger');
+    }
+
+
 
 }
