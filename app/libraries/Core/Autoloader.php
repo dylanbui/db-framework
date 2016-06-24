@@ -146,7 +146,8 @@ function real_escape_string($str)
 
 /**
  * Create a encryption string
- *
+ * @param $string
+ * @param $salt
  * @return string
  */
 function encryption($string ,$salt = "")
