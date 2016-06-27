@@ -264,7 +264,21 @@ class Application
 
         $this->front->addPreRequest(new \App\Lib\Core\Request('member-manager/member/get-login-info'));
 
-        $this->front->dispatch();
+//        $this->front->dispatch();
+
+        $p = \TinyFw\Core\Config::getInstance();
+
+        $in = new \TinyFw\Input();
+
+        echo "<pre>";
+        print_r($in->get('aaaaa','gia tri mac dinh'));
+        echo "</pre>";
+
+        echo "<pre>";
+        print_r(tinyfw_now_to_mysql());
+        echo "</pre>";
+
+        exit();
 
         // -- Chi de tam --
         if($this->registry->oConfig->config_values['application']['show_benchmark'])

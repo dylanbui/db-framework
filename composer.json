@@ -9,6 +9,7 @@
     "facebook/php-sdk-v4" : "~5.0",
     "iignatov/lightopenid": "*",
     "intervention/image": "^2.3",
-    "phpmailer/phpmailer": "^5.2"
+    "phpmailer/phpmailer": "^5.2",
+    "tinyfw/tinyfw": "*"
   }
 }
