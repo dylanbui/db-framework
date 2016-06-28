@@ -14,11 +14,6 @@
     define ('__SITE_URL', str_replace(basename($tmp), '', $tmp));
 // 	define ('__SITE_URL', str_replace('/'.basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']));
 
-echo "<pre>";
-print_r(__SITE_PATH);
-echo "</pre>";
-
-
 	// __BASE_URL : /adv_mvc/
 // 	define ('__BASE_URL', __SITE_URL);
  	// Co thu muc public_html 	
@@ -153,17 +148,23 @@ class Application
     function __construct()
     {
         // Load constants file
-        require __SITE_PATH.'/vendor/autoload.php';
+        $this->loader = require_once __SITE_PATH.'/vendor/autoload.php';
         require __SITE_PATH.'/app/config/constants.php';
 
-        $this->loader = require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
+        require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
+//        $this->loader = require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
         // register the namspace
-        $this->loader->addNamespace('App\Controller', __SITE_PATH.'/app/controllers');
-        $this->loader->addNamespace('App\Lib', __SITE_PATH.'/app/libraries');
-        $this->loader->addNamespace('App\Model', __SITE_PATH.'/app/models');
-        $this->loader->addNamespace('App\Helper', __SITE_PATH.'/app/helpers');
+//        $this->loader->addNamespace('App\Controller', __SITE_PATH.'/app/controllers');
+//        $this->loader->addNamespace('App\Lib', __SITE_PATH.'/app/libraries');
+//        $this->loader->addNamespace('App\Model', __SITE_PATH.'/app/models');
+//        $this->loader->addNamespace('App\Helper', __SITE_PATH.'/app/helpers');
+        $this->loader->addPsr4("App\Controller\\", __SITE_PATH.'/app/controllers');
+        $this->loader->addPsr4("App\Lib\\", __SITE_PATH.'/app/libraries');
+        $this->loader->addPsr4("App\Model\\", __SITE_PATH.'/app/models');
+        $this->loader->addPsr4("App\Helper\\", __SITE_PATH.'/app/helpers');
+
         // register the autoloader
-        $this->loader->register();
+//        $this->loader->register();
     }
 
     function loadRegister()
@@ -279,18 +280,18 @@ class Application
 
         $this->front->addPreRequest(new \TinyFw\Core\Request('member-manager/member/get-login-info'));
 
-        echo "<pre>";
-        print_r(site_path('app'));
-        echo "</pre>";
-        echo "<pre>";
-        print_r(site_path('views'));
-        echo "</pre>";
-        echo "<pre>";
-        print_r(site_path('layout'));
-        echo "</pre>";
-        exit();
-
-        tinyfw_url();
+//        echo "<pre>";
+//        print_r(site_path('app'));
+//        echo "</pre>";
+//        echo "<pre>";
+//        print_r(site_path('views'));
+//        echo "</pre>";
+//        echo "<pre>";
+//        print_r(site_path('layout'));
+//        echo "</pre>";
+//        exit();
+//
+//        tinyfw_url();
 
         $this->front->dispatch();
 
