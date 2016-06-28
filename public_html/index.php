@@ -14,6 +14,11 @@
     define ('__SITE_URL', str_replace(basename($tmp), '', $tmp));
 // 	define ('__SITE_URL', str_replace('/'.basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']));
 
+echo "<pre>";
+print_r(__SITE_PATH);
+echo "</pre>";
+
+
 	// __BASE_URL : /adv_mvc/
 // 	define ('__BASE_URL', __SITE_URL);
  	// Co thu muc public_html 	
@@ -273,6 +278,19 @@ class Application
         */
 
         $this->front->addPreRequest(new \TinyFw\Core\Request('member-manager/member/get-login-info'));
+
+        echo "<pre>";
+        print_r(site_path('app'));
+        echo "</pre>";
+        echo "<pre>";
+        print_r(site_path('views'));
+        echo "</pre>";
+        echo "<pre>";
+        print_r(site_path('layout'));
+        echo "</pre>";
+        exit();
+
+        tinyfw_url();
 
         $this->front->dispatch();
 

@@ -103,7 +103,7 @@ final class Request
 
         try {
             $rc = new \ReflectionClass($class);
-            if($rc->isSubclassOf('\TinyFw\Core\BaseController'))
+            if($rc->isSubclassOf(__NAMESPACE__.'\BaseController'))
             {
                 $controller = $rc->newInstance();
                 $classMethod = $rc->getMethod($method);
