@@ -164,7 +164,8 @@ class Application
     function loadRegister()
     {
         /*** a new registry object ***/
-        $this->registry = new \App\Lib\Core\Registry();
+//        $this->registry = new \App\Lib\Core\Registry();
+        $this->registry = new \TinyFw\Core\Registry();
         // Loader
         $this->registry->oLoader = $this->loader;
     }
@@ -172,13 +173,16 @@ class Application
     function loadConfig()
     {
         // Create configure object
-        $config = \App\Lib\Core\Config::getInstance();
+//        $config = \App\Lib\Core\Config::getInstance();
+        $config = \TinyFw\Core\Config::getInstance();
         $config->load(__SITE_PATH.'/app/config/config.php');
         define('APPLICATION_ENV', $config->config_values['application']['application_env']);
         // set the timezone
         date_default_timezone_set($config->config_values['application']['timezone']);
         // register exception handler
-        \App\Lib\Core\ExceptionHandler::register();
+//        \App\Lib\Core\ExceptionHandler::register();
+        \TinyFw\Core\ExceptionHandler::register();
+
         // Loader
         $this->registry->oConfig = $config;
     }
@@ -186,21 +190,24 @@ class Application
     function loadSession()
     {
         // Session
-        $oSession = new \App\Lib\Session();
+//        $oSession = new \App\Lib\Session();
+        $oSession = new \TinyFw\Session();
         $this->registry->oSession = $oSession;
     }
 
     function loadInput()
     {
         // Input
-        $oInput = new \App\Lib\Input();
+//        $oInput = new \App\Lib\Input();
+        $oInput = new \TinyFw\Input();
         $this->registry->oInput = $oInput;
     }
 
     function loadView()
     {
         // View
-        $view = new \App\Lib\Core\View('default/bootstrap');
+//        $view = new \App\Lib\Core\View('default/bootstrap');
+        $view = new \TinyFw\Core\View('default/bootstrap');
         $view->setTemplateDir(__VIEW_PATH);
         $view->setLayoutDir(__LAYOUT_PATH);
         $this->registry->oView = $view;
@@ -210,7 +217,8 @@ class Application
     {
         $config_cache = $this->registry->oConfig->config_values['cache'];
         $config_cache['cache_path'] = __SITE_PATH.'/public_html/cache/';
-        $cache = new \App\Lib\Cache($config_cache);
+//        $cache = new \App\Lib\Cache($config_cache);
+        $cache = new \TinyFw\Cache($config_cache);
 
 //        echo "<pre>";
 //        print_r($cache->_cache_path);
@@ -227,14 +235,16 @@ class Application
     function loadResponse()
     {
         // Response
-        $response = new \App\Lib\Core\Response();
+//        $response = new \App\Lib\Core\Response();
+        $response = new \TinyFw\Core\Response();
         $response->addHeader('Content-Type:text/html; charset=utf-8');
         $this->registry->oResponse = $response;
     }
 
     function run()
     {
-        $oBenchmark = new \App\Lib\Core\Benchmark();
+
+        $oBenchmark = new \TinyFw\Core\Benchmark();
         $oBenchmark->mark('code_start');
 
         $this->loadRegister();
@@ -252,7 +262,7 @@ class Application
         $this->loadResponse();
 
         // Initialize the FrontController
-        $this->front = \App\Lib\Core\FrontController::getInstance();
+        $this->front = \TinyFw\Core\FrontController::getInstance();
         $this->front->setRegistry($this->registry);
         $this->front->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
 
@@ -262,30 +272,30 @@ class Application
         $front->addPreRequest(new Request('run/second/action'));
         */
 
-        $this->front->addPreRequest(new \App\Lib\Core\Request('member-manager/member/get-login-info'));
+        $this->front->addPreRequest(new \TinyFw\Core\Request('member-manager/member/get-login-info'));
 
-//        $this->front->dispatch();
+        $this->front->dispatch();
 
-        $p = \TinyFw\Core\Config::getInstance();
-
-        $in = new \TinyFw\Input();
-
-        echo "<pre>";
-        print_r($in->get('aaaaa','gia tri mac dinh'));
-        echo "</pre>";
-
-        echo "<pre>";
-        print_r(tinyfw_now_to_mysql());
-        echo "</pre>";
-
-        exit();
+//        $p = \TinyFw\Core\Config::getInstance();
+//
+//        $in = new \TinyFw\Input();
+//
+//        echo "<pre>";
+//        print_r($in->get('aaaaa','gia tri mac dinh'));
+//        echo "</pre>";
+//
+//        echo "<pre>";
+//        print_r(tinyfw_now_to_mysql());
+//        echo "</pre>";
+//
+//        exit();
 
         // -- Chi de tam --
-        if($this->registry->oConfig->config_values['application']['show_benchmark'])
-        {
-            $oBenchmark->mark('code_end');
-            echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
-        }
+//        if($this->registry->oConfig->config_values['application']['show_benchmark'])
+//        {
+//            $oBenchmark->mark('code_end');
+//            echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
+//        }
 
     }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Controller\MemberManager;
 
-use App\Lib\Core\BaseController;
-use App\Lib\Core\Request;
+use TinyFw\Core\BaseController;
 
 class MemberController extends BaseController
 {

@@ -2,10 +2,10 @@
 
 namespace App\Controller\SiteIndex;
 
-use App\Lib\Core\BaseController;
-use App\Lib\Core\Config;
-use App\Lib\Core\Request;
-use App\Lib\Logger;
+use TinyFw\Core\BaseController;
+use TinyFw\Core\Config;
+use TinyFw\Core\Request;
+use TinyFw\Logger;
 
 class HomeController extends BaseController
 {
