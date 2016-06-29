@@ -148,23 +148,26 @@ class Application
     function __construct()
     {
         // Load constants file
-        $this->loader = require_once __SITE_PATH.'/vendor/autoload.php';
+        require_once __SITE_PATH.'/vendor/autoload.php';
         require __SITE_PATH.'/app/config/constants.php';
 
-        require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
+//        require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
 //        $this->loader = require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
+
+        $this->loader = \TinyFw\Core\Loader::getInstance();
+
         // register the namspace
-//        $this->loader->addNamespace('App\Controller', __SITE_PATH.'/app/controllers');
-//        $this->loader->addNamespace('App\Lib', __SITE_PATH.'/app/libraries');
-//        $this->loader->addNamespace('App\Model', __SITE_PATH.'/app/models');
-//        $this->loader->addNamespace('App\Helper', __SITE_PATH.'/app/helpers');
-        $this->loader->addPsr4("App\Controller\\", __SITE_PATH.'/app/controllers');
-        $this->loader->addPsr4("App\Lib\\", __SITE_PATH.'/app/libraries');
-        $this->loader->addPsr4("App\Model\\", __SITE_PATH.'/app/models');
-        $this->loader->addPsr4("App\Helper\\", __SITE_PATH.'/app/helpers');
+        $this->loader->addNamespace('App\Controller', __SITE_PATH.'/app/controllers');
+        $this->loader->addNamespace('App\Lib', __SITE_PATH.'/app/libraries');
+        $this->loader->addNamespace('App\Model', __SITE_PATH.'/app/models');
+        $this->loader->addNamespace('App\Helper', __SITE_PATH.'/app/helpers');
+//        $this->loader->addPsr4("App\Controller\\", __SITE_PATH.'/app/controllers');
+//        $this->loader->addPsr4("App\Lib\\", __SITE_PATH.'/app/libraries');
+//        $this->loader->addPsr4("App\Model\\", __SITE_PATH.'/app/models');
+//        $this->loader->addPsr4("App\Helper\\", __SITE_PATH.'/app/helpers');
 
         // register the autoloader
-//        $this->loader->register();
+        $this->loader->register();
     }
 
     function loadRegister()
