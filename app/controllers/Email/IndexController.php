@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller\Email;
-use App\Lib\Core\BaseController;
+use TinyFw\Core\BaseController;
 use App\Lib\Email;
 
 class IndexController extends BaseController

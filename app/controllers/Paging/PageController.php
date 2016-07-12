@@ -2,7 +2,7 @@
 
 namespace App\Controller\Paging;
 
-use App\Lib\Core\BaseController;
+use TinyFw\Core\BaseController;
 use App\Lib\Paginator;
 
 Class PageController Extends BaseController 

@@ -2,7 +2,7 @@
 
 namespace App\Controller\MemberManager;
 
-use App\Lib\Core\BaseController;
+use TinyFw\Core\BaseController;
 
 class FacebookController extends BaseController
 {

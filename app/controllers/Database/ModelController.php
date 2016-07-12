@@ -2,9 +2,14 @@
 
 namespace App\Controller\Database;
 
-use App\Lib\Core\BaseController,
-	App\Lib\Core\DbConnection,
-	App\Lib\Paginator;
+//use App\Lib\Core\BaseController,
+//	App\Lib\Core\DbConnection,
+//	App\Lib\Paginator;
+
+use TinyFw\Core\BaseController,
+    TinyFw\Core\DbConnection,
+    App\Lib\Paginator;
+
 
 Class ModelController Extends BaseController 
 {

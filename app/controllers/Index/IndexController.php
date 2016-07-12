@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller\Index;
-use App\Lib\Core\BaseController;
+
+use TinyFw\Core\BaseController;
 
 class IndexController extends BaseController
 {

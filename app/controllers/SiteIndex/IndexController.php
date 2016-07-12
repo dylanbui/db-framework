@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Controller\SiteIndex;
-use App\Lib\Core\BaseController;
-use App\Helper\Captcha;
+
+use TinyFw\Core\BaseController;
+use TinyFw\Helper\Captcha;
 use App\Lib\Email;
 
 class IndexController extends BaseController

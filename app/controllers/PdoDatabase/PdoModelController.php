@@ -2,7 +2,7 @@
 
 namespace App\Controller\PdoDatabase;
 
-use App\Lib\Core\BaseController;
+use TinyFw\Core\BaseController;
 use App\Lib\Paginator;
 use App\Lib\Validation;
 use App\Model\Ex\Users as Ex_Users;

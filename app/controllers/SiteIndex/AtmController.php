@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller\SiteIndex;
-use App\Lib\Core\BaseController;
+use TinyFw\Core\BaseController;
 use App\Lib\Paginator;
 use App\Model\City;
 use App\Model\District;
