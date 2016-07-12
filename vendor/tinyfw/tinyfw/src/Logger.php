@@ -21,6 +21,7 @@ class Logger
      * @param	string	$function The name of the function called
      * @param 	array	$args	The array of args passed
      * @return	int	The number of bytes written, false other wise
+     * @throws  \Exception
      */
     public static function __callStatic($function, $args)
     {
@@ -46,7 +47,7 @@ class Logger
                     // encode the line
                     $message = self::convertMesg($line);
 
-                    $log_file = __SITE_PATH.rtrim($config->config_values['logging']['log_dir'], '/');
+                    $log_file = site_path(rtrim($config->config_values['logging']['log_dir'], '/'));
                     $log_file .= '/log-'.date('Y-m-d').'.log';
 
                     if ($handle = fopen($log_file, "a+"))

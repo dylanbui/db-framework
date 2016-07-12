@@ -1,0 +1,4 @@
+[2016-07-12 18:07:00] - [debugLog] - This is a DEBUG log message
+[2016-07-12 18:07:00] - [auditLog] - This is an AUDIT log message
+[2016-07-12 18:07:00] - [errorLog] - This is an ERROR log message
+[2016-07-12 18:07:00] - [warningLog] - This is an WARNING log message

@@ -137,191 +137,34 @@
 //		echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
 //	}
 
+require_once __SITE_PATH.'/vendor/autoload.php';
+require_once __SITE_PATH.'/app/config/constants.php';
 
-
-class Application
+class Application extends \TinyFw\Application
 {
-    var $register;
-    var $loader;
-    var $front;
-
     function __construct()
     {
-        // Load constants file
-        require_once __SITE_PATH.'/vendor/autoload.php';
-        require __SITE_PATH.'/app/config/constants.php';
-
-//        require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
-//        $this->loader = require __SITE_PATH.'/app/libraries/Core/Autoloader.php';
-
-        $this->loader = \TinyFw\Core\Loader::getInstance();
-
-        // register the namspace
-        $this->loader->addNamespace('App\Controller', __SITE_PATH.'/app/controllers');
-        $this->loader->addNamespace('App\Lib', __SITE_PATH.'/app/libraries');
-        $this->loader->addNamespace('App\Model', __SITE_PATH.'/app/models');
-        $this->loader->addNamespace('App\Helper', __SITE_PATH.'/app/helpers');
-//        $this->loader->addPsr4("App\Controller\\", __SITE_PATH.'/app/controllers');
-//        $this->loader->addPsr4("App\Lib\\", __SITE_PATH.'/app/libraries');
-//        $this->loader->addPsr4("App\Model\\", __SITE_PATH.'/app/models');
-//        $this->loader->addPsr4("App\Helper\\", __SITE_PATH.'/app/helpers');
-
-        // register the autoloader
-        $this->loader->register();
+        parent::__construct();
     }
 
-    function loadRegister()
+    protected function createCache()
     {
-        /*** a new registry object ***/
-//        $this->registry = new \App\Lib\Core\Registry();
-        $this->registry = new \TinyFw\Core\Registry();
-        // Loader
-        $this->registry->oLoader = $this->loader;
-    }
-
-    function loadConfig()
-    {
-        // Create configure object
-//        $config = \App\Lib\Core\Config::getInstance();
-        $config = \TinyFw\Core\Config::getInstance();
-        $config->load(__SITE_PATH.'/app/config/config.php');
-        define('APPLICATION_ENV', $config->config_values['application']['application_env']);
-        // set the timezone
-        date_default_timezone_set($config->config_values['application']['timezone']);
-        // register exception handler
-//        \App\Lib\Core\ExceptionHandler::register();
-        \TinyFw\Core\ExceptionHandler::register();
-
-        // Loader
-        $this->registry->oConfig = $config;
-    }
-
-    function loadSession()
-    {
-        // Session
-//        $oSession = new \App\Lib\Session();
-        $oSession = new \TinyFw\Session();
-        $this->registry->oSession = $oSession;
-    }
-
-    function loadInput()
-    {
-        // Input
-//        $oInput = new \App\Lib\Input();
-        $oInput = new \TinyFw\Input();
-        $this->registry->oInput = $oInput;
-    }
-
-    function loadView()
-    {
-        // View
-//        $view = new \App\Lib\Core\View('default/bootstrap');
-        $view = new \TinyFw\Core\View('default/bootstrap');
-        $view->setTemplateDir(__VIEW_PATH);
-        $view->setLayoutDir(__LAYOUT_PATH);
-        $this->registry->oView = $view;
-    }
-
-    function loadCache()
-    {
-        $config_cache = $this->registry->oConfig->config_values['cache'];
+        $config_cache = $this->oConfig->config_values['cache'];
         $config_cache['cache_path'] = __SITE_PATH.'/public_html/cache/';
-//        $cache = new \App\Lib\Cache($config_cache);
         $cache = new \TinyFw\Cache($config_cache);
-
-//        echo "<pre>";
-//        print_r($cache->_cache_path);
-//        echo "</pre>";
-//
-//        echo "<pre>";
-//        print_r($cache->cache_info());
-//        echo "</pre>";
-//        exit();
-
-        $this->registry->oCache = $cache;
-    }
-
-    function loadResponse()
-    {
-        // Response
-//        $response = new \App\Lib\Core\Response();
-        $response = new \TinyFw\Core\Response();
-        $response->addHeader('Content-Type:text/html; charset=utf-8');
-        $this->registry->oResponse = $response;
+        return $cache;
     }
 
     function run()
     {
+        $this->oCache = $this->createCache();
 
-        $oBenchmark = new \TinyFw\Core\Benchmark();
-        $oBenchmark->mark('code_start');
+        $this->oFront->addPreRequest(new \TinyFw\Core\Request('member-manager/member/get-login-info'));
 
-        $this->loadRegister();
-
-        $this->loadConfig();
-
-        $this->loadSession();
-
-        $this->loadInput();
-
-        $this->loadView();
-
-        $this->loadCache();
-
-        $this->loadResponse();
-
-        // Initialize the FrontController
-        $this->front = \TinyFw\Core\FrontController::getInstance();
-        $this->front->setRegistry($this->registry);
-        $this->front->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
-
-        /*
-            // Cau hinh cho cac action nay chay dau tien
-        $front->addPreRequest(new Request('run/first/action'));
-        $front->addPreRequest(new Request('run/second/action'));
-        */
-
-        $this->front->addPreRequest(new \TinyFw\Core\Request('member-manager/member/get-login-info'));
-
-//        echo "<pre>";
-//        print_r(site_path('app'));
-//        echo "</pre>";
-//        echo "<pre>";
-//        print_r(site_path('views'));
-//        echo "</pre>";
-//        echo "<pre>";
-//        print_r(site_path('layout'));
-//        echo "</pre>";
-//        exit();
-//
-//        tinyfw_url();
-
-        $this->front->dispatch();
-
-//        $p = \TinyFw\Core\Config::getInstance();
-//
-//        $in = new \TinyFw\Input();
-//
-//        echo "<pre>";
-//        print_r($in->get('aaaaa','gia tri mac dinh'));
-//        echo "</pre>";
-//
-//        echo "<pre>";
-//        print_r(tinyfw_now_to_mysql());
-//        echo "</pre>";
-//
-//        exit();
-
-        // -- Chi de tam --
-//        if($this->registry->oConfig->config_values['application']['show_benchmark'])
-//        {
-//            $oBenchmark->mark('code_end');
-//            echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
-//        }
-
+        return parent::run();
     }
 }
 
 $app = new Application();
-$app->run();
+$app->run()->dispatch();
 
