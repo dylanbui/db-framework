@@ -33,8 +33,8 @@ class HomeController extends BaseController
 
 	public function indexAction() 
 	{
-		$this->oSession->userdata['test_1'] = 'Thong tin duoc luu vao test';
-		$this->oSession->userdata['test'] = 'Thong tin duoc luu vao test';
+		$this->oSession->set('test_1', 'Thong tin duoc luu vao test');
+		$this->oSession->set('test', 'Thong tin duoc luu vao test');
 	    $this->oView->title = 'Welcome to Bui Van Tien Duc MVC RENDER';
 	    $this->renderView('site-index/home/index');
 	}

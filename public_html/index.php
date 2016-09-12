@@ -165,6 +165,97 @@ class Application extends \TinyFw\Application
     }
 }
 
+
+//class A {
+//
+//    public static function __callStatic($name, $params) {
+//        var_dump($name);
+//
+//        // TODO call the private function from class B here
+//
+//        //call_user_func_array('self::' . $name, $params); //infinite loop
+//
+//        //forward_static_call_array(array(self, $name), $params); // loops too
+//
+//        $method = new ReflectionMethod(get_called_class(), $name);
+//        $method->setAccessible(true);
+//        $method->invokeArgs(null, $params);
+//
+//    }
+//
+//}
+//
+//
+//class MethodTest extends A
+//{
+//    /*
+//     * @var object $instance
+//    */
+//    private static $instance = null;
+//
+//
+//    /**
+//     * Configure some default session setting and then start the session.
+//     * @param   array
+//     */
+//    public function __construct($params = array())
+//    {
+//        if (is_null(self::$instance)) {
+//            self::$instance = $this;
+//        }
+//    }
+//
+////    public function __call($name, $arguments)
+////    {
+////        // Note: value of $name is case sensitive.
+////        echo "Calling object method '$name' "
+////            . implode(', ', $arguments). "\n";
+////    }
+//
+//    /**  As of PHP 5.3.0  */
+////    public static function __callStatic($name, $arguments)
+////    {
+//////        // Note: value of $name is case sensitive.
+//////        echo "Calling static method '$name' "
+//////            . implode(', ', $arguments). "\n";
+//////
+//////        $name = 'call_'.$name;
+////////        self::$instance->saveData($arguments[0]);
+//////        self::$instance->{$name}($arguments);
+//////        call_user_func_array()
+//////        var_dump($name);
+////
+////        // TODO call the private function from class B here
+////
+////        //call_user_func_array('self::' . $name, $params); //infinite loop
+////
+////        //forward_static_call_array(array(self, $name), $params); // loops too
+////
+////        $method = new ReflectionMethod(get_called_class(), $name);
+////        $method->setAccessible(true);
+////        $method->invokeArgs(null, $arguments);
+////
+////    }
+//
+//    public function saveData($data)
+//    {
+//        echo "Luu du lieu tai day -- " . $data;
+//    }
+//
+//    public function runTest($data)
+//    {
+//        echo "Luu du lieu tai day -- " . $data;
+//    }
+//}
+//
+//$obj = new MethodTest;
+//$obj->runTest('in object context');
+//echo "<br>";
+//
+//MethodTest::saveData('in static context');  // As of PHP 5.3.0
+//
+//echo "<br>";
+
 $app = new Application();
 $app->run()->dispatch();
 

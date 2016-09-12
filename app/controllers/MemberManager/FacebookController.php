@@ -92,7 +92,8 @@ class FacebookController extends BaseController
             $rowMember = $objMember->getRow("email = ?", array($fbme['email']));
 
             // -- Save to session --
-            $this->oSession->userdata['current_user'] = $rowMember;
+//            $this->oSession->userdata['current_user'] = $rowMember;
+            $this->oSession->set('current_user', $rowMember);
 
             $returnVal = array('result' => true, 'message' => null, 'data' => $rowMember);
         }

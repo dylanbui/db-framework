@@ -94,8 +94,8 @@ namespace TinyFw;
 //	// Loader
 //	$registry->oLoader = $loader;
 //
-// 	// Session
-// 	$oSession = new \App\Lib\Session();
+// 	// SessionManager
+// 	$oSession = new \App\Lib\SessionManager();
 // 	$registry->oSession = $oSession;
 //
 // 	// Input
@@ -268,8 +268,9 @@ class Application
 
     protected function createSession()
     {
-        // Session
-        $oSession = new Session();
+        // SessionManager
+        $params = $this->oConfig->config_values['session'];
+        $oSession = new SessionManager\Session($params);
         return $oSession;
     }
 

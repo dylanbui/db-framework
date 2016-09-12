@@ -1,6 +1,6 @@
 <?php
 /**
- * Session Class
+ * SessionManager Class
  *
  * Class for adding extra session security protection as well as new ways to
  * store sessions (such as databases).
@@ -248,7 +248,7 @@ final class Session
 
 
 	/**
-	 * Generates key as protection against Session Hijacking & Fixation. This
+	 * Generates key as protection against SessionManager Hijacking & Fixation. This
 	 * works better than IP based checking for most sites due to constant user
 	 * IP changes (although this method is not as secure as IP checks).
 	 * @return string
@@ -492,7 +492,7 @@ final class Session
 }
 
 /**
- * CodeIgniter Session Driver Class
+ * CodeIgniter SessionManager Driver Class
  *
  * @package	CodeIgniter
  * @subpackage	Libraries
@@ -628,7 +628,7 @@ abstract class SessionDriver implements SessionHandlerInterface {
 }
 
 /**
- * CodeIgniter Session Database Driver
+ * CodeIgniter SessionManager Database Driver
  *
  * @package	CodeIgniter
  * @subpackage	Libraries
@@ -687,7 +687,7 @@ class SessionDatabaseDriver extends SessionDriver implements SessionHandlerInter
      * Initializes the database connection
      *
      * @param	string	$save_path	Table name
-     * @param	string	$name		Session cookie name, unused
+     * @param	string	$name		SessionManager cookie name, unused
      * @return	bool
      */
     public function open($save_path, $name)
@@ -707,7 +707,7 @@ class SessionDatabaseDriver extends SessionDriver implements SessionHandlerInter
      *
      * Reads session data and acquires a lock
      *
-     * @param	string	$session_id	Session ID
+     * @param	string	$session_id	SessionManager ID
      * @return	string	Serialized session data
      */
     public function read($session_id)
@@ -773,7 +773,7 @@ class SessionDatabaseDriver extends SessionDriver implements SessionHandlerInter
      *
      * Writes (create / update) session data
      *
-     * @param	string	$session_id	Session ID
+     * @param	string	$session_id	SessionManager ID
      * @param	string	$session_data	Serialized session data
      * @return	bool
      */
@@ -853,7 +853,7 @@ class SessionDatabaseDriver extends SessionDriver implements SessionHandlerInter
      *
      * Destroys the current session.
      *
-     * @param	string	$session_id	Session ID
+     * @param	string	$session_id	SessionManager ID
      * @return	bool
      */
     public function destroy($session_id)
@@ -914,7 +914,7 @@ class SessionDatabaseDriver extends SessionDriver implements SessionHandlerInter
      *
      * Acquires a lock, depending on the underlying platform.
      *
-     * @param	string	$session_id	Session ID
+     * @param	string	$session_id	SessionManager ID
      * @return	bool
      */
     protected function _get_lock($session_id)

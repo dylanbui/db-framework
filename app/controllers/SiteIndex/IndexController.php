@@ -18,7 +18,8 @@ class IndexController extends BaseController
 	public function indexAction() 
 	{
 //		$_SESSION['test'] = 12;
-		$this->oSession->userdata['test'] = 12;
+//		$this->oSession->userdata['test'] = 12;
+        $this->oSession->set('test', 12);
 //	    $this->oView->title = 'Welcome to Bui Van Tien Duc MVC';
 	    $this->renderView('site/home/index');
 	}
@@ -232,6 +233,9 @@ class IndexController extends BaseController
 
         echo "<pre>";
         print_r($this->oSession->userdata['session_1']);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($this->oSession->get('session_1'));
         echo "</pre>";
         exit();
     }

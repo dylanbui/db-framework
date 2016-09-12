@@ -40,20 +40,51 @@ $config['database_slave']['db_prefix'] 				= "z__";
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- SESSION ---//
 
+//$config['session']['match_ip'] 						= FALSE;
+//$config['session']['match_fingerprint'] 			= TRUE;
+//$config['session']['match_token'] 					= FALSE;
+//$config['session']['session_name'] 					= "simple_mvc_session";
+//$config['session']['cookie_path'] 					= "/";
+//$config['session']['cookie_domain'] 				= NULL;
+//$config['session']['cookie_secure'] 				= NULL;
+//$config['session']['cookie_httponly'] 				= NULL;
+//$config['session']['regenerate'] 					= 300;
+//$config['session']['expiration'] 					= 7200;
+//$config['session']['gc_probability'] 				= 100;
+//$config['session']['session_database'] 				= TRUE; //FALSE;
+//$config['session']['table_name'] 					= "z__sessions";
+//$config['session']['primary_key'] 					= "session_id";
+
+//$config['session']['driver'] 						= 'files';
+//$config['session']['save_path'] 					= '/Volumes/DATA/_Website_htdocs/db-fw/sessions_path';
+//$config['session']['save_path'] 					= NULL;
+
+$config['session']['driver'] 						= 'database';
+$config['session']['save_path'] 					= 'db_sessions';
+
+$config['session']['expiration'] 						= 7200;
 $config['session']['match_ip'] 						= FALSE;
-$config['session']['match_fingerprint'] 			= TRUE;
-$config['session']['match_token'] 					= FALSE;
-$config['session']['session_name'] 					= "simple_mvc_session";
-$config['session']['cookie_path'] 					= "/";
-$config['session']['cookie_domain'] 				= NULL;
-$config['session']['cookie_secure'] 				= NULL;
-$config['session']['cookie_httponly'] 				= NULL;
-$config['session']['regenerate'] 					= 300;
-$config['session']['expiration'] 					= 7200;
-$config['session']['gc_probability'] 				= 100;
-$config['session']['session_database'] 				= TRUE; //FALSE;
-$config['session']['table_name'] 					= "z__sessions";
-$config['session']['primary_key'] 					= "session_id";
+$config['session']['time_to_update'] 						= 300;
+$config['session']['regenerate_destroy'] 						= FALSE;
+
+
+//$config['session']['database_platform'] 				= 'mysql';
+//$config['session']['database_table_name'] 					= "z__sessions";
+//$config['session']['database_primary_key'] 					= "session_id";
+
+
+$config['session']['cookie_name'] 						= 'ci_session';
+$config['session']['cookie_prefix'] 						= '';
+$config['session']['cookie_domain'] 						= '';
+$config['session']['cookie_path'] 						= '/';
+$config['session']['cookie_secure'] 						= FALSE;
+$config['session']['cookie_httponly'] 						= FALSE;
+
+
+
+
+
+
 
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- MAIL ---//

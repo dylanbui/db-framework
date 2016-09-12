@@ -16,7 +16,8 @@ class IndexController extends BaseController
 	public function indexAction() 
 	{
 //		$_SESSION['test'] = 12;
-		$this->oSession->userdata['test'] = 12;
+//		$this->oSession->userdata['test'] = 12;
+        $this->oSession->set('test', 12); // userdata['test'] = 12;
 	    $this->oView->title = 'Welcome to my site index/index/index MVC';
 	    $this->renderView('site-index/home/index');
 	}
