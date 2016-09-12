@@ -35,6 +35,10 @@ abstract class SupportInterface
             $instance = \TinyFw\Core\FrontController::getInstance();
             self::$instanceRegister = $instance->getRegistry();
         }
+        
+        $class = self::getSupportClass();
+        $instance = self::$instanceRegister->{$class};
+
 //        $instance = null; //static::getFacadeRoot();
         switch (count($args))
         {
