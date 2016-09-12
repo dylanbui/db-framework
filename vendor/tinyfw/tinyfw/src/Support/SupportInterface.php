@@ -8,6 +8,7 @@
  */
 abstract class SupportInterface
 {
+    static protected $instanceRegister = null;
     /**
      * Get the registered name of the component.
      *
@@ -29,7 +30,12 @@ abstract class SupportInterface
      */
     public static function __callStatic($method, $args)
     {
-        $instance = null; //static::getFacadeRoot();
+        if (is_null(self::$instanceRegister))
+        {
+            $instance = \TinyFw\Core\FrontController::getInstance();
+            self::$instanceRegister = $instance->getRegistry();
+        }
+//        $instance = null; //static::getFacadeRoot();
         switch (count($args))
         {
             case 0:

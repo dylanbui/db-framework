@@ -182,7 +182,6 @@ class Session {
             $params['cookie_lifetime'] = ( ! isset($expiration)) ? 0 : (int) $expiration;
         }
 
-//        isset($params['cookie_name']) OR $params['cookie_name'] = config_item('sess_cookie_name');
         if (empty($params['cookie_name']))
         {
             $params['cookie_name'] = ini_get('session.name');
@@ -191,10 +190,6 @@ class Session {
         {
             ini_set('session.name', $params['cookie_name']);
         }
-
-//        isset($params['cookie_path']) OR $params['cookie_path'] = config_item('cookie_path');
-//        isset($params['cookie_domain']) OR $params['cookie_domain'] = config_item('cookie_domain');
-//        isset($params['cookie_secure']) OR $params['cookie_secure'] = (bool) config_item('cookie_secure');
 
         session_set_cookie_params(
             $params['cookie_lifetime'],
@@ -215,8 +210,6 @@ class Session {
         }
 
         $params['match_ip'] = (bool) $params['match_ip'];
-
-//        isset($params['save_path']) OR $params['save_path'] = config_item('sess_save_path');
 
         $this->_config = $params;
 
