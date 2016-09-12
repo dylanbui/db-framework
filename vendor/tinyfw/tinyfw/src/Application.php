@@ -144,6 +144,13 @@ namespace TinyFw;
 class Application
 {
     protected $oRegister;
+
+    /**
+     * The resolved object instances.
+     *
+     * @var object
+     */
+    public static $registerInstance;
 //    protected $oConfig;
 //    protected $oLoader;
 //    protected $oFront;
@@ -173,6 +180,9 @@ class Application
 //        $this->loader->register();
 
         $this->oRegister = new Core\Registry();
+
+        self::$registerInstance =& $this->oRegister;
+
         // Loader
 //        $this->registry->oLoader = $this->loader;
 

@@ -164,7 +164,8 @@ class SessionDatabaseDriver extends SessionDriver implements \SessionHandlerInte
                 $sql .= " AND ip_address = '{$_SERVER['REMOTE_ADDR']}'";
             }
 
-            if (empty($result = $this->_db->selectOneRow($sql)))
+            $result = $this->_db->selectOneRow($sql);
+            if (empty($result))
             {
                 // PHP7 will reuse the same SessionHandler object after
                 // ID regeneration, so we need to explicitly set this to

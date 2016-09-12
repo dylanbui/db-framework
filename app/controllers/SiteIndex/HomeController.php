@@ -6,6 +6,7 @@ use TinyFw\Core\BaseController;
 use TinyFw\Core\Config;
 use TinyFw\Core\Request;
 use TinyFw\Logger;
+use TinyFw\Support\Session;
 
 class HomeController extends BaseController
 {
@@ -35,6 +36,9 @@ class HomeController extends BaseController
 	{
 		$this->oSession->set('test_1', 'Thong tin duoc luu vao test');
 		$this->oSession->set('test', 'Thong tin duoc luu vao test');
+
+        Session::set('support_session', 'Thanh cong roi ban oi');
+
 	    $this->oView->title = 'Welcome to Bui Van Tien Duc MVC RENDER';
 	    $this->renderView('site-index/home/index');
 	}

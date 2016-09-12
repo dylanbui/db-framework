@@ -6,6 +6,11 @@
  * Date: 9/11/16
  * Time: 11:18 AM
  */
+
+namespace TinyFw\Support;
+
+use TinyFw\Application;
+
 abstract class SupportInterface
 {
     static protected $instanceRegister = null;
@@ -18,7 +23,7 @@ abstract class SupportInterface
      */
     protected static function getSupportClass()
     {
-        throw new RuntimeException("Support child class does not implement getSupportClass method.");
+        throw new \RuntimeException("Support child class does not implement getSupportClass method.");
     }
 
     /**
@@ -30,16 +35,17 @@ abstract class SupportInterface
      */
     public static function __callStatic($method, $args)
     {
-        if (is_null(self::$instanceRegister))
-        {
-            $instance = \TinyFw\Core\FrontController::getInstance();
-            self::$instanceRegister = $instance->getRegistry();
-        }
-        
-        $class = self::getSupportClass();
-        $instance = self::$instanceRegister->{$class};
+//        if (is_null(self::$instanceRegister))
+//        {
+//            $instance = \TinyFw\Core\FrontController::getInstance();
+//            self::$instanceRegister = $instance->getRegistry();
+//        }
+//
+//        $class = static::getSupportClass();
+//        $instance = self::$instanceRegister->{$class};
 
-//        $instance = null; //static::getFacadeRoot();
+        $class = static::getSupportClass();
+        $instance = Application::$registerInstance->{$class};
         switch (count($args))
         {
             case 0:
