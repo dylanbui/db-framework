@@ -141,16 +141,14 @@ namespace TinyFw;
 
 
 
+use TinyFw\Core\Config;
+use TinyFw\Core\Registry;
+use TinyFw\SessionManager\Session;
+
 class Application
 {
     protected $oRegister;
 
-    /**
-     * The resolved object instances.
-     *
-     * @var object
-     */
-    public static $registerInstance;
 //    protected $oConfig;
 //    protected $oLoader;
 //    protected $oFront;
@@ -179,20 +177,18 @@ class Application
         // register the autoloader
 //        $this->loader->register();
 
-        $this->oRegister = new Core\Registry();
-
-        self::$registerInstance =& $this->oRegister;
+        $this->oRegister = Registry::getInstance();
 
         // Loader
 //        $this->registry->oLoader = $this->loader;
 
 //        $this->createApplication();
 
-        $this->oRegister->oConfig = $this->createConfig();
+        $this->oConfig = $this->createConfig();
 
-        $this->oRegister->oLoader = $this->createLoader();
+        $this->oLoader = $this->createLoader();
 
-        $this->oRegister->oFront = $this->createFrontController();
+        $this->oFront = $this->createFrontController();
     }
 
     public function __get($key)
@@ -205,54 +201,55 @@ class Application
         $this->oRegister->{$key} = $value;
     }
 
-    protected function createApplication()
-    {
-        $oConfig = Config::getInstance();
-
-        // -- Load default config file --
-        if(file_exists(site_path('/app/config/config.php')))
-            $oConfig->load(site_path('/app/config/config.php'));
-
-        $this->oRegister->oConfig = $oConfig;
-
-
-        $oLoader = Loader::getInstance();
-
-        // register the namspace
-        $oLoader->addNamespace('App\Controller', site_path('/app/controllers'));
-        $oLoader->addNamespace('App\Lib', site_path('/app/libraries'));
-        $oLoader->addNamespace('App\Model', site_path('/app/models'));
-        $oLoader->addNamespace('App\Helper', site_path('/app/helpers'));
-
-        $oLoader->register();
-
-        $this->oRegister->oLoader = $oLoader;
-
-        $this->oRegister->oSession = new Session();
-
-        $this->oRegister->oInput = new Input();
-
-        $oView = new View('default/default');
-        $oView->setTemplateDir(site_path('/views'));
-        $oView->setLayoutDir(site_path('/layouts'));
-        $this->oRegister->oView = $oView;
-
-        $oResponse = new Response();
-        $oResponse->addHeader('Content-Type:text/html; charset=utf-8');
-        $this->oRegister->oResponse = $oResponse;
-
-        // Initialize the FrontController
-        $oFront = FrontController::getInstance();
-        $oFront->setRegistry($this->oRegister);
-        $oFront->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
-
-        $this->oRegister->oFront = $oFront;
-    }
+    // Khong su dung
+//    protected function createApplication()
+//    {
+//        $oConfig = new Config();
+//
+//        // -- Load default config file --
+//        if(file_exists(site_path('/app/config/config.php')))
+//            $oConfig->load(site_path('/app/config/config.php'));
+//
+//        $this->oRegister->oConfig = $oConfig;
+//
+//
+//        $oLoader = Loader::getInstance();
+//
+//        // register the namspace
+//        $oLoader->addNamespace('App\Controller', site_path('/app/controllers'));
+//        $oLoader->addNamespace('App\Lib', site_path('/app/libraries'));
+//        $oLoader->addNamespace('App\Model', site_path('/app/models'));
+//        $oLoader->addNamespace('App\Helper', site_path('/app/helpers'));
+//
+//        $oLoader->register();
+//
+//        $this->oRegister->oLoader = $oLoader;
+//
+//        $this->oRegister->oSession = new Session();
+//
+//        $this->oRegister->oInput = new Input();
+//
+//        $oView = new View('default/default');
+//        $oView->setTemplateDir(site_path('/views'));
+//        $oView->setLayoutDir(site_path('/layouts'));
+//        $this->oRegister->oView = $oView;
+//
+//        $oResponse = new Response();
+//        $oResponse->addHeader('Content-Type:text/html; charset=utf-8');
+//        $this->oRegister->oResponse = $oResponse;
+//
+//        // Initialize the FrontController
+//        $oFront = FrontController::getInstance();
+//        $oFront->setRegistry($this->oRegister);
+//        $oFront->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
+//
+//        $this->oRegister->oFront = $oFront;
+//    }
 
     protected function createConfig()
     {
         // Create configure object
-        $oConfig = Core\Config::getInstance();
+        $oConfig = new Config();
 
         // -- Load default config file --
         if(file_exists(site_path('/app/config/config.php')))
@@ -312,7 +309,7 @@ class Application
     {
         // Initialize the FrontController
         $oFront = Core\FrontController::getInstance();
-        $oFront->setRegistry($this->oRegister);
+//        $oFront->setRegistry($this->oRegister);
         $oFront->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
         return $oFront;
     }
@@ -325,13 +322,27 @@ class Application
         // register exception handler
         Core\ExceptionHandler::register();
 
-        $this->oRegister->oSession = $this->createSession();
+        $this->oSession = $this->createSession();
 
-        $this->oRegister->oInput = $this->createInput();
+        $this->oInput = $this->createInput();
 
-        $this->oRegister->oView = $this->createView();
+        $this->oView = $this->createView();
 
-        $this->oRegister->oResponse = $this->createResponse();
+        $this->oResponse = $this->createResponse();
+
+
+        $this->oFront->dispatch();
+
+
+        $this->oResponse->setOutput(
+            $this->oView->getContent(),
+            $this->oConfig->config_values['application']['config_compression']);
+
+        // -- echo html content --
+        $this->oResponse->output();
+
+//        return $this->oFront;
+
 
         // Initialize the FrontController
 //        $oFront = Core\FrontController::getInstance();
@@ -380,7 +391,10 @@ class Application
 //
 //        tinyfw_url();
 
-        return $this->oFront;
+
+
+
+
 //        $this->oFront->dispatch();
 
 //        $p = \TinyFw\Core\Config::getInstance();

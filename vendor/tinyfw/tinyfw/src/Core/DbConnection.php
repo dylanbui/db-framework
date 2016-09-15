@@ -12,6 +12,8 @@
 
 namespace TinyFw\Core;
 
+use TinyFw\Support\Config as ConfigSupport;
+
 class DbConnection
 {
 
@@ -40,12 +42,19 @@ class DbConnection
     {
         if (!isset(self::$instances[$config_name]))
         {
-            $config = Config::getInstance();
-            $hostname = $config->config_values[$config_name]['db_hostname'];
-            $db_name = $config->config_values[$config_name]['db_name'];
-            $db_password = $config->config_values[$config_name]['db_password'];
-            $db_username = $config->config_values[$config_name]['db_username'];
-            $db_port = $config->config_values[$config_name]['db_port'];
+//            $config = Config::getInstance();
+//            $hostname = $config->config_values[$config_name]['db_hostname'];
+//            $db_name = $config->config_values[$config_name]['db_name'];
+//            $db_password = $config->config_values[$config_name]['db_password'];
+//            $db_username = $config->config_values[$config_name]['db_username'];
+//            $db_port = $config->config_values[$config_name]['db_port'];
+
+            $configDb = ConfigSupport::get($config_name);
+            $hostname = $configDb['db_hostname'];
+            $db_name = $configDb['db_name'];
+            $db_password = $configDb['db_password'];
+            $db_username = $configDb['db_username'];
+            $db_port = $configDb['db_port'];
 
             try {
                 self::$instances[$config_name] = new Pdo($hostname, $db_port, $db_username, $db_password, $db_name);

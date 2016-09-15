@@ -257,5 +257,5 @@ class Application extends \TinyFw\Application
 //echo "<br>";
 
 $app = new Application();
-$app->run()->dispatch();
+$app->run();//->dispatch();
 

@@ -40,6 +40,7 @@ class HomeController extends BaseController
         Session::set('support_session', 'Thanh cong roi ban oi');
 
 	    $this->oView->title = 'Welcome to Bui Van Tien Duc MVC RENDER';
+
 	    $this->renderView('site-index/home/index');
 	}
 	

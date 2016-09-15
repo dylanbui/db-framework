@@ -10,6 +10,7 @@
 namespace TinyFw\Support;
 
 use TinyFw\Application;
+use TinyFw\Core\Registry;
 
 abstract class SupportInterface
 {
@@ -45,7 +46,7 @@ abstract class SupportInterface
 //        $instance = self::$instanceRegister->{$class};
 
         $class = static::getSupportClass();
-        $instance = Application::$registerInstance->{$class};
+        $instance = Registry::getInstance()->{$class};// Application::$registerInstance->{$class};
         switch (count($args))
         {
             case 0:

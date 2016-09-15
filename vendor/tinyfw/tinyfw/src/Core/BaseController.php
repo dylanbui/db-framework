@@ -15,7 +15,7 @@ abstract class BaseController implements IController
 	
 	public function __construct()
 	{
-        $this->_registry = FrontController::getInstance()->getRegistry();
+        $this->_registry = Registry::getInstance(); //FrontController::getInstance()->getRegistry();
 
 		// --- Set oView Params ---//
 		$this->oView->oConfig = $this->oConfig;

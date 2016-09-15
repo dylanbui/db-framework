@@ -10,10 +10,12 @@
 
 namespace TinyFw\Core;
 
+use TinyFw\Support\Config as ConfigSupport;
+
 class FrontController
 {
     protected $_defaultControllerNamespace = 'App\Controller';
-    protected $_registry, $_current_request;
+    protected $_current_request;
 	protected $_pre_request = array();
 
 	public static $_instance;
@@ -66,14 +68,16 @@ class FrontController
 	public function dispatch()
 	{
         // -- Load URL --
-        $uri = empty($_GET['_url']) ? $this->_registry->oConfig->config_values['application']['default_uri'] : $_GET['_url'];
+//        $uri = empty($_GET['_url']) ? $this->_registry->oConfig->config_values['application']['default_uri'] : $_GET['_url'];
+        $uri = empty($_GET['_url']) ? ConfigSupport::get('application')['default_uri'] : $_GET['_url'];
         $_GET['_url'] = '/'.str_replace(array('//', '../'), '/', trim($uri, '/'));
         $_GET['_url_params'] = array();
 
 		// Load pre config router
         // Loop through the route array looking for wild-cards
-        if(!empty($this->_registry->oConfig->config_values['routes'])) // array();
-            $this->loadPreRouter($this->_registry->oConfig->config_values['routes']);
+        $routes = ConfigSupport::get('routes');
+        if(!is_null($routes)) // array();
+            $this->loadPreRouter($routes);
 		
 		$request = NULL;
 		foreach ($this->_pre_request as $pre_request)
@@ -89,20 +93,26 @@ class FrontController
 		if (is_null($request)) 
 		{
 			$request = $this->getCurrentRequest();
-			$this->_registry->oRequest = $request;
+//			$this->_registry->oRequest = $request;
 		}
+
 
         while ($request instanceof Request) {
             $request = $request->run();
 		}
 
-        // -- Co the xu ly content html truoc khi output --
-        $this->_registry->oResponse->setOutput(
-            $this->_registry->oView->getContent(),
-            $this->_registry->oConfig->config_values['application']['config_compression']);
 
-        // -- echo html content --
-        $this->_registry->oResponse->output();
+//		echo "<pre>";
+//		print_r('Dung o cho nay -- '. __FILE__);
+//		echo "</pre>";
+//		exit();
+        // -- Co the xu ly content html truoc khi output --
+//        $this->_registry->oResponse->setOutput(
+//            $this->_registry->oView->getContent(),
+//            $this->_registry->oConfig->config_values['application']['config_compression']);
+//
+//        // -- echo html content --
+//        $this->_registry->oResponse->output();
 	}
 	
 	public function getCurrentRequest()
@@ -115,15 +125,15 @@ class FrontController
 		return $this->_current_request;
 	}
 	
-	public function getRegistry()
-	{
-		return $this->_registry;
-	}
-
-	public function setRegistry($registry)
-	{
-		$this->_registry = $registry;
-	}
+//	public function getRegistry()
+//	{
+//		return $this->_registry;
+//	}
+//
+//	public function setRegistry($registry)
+//	{
+//		$this->_registry = $registry;
+//	}
 
     public function getDefaultControllerNamespace()
     {
