@@ -22,7 +22,7 @@ class Registry {
     {
         if(is_null(self::$instance))
         {
-            self::$instance = new Registry();
+            self::$instance = new self(); //Registry();
         }
         return self::$instance;
     }

@@ -95,8 +95,16 @@ final class Request
         return $request->run();
     }
 
-    public function run()
+    public function run($request = null)
     {
+        if(!is_null($request)
+        {
+            if(!$request instanceof Request)
+                $request = new Request($request);
+
+            return $request->run();
+        }
+
         $class  = $this->getClass();
         $method = $this->getMethod();
         $args   = $this->getArgs();
