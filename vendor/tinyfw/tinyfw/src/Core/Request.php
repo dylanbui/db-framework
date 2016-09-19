@@ -87,17 +87,17 @@ final class Request
 	}
 
     // -- Fixed DucBui : 24/11/2015  --
-    public static function staticRun($request)
-    {
-        if(!$request instanceof Request)
-            $request = new Request($request);
-
-        return $request->run();
-    }
+//    public static function staticRun($request)
+//    {
+//        if(!$request instanceof Request)
+//            $request = new Request($request);
+//
+//        return $request->run();
+//    }
 
     public function run($request = null)
     {
-        if(!is_null($request)
+        if(!is_null($request))
         {
             if(!$request instanceof Request)
                 $request = new Request($request);

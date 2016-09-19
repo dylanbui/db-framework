@@ -36,11 +36,14 @@ abstract class BaseController implements IController
 		return new Request($route, $args);
 	}
 	
-	protected function renderView($path, $layout_path = NULL)
+	protected function renderView($path, $variables = array(), $layout_path = NULL)
 	{
 		if (!is_null($layout_path))
 			$this->_layout_path = $layout_path;
-		
+
+        //-- Set variables for view --
+        $this->oView->setVars($variables);
+
 		foreach ($this->_children as $child) {
 			$param_name = str_replace("-", "_", $child->getAction());
             $this->oView->{$param_name} = Request::staticRun($child);

@@ -68,7 +68,20 @@ class View
 	{
 		$this->variables[$name] = $value;
 	}
-	
+
+	/**
+	 * Set variables for view
+	 * added variables.
+	 * @param array $args
+	 * @access public
+	 * @return void
+	 */
+	public function setVars($args = array())
+	{
+		if(!empty($args))
+			$this->variables = array_merge($this->variables,$args);
+	}
+
 	/**
 	 * Returns a numeral array containing the names of all
 	 * added variables.

@@ -330,13 +330,19 @@ class Application
 
         $this->oResponse = $this->createResponse();
 
-
         $this->oFront->dispatch();
 
+        //-- Level = 0 => get default compression level --
+        if ($this->oResponse->getLevel() == 0)
+            $this->oResponse->setLevel($this->oConfig->config_values['application']['config_compression']);
 
-        $this->oResponse->setOutput(
-            $this->oView->getContent(),
-            $this->oConfig->config_values['application']['config_compression']);
+        if (is_null($this->oResponse->getOutput()))
+            $this->oResponse->setOutput($this->oView->getContent());
+
+        //-- TODO : Hook before output content html --
+//        $this->oResponse->setOutput(
+//            $this->oView->getContent(),
+//            $this->oConfig->config_values['application']['config_compression']);
 
         // -- echo html content --
         $this->oResponse->output();

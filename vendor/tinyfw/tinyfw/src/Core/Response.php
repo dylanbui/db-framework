@@ -5,7 +5,7 @@ namespace TinyFw\Core;
 final class Response 
 {
 	private $headers = array(); 
-	private $output;
+	private $output = null;
 	private $level = 0;
 
     public function __construct()
@@ -24,6 +24,21 @@ final class Response
 		exit;
 	}
 
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
     public function setOutput($output, $level = 0)
     {
         $this->output = $output;
@@ -41,9 +56,9 @@ final class Response
     public function output()
     {
         if ($this->level) {
-            $ouput = $this->compress($this->output, $this->level);
+            $content = $this->compress($this->output, $this->level);
         } else {
-            $ouput = $this->output;
+            $content = $this->output;
         }
 
         if (!headers_sent()) {
@@ -52,7 +67,7 @@ final class Response
             }
         }
 
-        echo $ouput;
+        echo $content;
     }
 
     private function compress($data, $level = 0)
