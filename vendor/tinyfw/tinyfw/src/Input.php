@@ -72,7 +72,12 @@ class Input
 		}
 		return $this->_get[$name];
 	}
-	
+
+    public function file($name)
+    {
+        return (isset($this->_files[$name])) ? $this->_files[$name] : null;
+    }
+
 	/*
 	 * XSS filter
 	*
