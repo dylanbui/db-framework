@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Controller\SiteIndex;
-use TinyFw\Core\BaseController;
+
 use App\Lib\Paginator;
 use App\Model\City;
 use App\Model\District;
 use App\Model\Atm\Address as Atm_Address;
 use App\Model\Atm\Bank as Atm_Bank;
+use TinyFw\Core\Controller;
 
-class AtmController extends BaseController
+class AtmController extends Controller
 {
 
 	public function __construct()

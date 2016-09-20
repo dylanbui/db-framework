@@ -2,9 +2,9 @@
 
 namespace App\Controller\MemberManager;
 
-use TinyFw\Core\BaseController;
+use TinyFw\Core\Controller;
 
-class MemberController extends BaseController
+class MemberController extends Controller
 {
 //    http://www.sitepoint.com/social-logins-php-hybridauth/
 

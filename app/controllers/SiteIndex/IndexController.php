@@ -2,11 +2,11 @@
 
 namespace App\Controller\SiteIndex;
 
-use TinyFw\Core\BaseController;
+use TinyFw\Core\Controller;
 use TinyFw\Helper\Captcha;
 use App\Lib\Email;
 
-class IndexController extends BaseController
+class IndexController extends Controller
 {
 
 	public function __construct()

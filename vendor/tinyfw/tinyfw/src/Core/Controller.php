@@ -7,9 +7,9 @@
 
 namespace TinyFw\Core;
 
-interface OLD_IController {}
+interface IController {}
 
-abstract class BaseController implements OLD_IController
+abstract class Controller implements IController
 {
     protected $_registry , $_layout_path = NULL , $_children = array();
 	

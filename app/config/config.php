@@ -19,7 +19,7 @@ $config['application']['enable_seo_url'] 			= TRUE;
 // --- MASTER DATABASE ---//
 
 //$config['database_master']['db_driver'] 			= "pdo"; // mysqli
-$config['database_master']['db_driver'] 			= "Pdo"; // MySqli
+$config['database_master']['db_driver'] 			= "mysql"; //"Pdo"; // MySqli
 $config['database_master']['db_hostname'] 			= "localhost";
 $config['database_master']['db_name'] 				= "db-cms";
 $config['database_master']['db_username'] 			= "root";

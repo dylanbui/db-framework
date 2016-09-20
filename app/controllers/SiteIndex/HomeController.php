@@ -2,13 +2,13 @@
 
 namespace App\Controller\SiteIndex;
 
-use TinyFw\Core\BaseController;
 use TinyFw\Core\Config;
+use TinyFw\Core\Controller;
 use TinyFw\Core\Request;
 use TinyFw\Logger;
 use TinyFw\Support\Session;
 
-class HomeController extends BaseController
+class HomeController extends Controller
 {
 	var $_cfg_upload_file;
 	var $_cfg_thumb_image;
@@ -125,7 +125,7 @@ class HomeController extends BaseController
 	
 	public function partRenderAction($title)
 	{
-	    $this->oView->title = 'Day la phan noi dung duoc render vao';
+	    $this->oView->title = 'Day la phan noi dung duoc render vao trong View::fetch()';
 	    $this->oView->render_title = $title;
 	    return $this->oView->fetch('site-index/home/part_render');
 	}

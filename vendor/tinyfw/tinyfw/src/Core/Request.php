@@ -111,14 +111,14 @@ final class Request
 
         try {
             $rc = new \ReflectionClass($class);
-            if($rc->isSubclassOf(__NAMESPACE__.'\BaseController'))
+            if($rc->isSubclassOf(__NAMESPACE__.'\Controller'))
             {
                 $controller = $rc->newInstance();
                 $classMethod = $rc->getMethod($method);
                 return $classMethod->invokeArgs($controller,$args);
             }
             else {
-            	throw new \Exception("abstract class BaseController must be extended");
+            	throw new \Exception("abstract class Controller must be extended");
             }
         }
         catch (\ReflectionException $e)
