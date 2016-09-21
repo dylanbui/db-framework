@@ -55,9 +55,9 @@ class Input
         return !empty($_POST);
     }
 
-    public function all()
+    public function request()
     {
-        return array_merge($this->_post, $this->_get);
+        return $this->_request;
     }
 
 	public function post($name,$default_value = NULL)
