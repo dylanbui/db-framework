@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Controller\Email;
-use TinyFw\Core\BaseController;
-use App\Lib\Email;
 
-class IndexController extends BaseController
+use App\Lib\Email;
+use TinyFw\Core\Controller;
+
+class IndexController extends Controller
 {
 
 	public function __construct()

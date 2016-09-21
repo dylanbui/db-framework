@@ -2,9 +2,9 @@
 
 namespace App\Controller\Index;
 
-use TinyFw\Core\BaseController;
+use TinyFw\Core\Controller;
 
-class IndexController extends BaseController
+class IndexController extends Controller
 {
 
 	public function __construct()

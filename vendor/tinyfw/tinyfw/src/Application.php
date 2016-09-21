@@ -139,8 +139,7 @@ namespace TinyFw;
 //		echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
 //	}
 
-
-
+use TinyFw\Core\Input;
 use TinyFw\Core\Config;
 use TinyFw\Core\Registry;
 use TinyFw\SessionManager\Session;

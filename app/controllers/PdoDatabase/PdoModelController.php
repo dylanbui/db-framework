@@ -2,12 +2,12 @@
 
 namespace App\Controller\PdoDatabase;
 
-use TinyFw\Core\BaseController;
 use App\Lib\Paginator;
 use App\Lib\Validation;
 use App\Model\Ex\Users as Ex_Users;
+use TinyFw\Core\Controller;
 
-Class PdoModelController Extends BaseController 
+Class PdoModelController Extends Controller
 {
 
 	function __construct()

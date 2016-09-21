@@ -2,10 +2,10 @@
 
 namespace App\Controller\Paging;
 
-use TinyFw\Core\BaseController;
 use App\Lib\Paginator;
+use TinyFw\Core\Controller;
 
-Class PageController Extends BaseController 
+Class PageController Extends Controller
 {
 
 	function __construct()

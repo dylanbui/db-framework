@@ -2,9 +2,9 @@
 
 namespace App\Controller\MemberManager;
 
-use TinyFw\Core\BaseController;
+use TinyFw\Core\Controller;
 
-class GoogleController extends BaseController
+class GoogleController extends Controller
 {
 
 	public function __construct()

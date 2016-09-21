@@ -2,10 +2,10 @@
 
 namespace App\Controller\SiteIndex;
 
-use TinyFw\Core\Config;
 use TinyFw\Core\Controller;
 use TinyFw\Core\Request;
 use TinyFw\Logger;
+use TinyFw\Support\Config;
 use TinyFw\Support\Session;
 
 class HomeController extends Controller
@@ -240,8 +240,9 @@ class HomeController extends Controller
         Logger::errorLog( "This is an ERROR log message", 220, __FILE__, __LINE__ );
         Logger::warningLog( "This is an WARNING log message", 220, __FILE__, __LINE__ );
 
-        $config = Config::getInstance();
-        $log_file = __SITE_PATH.rtrim($config->config_values['logging']['log_dir'], '/');
+        $config = Config::get('logging');
+
+        $log_file = __SITE_PATH.rtrim($config['log_dir'], '/');
         $log_file .= '/log-'.date('Y-m-d').'.log';
         $content_log = file_get_contents($log_file);
 

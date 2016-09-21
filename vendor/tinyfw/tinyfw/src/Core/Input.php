@@ -1,8 +1,8 @@
 <?php
 
-namespace TinyFw;
+namespace TinyFw\Core;
 
-class Input_OLD
+class Input 
 {	
 	public $_get = array();
 	public $_post = array();

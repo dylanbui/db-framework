@@ -2,16 +2,12 @@
 
 namespace App\Controller\Database;
 
-//use App\Lib\Core\BaseController,
-//	App\Lib\Core\DbConnection,
-//	App\Lib\Paginator;
-
-use TinyFw\Core\BaseController,
+use TinyFw\Core\Controller,
     TinyFw\Core\DbConnection,
     App\Lib\Paginator;
 
 
-Class ModelController Extends BaseController 
+Class ModelController Extends Controller
 {
 
 	function __construct()
