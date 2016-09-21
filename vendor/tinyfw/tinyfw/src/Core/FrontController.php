@@ -12,6 +12,7 @@ namespace TinyFw\Core;
 
 use TinyFw\Support\Config as ConfigSupport;
 
+
 class FrontController
 {
     protected $_defaultControllerNamespace = 'App\Controller';
@@ -89,14 +90,15 @@ class FrontController
 				break;
 			}
 		}
-		
+
+		// -- If pre_request dont return 1 Request --
 		if (is_null($request)) 
-		{
 			$request = $this->getCurrentRequest();
-//			$this->_registry->oRequest = $request;
-		}
 
+        // -- Save current Request to Register --
+        Registry::getInstance()->oRequest = $request;
 
+        // -- Run Request --
         while ($request instanceof Request) {
             $request = $request->run();
 		}

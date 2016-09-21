@@ -4,6 +4,7 @@ namespace App\Controller\SiteIndex;
 
 use TinyFw\Core\Controller;
 use TinyFw\Core\Request;
+use TinyFw\Support\Request as RequestSupport;
 use TinyFw\Logger;
 use TinyFw\Support\Config;
 use TinyFw\Support\Session;
@@ -135,7 +136,7 @@ class HomeController extends Controller
 		$this->oSession->userdata['c'] = 2000;
 		$this->oView->title_aaa = 'Day la trang dung chuc nang renderAction --- '.$this->oSession->userdata['test'];
 
-        $this->oView->part_render = Request::staticRun(new Request('site-index/home/part-render',array('Title duoc truyen vao '.$this->oSession->userdata['c'])));
+        $this->oView->part_render = RequestSupport::run(new Request('site-index/home/part-render',array('Title duoc truyen vao '.$this->oSession->userdata['c'])));
 
         $this->_children[] = new Request('site-index/home/child-first');
         $this->_children[] = new Request('site-index/home/child-second',array('Title duoc truyen vao site/home/child-second'));

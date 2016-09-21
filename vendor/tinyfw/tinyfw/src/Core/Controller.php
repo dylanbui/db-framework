@@ -7,6 +7,8 @@
 
 namespace TinyFw\Core;
 
+use TinyFw\Support\Request as RequestSupport;
+
 interface IController {}
 
 abstract class Controller implements IController
@@ -15,7 +17,7 @@ abstract class Controller implements IController
 	
 	public function __construct()
 	{
-        $this->_registry = Registry::getInstance(); //FrontController::getInstance()->getRegistry();
+        $this->_registry = Registry::getInstance();
 
 		// --- Set oView Params ---//
 		$this->oView->oConfig = $this->oConfig;
@@ -46,7 +48,7 @@ abstract class Controller implements IController
 
 		foreach ($this->_children as $child) {
 			$param_name = str_replace("-", "_", $child->getAction());
-            $this->oView->{$param_name} = Request::staticRun($child);
+            $this->oView->{$param_name} = RequestSupport::run($child);
 		}
 
         return $this->oView->renderLayout($path, $this->_layout_path);
