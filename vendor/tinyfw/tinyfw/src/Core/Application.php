@@ -14,7 +14,7 @@ namespace TinyFw\Core;
 //use TinyFw\Core\Config;
 //use TinyFw\Core\Registry;
 use TinyFw\SessionManager\Session;
-use TinyFw\Support\Config;
+use TinyFw\Support\Config as ConfigSupport;
 
 class Application extends Container
 {
@@ -71,7 +71,7 @@ class Application extends Container
 
         $this->set('oSession', function () {
             // SessionManager
-            $params = Config::get('session');
+            $params = ConfigSupport::get('session');
             $oSession = new Session($params);
             return $oSession;
         });
@@ -98,7 +98,7 @@ class Application extends Container
             return $oResponse;
         });
 
-        $this->appConfig = Config::get('application');
+        $this->appConfig = ConfigSupport::get('application');
 
         date_default_timezone_set($this->appConfig['timezone']);
 
