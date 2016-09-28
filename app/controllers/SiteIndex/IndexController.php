@@ -46,6 +46,11 @@ class IndexController extends Controller
 
     public function sentEmailAction()
     {
+        echo "<pre>";
+        print_r($_GET);
+        echo "</pre>";
+        exit();
+
         // Cho phep truy cap KCFINDER
         // Tranh truong hop truy cap thong wa duong link cua iframe
         $_SESSION['KCFINDER'] = array();

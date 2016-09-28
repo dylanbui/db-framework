@@ -20,7 +20,11 @@ class HomeController extends Controller
 	public function pageHomeAction($name = 'nguyen van a')
 	{
 
-        $this->renderView('site-index/home/index');
+	    $viewData = array(
+	      'name' => $name
+        );
+
+        $this->renderView('site-index/home/index', $viewData);
 
 //		$this->oSession->set('test_1', 'Thong tin duoc luu vao test');
 //		$this->oSession->set('test', 'Thong tin duoc luu vao test');

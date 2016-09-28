@@ -107,7 +107,7 @@ class Dispatcher extends Container
             if (preg_match('#^'.$key.'$#', $uri, $matches))
             {
                 // Do we have a back-reference?
-                if (strpos($val, '$') !== FALSE AND strpos($key, '(') !== FALSE)
+                if (strpos($path, '$') !== FALSE AND strpos($key, '(') !== FALSE)
                 {
                     $path = preg_replace('#^'.$key.'$#', $path, $uri);
                 }
