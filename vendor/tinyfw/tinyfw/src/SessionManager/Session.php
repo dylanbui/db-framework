@@ -72,10 +72,9 @@ class Session {
         if ((bool) ini_get('session.auto_start'))
         {
             throw new Exception("SessionManager: session.auto_start is enabled in php.ini. Aborting.");
-//            log_message('error', 'SessionManager: session.auto_start is enabled in php.ini. Aborting.');
             return;
         }
-        elseif ( ! empty($params['driver']))
+        elseif (!empty($params['driver']))
         {
             $this->_driver = $params['driver'];
             unset($params['driver']);

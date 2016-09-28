@@ -11,26 +11,24 @@ use TinyFw\Support\Request as RequestSupport;
 
 interface IController {}
 
-abstract class Controller implements IController
+abstract class Controller extends Container implements IController
 {
-    protected $_registry , $_layout_path = NULL , $_children = array();
+    protected $_layout_path = NULL , $_children = array();
 	
 	public function __construct()
 	{
-        $this->_registry = Registry::getInstance();
-
 		// --- Set oView Params ---//
 		$this->oView->oConfig = $this->oConfig;
 	}
 	
-	public function __get($key) 
+	final public function __get($key)
 	{
-		return $this->_registry->{$key};
+		return parent::get($key);
 	}
 	
-	public function __set($key, $value) 
+	final public function __set($key, $value)
 	{
-		$this->_registry->{$key} = $value;
+	    parent::set($key, $value);
 	}
 
 	protected function forward($route, $args = array()) 

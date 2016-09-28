@@ -2,80 +2,45 @@
 
 namespace TinyFw\Core;
 
-final class Request 
+use TinyFw\Support\Dispatcher as DispatcherSupport;
+
+final class Request
 {
 	protected $class;
 	protected $method;
-	protected $moduleNamespace;
+	protected $namespace;
 
     // -- Default value --
-    protected $module = 'index';
 	protected $controller = 'index';
 	protected $action = 'index';
     protected $args = array();
 
-	public function __construct($route  = 'index/index/index', $args = array(), $moduleNamespace = NULL)
+	public function __construct($route  = 'index/index', $args = array(), $namespace = NULL)
 	{
 		$this->parseUri($route);
 
-        // -- Default $moduleNamespace get form FrontController --
-        if (is_null($moduleNamespace))
-		    $this->moduleNamespace = FrontController::getInstance()->getDefaultControllerNamespace();
+        // -- Default $moduleNamespace get form Dispatcher --
+        if (is_null($namespace))
+		    $this->namespace = Dispatcher::getDefaultControllerNamespace();
         else
-            $this->moduleNamespace = $moduleNamespace;
+            $this->namespace = $namespace;
 
-        $this->moduleNamespace .= '\\'.$this->upperCamelcase($this->module).'\\';
-		$this->class = $this->moduleNamespace.$this->upperCamelcase($this->controller).'Controller';
-		$this->method = $this->lowerCamelcase($this->action).'Action';
+        $this->class = $this->namespace.'\\'.$this->upperCamelcase($this->controller).'Controller';
+        $this->method = $this->lowerCamelcase($this->action).'Action';
 		$this->args = array_merge($this->args,$args);
 	}
-	
-	private function parseUri($route)
-	{
-		// removes the trailing slash
-// 		/this/that/theother/ => this/that/theother
-		$route = trim($route, '/');
-		$parts = explode('/', str_replace('../', '', $route));
 
-        $module = array_shift($parts);
-        if(empty($module))
-            return;
-        $this->module = $module;
-
-        $controller = array_shift($parts);
-        if(empty($controller))
-            return;
-        $this->controller = $controller;
-
-        $action = array_shift($parts);
-        if(empty($action))
-            return;
-        $this->action = $action;
-        $this->args = $parts;
-	}
-
+	// -- Only get --
 	public function getClass() {
 		return $this->class;
 	}
-	
+
 	public function getMethod() {
 		return $this->method;
 	}
 
-    public function setArgs($args) {
-        $this->args = $args;
-    }
-
-	public function getArgs() {
-		return $this->args;
-	}
-	
 	public function getRouter()	{
-		return "{$this->module}/{$this->controller}/$this->action";		
-	}
-	
-	public function getModule() {
-		return $this->module;
+		return "{$this->controller}/$this->action";
 	}
 
 	public function getController() {
@@ -86,14 +51,13 @@ final class Request
 		return $this->action;
 	}
 
-    // -- Fixed DucBui : 24/11/2015  --
-//    public static function staticRun($request)
-//    {
-//        if(!$request instanceof Request)
-//            $request = new Request($request);
-//
-//        return $request->run();
-//    }
+    public function getArgs() {
+        return $this->args;
+    }
+
+    public function setArgs($args) {
+        $this->args = $args;
+    }
 
     public function run($request = null)
     {
@@ -105,17 +69,13 @@ final class Request
             return $request->run();
         }
 
-        $class  = $this->getClass();
-        $method = $this->getMethod();
-        $args   = $this->getArgs();
-
         try {
-            $rc = new \ReflectionClass($class);
+            $rc = new \ReflectionClass($this->class);
             if($rc->isSubclassOf(__NAMESPACE__.'\Controller'))
             {
                 $controller = $rc->newInstance();
-                $classMethod = $rc->getMethod($method);
-                return $classMethod->invokeArgs($controller,$args);
+                $classMethod = $rc->getMethod($this->method);
+                return $classMethod->invokeArgs($controller,$this->args);
             }
             else {
             	throw new \Exception("abstract class Controller must be extended");
@@ -125,6 +85,25 @@ final class Request
         {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    private function parseUri($route)
+    {
+        // removes the trailing slash
+// 		/this/that/theother/ => this/that/theother
+        $route = trim($route, '/');
+        $parts = explode('/', str_replace('../', '', $route));
+
+        $controller = array_shift($parts);
+        if(empty($controller))
+            return;
+        $this->controller = $controller;
+
+        $action = array_shift($parts);
+        if(empty($action))
+            return;
+        $this->action = $action;
+        $this->args = $parts;
     }
 
 	//// underscored to upper-camelcase 

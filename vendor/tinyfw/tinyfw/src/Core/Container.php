@@ -7,7 +7,7 @@ class Container {
     /*
      * @var object $instance
     */
-    protected static $_container = array();
+    public static $_container = array();
 
     /**
      *
@@ -31,9 +31,17 @@ class Container {
      * @return void
      *
      */
-    public function __set($index, $value)
+    public function set($index, $value)
     {
-        self::$_container[$index] = $value;
+        self::$_container[$index] = ($value instanceof \Closure) ? $value() : $value;
+//        if($value instanceof \Closure)
+//        {
+//            // Will be true.
+//            self::$_container[$index] = $value();
+//            return;
+//        }
+//
+//        self::$_container[$index] = $value;
     }
 
     /**
@@ -45,7 +53,7 @@ class Container {
      * @return mixed
      *
      */
-    public function __get($index)
+    public function get($index)
     {
         return (isset(self::$_container[$index]) ? self::$_container[$index] : NULL);
     }

@@ -45,29 +45,27 @@ class Application extends Container
         $this->initVars();
     }
 
-    public function get($key)
+    public function __get($key)
     {
-        return parent::__get($key);
+        return $this->get($key);
     }
 
-    public function set($key, $value)
+    public function __set($key, $value)
     {
-        parent::__set($key, $value);
+        $this->set($key, $value);
     }
 
     protected function initVars()
     {
+        // Create configure object
+        $oConfig = new Config();
 
-        $this->set('oConfig', function () {
-            // Create configure object
-            $oConfig = new Config();
+        // -- Load default config file --
+        if(file_exists(site_path('/app/config/config.php')))
+            $oConfig->load(site_path('/app/config/config.php'));
 
-            // -- Load default config file --
-            if(file_exists(site_path('/app/config/config.php')))
-                $oConfig->load(site_path('/app/config/config.php'));
-
-            return $oConfig;
-        });
+        $this->set('oConfig', $oConfig);
+        $this->appConfig = $oConfig->get('application');
 
         $this->set('oSession', function () {
             // SessionManager
@@ -88,7 +86,6 @@ class Application extends Container
             $oView->setTemplateDir(site_path('/app/views'));
             $oView->setLayoutDir(site_path('/app/layouts'));
             return $oView;
-
         });
 
         $this->set('oResponse', function () {
@@ -98,7 +95,11 @@ class Application extends Container
             return $oResponse;
         });
 
-        $this->appConfig = ConfigSupport::get('application');
+        $this->set('oDispatcher', function () {
+            // Response
+            $oDispatcher = new Dispatcher();
+            return $oDispatcher;
+        });
 
         date_default_timezone_set($this->appConfig['timezone']);
 
@@ -107,47 +108,15 @@ class Application extends Container
 
     }
 
-    // -- 2 dong nay tam dong de kiem tra --
-//    public function __get($key)
-//    {
-//        return parent::__get($key);
-//    }
-//
-//    public function __set($key, $value)
-//    {
-//        parent::__set($key, $value);
-//    }
-
-    protected function createFrontController()
-    {
-        // Initialize the FrontController
-        $oFront = Core\FrontController::getInstance();
-//        $oFront->setRegistry($this->oRegister);
-        $oFront->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
-        return $oFront;
-    }
-
-
     public function run()
     {
-        date_default_timezone_set($this->oConfig->config_values['application']['timezone']);
 
-        // register exception handler
-        Core\ExceptionHandler::register();
-
-        $this->oSession = $this->createSession();
-
-        $this->oInput = $this->createInput();
-
-        $this->oView = $this->createView();
-
-        $this->oResponse = $this->createResponse();
-
-        $this->oFront->dispatch();
+        // -- Send dispatcher --
+        $this->oDispatcher->send();
 
         //-- Level = 0 => get default compression level --
         if ($this->oResponse->getLevel() == 0)
-            $this->oResponse->setLevel($this->oConfig->config_values['application']['config_compression']);
+            $this->oResponse->setLevel($this->appConfig['config_compression']);
 
         if (is_null($this->oResponse->getOutput()))
             $this->oResponse->setOutput($this->oView->getContent());
@@ -160,93 +129,6 @@ class Application extends Container
         // -- echo html content --
         $this->oResponse->output();
 
-//        return $this->oFront;
-
-
-        // Initialize the FrontController
-//        $oFront = Core\FrontController::getInstance();
-//        $oFront->setRegistry($this->oRegister);
-//        $oFront->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
-//
-//        $this->oRegister->oFront = $oFront;
-
-//        $this->loadRegister();
-//
-//        $this->loadConfig();
-//
-//        $this->loadSession();
-//
-//        $this->loadInput();
-//
-//        $this->loadView();
-//
-//        $this->loadCache();
-//
-//        $this->loadResponse();
-//
-//        // Initialize the FrontController
-//        $this->front = \TinyFw\Core\FrontController::getInstance();
-//        $this->front->setRegistry($this->registry);
-//        $this->front->setDefaultControllerNamespace('App\Controller'); // Default : 'App\Controller'
-
-        /*
-            // Cau hinh cho cac action nay chay dau tien
-        $front->addPreRequest(new Request('run/first/action'));
-        $front->addPreRequest(new Request('run/second/action'));
-        */
-
-//        $this->oFront->addPreRequest(new \TinyFw\Core\Request('member-manager/member/get-login-info'));
-
-//        echo "<pre>";
-//        print_r(site_path('app'));
-//        echo "</pre>";
-//        echo "<pre>";
-//        print_r(site_path('views'));
-//        echo "</pre>";
-//        echo "<pre>";
-//        print_r(site_path('layout'));
-//        echo "</pre>";
-//        exit();
-//
-//        tinyfw_url();
-
-
-
-
-
-//        $this->oFront->dispatch();
-
-//        $p = \TinyFw\Core\Config::getInstance();
-//
-//        $in = new \TinyFw\Input();
-//
-//        echo "<pre>";
-//        print_r($in->get('aaaaa','gia tri mac dinh'));
-//        echo "</pre>";
-//
-//        echo "<pre>";
-//        print_r(tinyfw_now_to_mysql());
-//        echo "</pre>";
-//
-//        exit();
-
-        // -- Chi de tam --
-//        if($this->registry->oConfig->config_values['application']['show_benchmark'])
-//        {
-//            $oBenchmark->mark('code_end');
-//            echo "<br>".$oBenchmark->elapsed_time('code_start', 'code_end');
-//        }
-
-    }
-
-    public function getDefaultControllerNamespace()
-    {
-        return $this->_defaultControllerNamespace;
-    }
-
-    public function setDefaultControllerNamespace($namespace)
-    {
-        $this->_defaultControllerNamespace = $namespace;
     }
 
 }

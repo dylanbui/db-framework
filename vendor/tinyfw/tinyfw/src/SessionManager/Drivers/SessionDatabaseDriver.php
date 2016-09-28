@@ -231,6 +231,7 @@ class SessionDatabaseDriver extends SessionDriver implements \SessionHandlerInte
 
         $sql = "UPDATE {$this->_config['save_path']} SET data = '{$session_data}', timestamp = '{$timestamp}'";
         $sql .= " WHERE id = '$session_id' ";
+
         if ($this->_config['match_ip'])
         {
             $sql .= " AND ip_address = '{$_SERVER['REMOTE_ADDR']}'";
@@ -242,7 +243,9 @@ class SessionDatabaseDriver extends SessionDriver implements \SessionHandlerInte
             return $this->_success;
         }
 
-        return $this->_fail();
+        // -- Khi reload lien tuc, khi update session se bi loi, se thow Exception  --
+//        return $this->_fail();
+        $this->_success;
     }
 
     // ------------------------------------------------------------------------
@@ -331,8 +334,11 @@ class SessionDatabaseDriver extends SessionDriver implements \SessionHandlerInte
             $arg = $session_id.($this->_config['match_ip'] ? '_'.$_SERVER['REMOTE_ADDR'] : '');
 
 //            if ($this->_db->query("SELECT GET_LOCK('".$arg."', 300) AS ci_session_lock")->row()->ci_session_lock)
-            if($this->_db->selectOneRow("SELECT GET_LOCK('".$arg."', 300) AS ci_session_lock"))
+//            if($this->_db->selectOneRow("SELECT GET_LOCK('".$arg."', 300) AS ci_session_lock"))
+            $row = $this->_db->selectOneRow("SELECT GET_LOCK('".$arg."', 300) AS ci_session_lock");
+            if($row['ci_session_lock'])
             {
+//                die($row['ci_session_lock']);
                 $this->_lock = $arg;
                 return TRUE;
             }
@@ -362,8 +368,10 @@ class SessionDatabaseDriver extends SessionDriver implements \SessionHandlerInte
         if ($this->_platform === 'mysql')
         {
 //            if ($this->_db->query("SELECT RELEASE_LOCK('".$this->_lock."') AS ci_session_lock")->row()->ci_session_lock)
-            if ($this->_db->selectOneRow("SELECT RELEASE_LOCK('".$this->_lock."') AS ci_session_lock"))
+            $row = $this->_db->selectOneRow("SELECT RELEASE_LOCK('".$this->_lock."') AS ci_session_lock");
+            if ($row['ci_session_lock'])
             {
+                exit();
                 $this->_lock = FALSE;
                 return TRUE;
             }

@@ -140,29 +140,29 @@
 require_once __SITE_PATH.'/vendor/autoload.php';
 require_once __SITE_PATH.'/app/config/constants.php';
 
-class Application extends \TinyFw\Application
+class Application extends \TinyFw\Core\Application
 {
     function __construct()
     {
         parent::__construct();
     }
 
-    protected function createCache()
-    {
-        $config_cache = $this->oConfig->config_values['cache'];
-        $config_cache['cache_path'] = __SITE_PATH.'/public_html/cache/';
-        $cache = new \TinyFw\Cache($config_cache);
-        return $cache;
-    }
-
-    function run()
-    {
-        $this->oCache = $this->createCache();
-
-        $this->oFront->addPreRequest(new \TinyFw\Core\Request('member-manager/member/get-login-info'));
-
-        return parent::run();
-    }
+//    protected function createCache()
+//    {
+//        $config_cache = $this->oConfig->config_values['cache'];
+//        $config_cache['cache_path'] = __SITE_PATH.'/public_html/cache/';
+//        $cache = new \TinyFw\Cache($config_cache);
+//        return $cache;
+//    }
+//
+//    function run()
+//    {
+//        $this->oCache = $this->createCache();
+//
+//        $this->oFront->addPreRequest(new \TinyFw\Core\Request('member-manager/member/get-login-info'));
+//
+//        return parent::run();
+//    }
 }
 
 

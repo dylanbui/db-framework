@@ -1,9 +1,9 @@
 <?php  if ( ! defined('__SITE_PATH')) exit('No direct script access allowed');
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- APPLICATION ---//
-
 $config['application']['application_env'] 			= "development"; // Define application environment => 'production'; 'staging'; 'test'; 'development';
-$config['application']['default_uri'] 				= "site-index/home/index";
+//$config['application']['default_uri'] 				= "site-index/home/index";
+$config['application']['default_uri'] 				= "home/page-home";
 // $config['application']['display_error_404'] 		= FALSE;
 // $config['application']['error_reporting'] 			= 0; // Neu = 0 : Khong hien thi bat cu thong bao nao
 // $config['application']['error_reporting'] 			= E_ALL; // Neu = 0 : Khong hien thi bat cu thong bao nao
