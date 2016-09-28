@@ -17,7 +17,7 @@ class HomeController extends Controller
 		parent::__construct();
 	}
 
-	public function pageHomeAction()
+	public function pageHomeAction($name = 'nguyen van a')
 	{
 
         $this->renderView('site-index/home/index');

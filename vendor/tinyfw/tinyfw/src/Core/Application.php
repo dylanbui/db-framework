@@ -9,21 +9,12 @@
 
 namespace TinyFw\Core;
 
-//
-//use TinyFw\Core\Input;
-//use TinyFw\Core\Config;
-//use TinyFw\Core\Registry;
 use TinyFw\SessionManager\Session;
-use TinyFw\Support\Config as ConfigSupport;
 
 class Application extends Container
 {
-//    protected $oRegister;
-    protected $_defaultControllerNamespace = 'App\Controller';
-
     protected $appConfig;
     protected $oLoader;
-//    protected $oFront;
 
     function __construct($vars = array())
     {
@@ -67,10 +58,10 @@ class Application extends Container
         $this->set('oConfig', $oConfig);
         $this->appConfig = $oConfig->get('application');
 
-        $this->set('oSession', function () {
+        $sessionConfig = $oConfig->get('session');
+        $this->set('oSession', function () use ($sessionConfig) {
             // SessionManager
-            $params = ConfigSupport::get('session');
-            $oSession = new Session($params);
+            $oSession = new Session($sessionConfig);
             return $oSession;
         });
 

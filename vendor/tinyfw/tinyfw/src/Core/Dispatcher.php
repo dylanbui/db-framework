@@ -24,6 +24,16 @@ class Dispatcher extends Container
 
     }
 
+    public function getDefaultControllerNamespace()
+    {
+        return $this->get('defaultControllerNamespace');
+    }
+
+    public function setDefaultControllerNamespace($namespace)
+    {
+        $this->set('defaultControllerNamespace',$namespace);
+    }
+
 	public function addPreRequest($pre_request) 
 	{
 		$this->_pre_request[] = $pre_request;
@@ -115,17 +125,6 @@ class Dispatcher extends Container
             }
         }
     }
-
-    public function getDefaultControllerNamespace()
-    {
-        return $this->get('defaultControllerNamespace');
-    }
-
-    public function setDefaultControllerNamespace($namespace)
-    {
-        $this->set('defaultControllerNamespace',$namespace);
-    }
-
 
 
 } // end of class
