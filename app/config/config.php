@@ -139,10 +139,10 @@ $config['cache']['life_time'] 						= 60;
 // $config['routes']['products/([a-z]+)/(\d+).html'] = "$1/abc_$2";
 // $config['routes']['links/([a-zA-Z0-9_-]+)'] = "site/index/links/$1";
 
-$config['routes']['email/(:any)/(:any)/(:other)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Email');
+$config['routes']['email/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Email');
 
-$config['routes']['site-index/(:any)/(:any)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\SiteIndex');
-//$config['routes']['site-index/(:any)/(:any)/(:other)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\SiteIndex');
+$config['routes']['site-index/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\SiteIndex');
+$config['routes']['site-index/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\SiteIndex');
 
 //$config['routes']['links/chuyen-tieng-viet/(:num)'] = "site-index/index/links-item";
 //$config['routes']['links/chuyen-tieng-viet'] = "site-index/index/links-item";

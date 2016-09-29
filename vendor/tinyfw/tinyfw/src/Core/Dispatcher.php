@@ -15,6 +15,14 @@ use TinyFw\Support\Config as ConfigSupport;
 
 class Dispatcher extends Container
 {
+    private $patterns = array(
+        ':name'     => '[a-z\-]+',
+        ':num'      => '[0-9]+',
+        ':slug'     => '[A-Za-z-0-9\-]+',
+        ':other'    => '[/]{0,1}[A-Za-z0-9\-\\/\.]+', // => maybe same (:any)
+        ':any'      => '.+'
+    );
+
     protected $_defaultControllerNamespace = 'App\Controller';
     protected $_current_request;
 	protected $_pre_request = array();
@@ -101,7 +109,7 @@ class Dispatcher extends Container
             $path = $val['path'];
 
             // Convert wildcards to RegEx
-            $key = str_replace(array(':other', ':any', ':num'), array('[/]{0,1}[A-Za-z0-9\-\\/\.]+', '.+', '[0-9]+'), $key);
+            $key = str_replace(array_keys($this->patterns), array_values($this->patterns), $key);
 
             // Does the RegEx match?
             if (preg_match('#^'.$key.'$#', $uri, $matches))
