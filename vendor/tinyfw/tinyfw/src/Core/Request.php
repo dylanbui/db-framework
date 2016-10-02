@@ -4,7 +4,7 @@ namespace TinyFw\Core;
 
 use TinyFw\Support\Dispatcher as DispatcherSupport;
 
-final class Request
+class Request
 {
 	protected $class;
 	protected $method;
@@ -17,11 +17,12 @@ final class Request
 
 	public function __construct($route  = 'index/index', $args = array(), $namespace = NULL)
 	{
+	    // -- Parse router to controller, action --
 		$this->parseUri($route);
 
         // -- Default $moduleNamespace get form Dispatcher --
         if (is_null($namespace))
-		    $this->namespace = Dispatcher::getDefaultControllerNamespace();
+		    $this->namespace = DispatcherSupport::getDefaultControllerNamespace();
         else
             $this->namespace = $namespace;
 
@@ -94,15 +95,19 @@ final class Request
         $route = trim($route, '/');
         $parts = explode('/', str_replace('../', '', $route));
 
+        // -- Get controller --
         $controller = array_shift($parts);
         if(empty($controller))
             return;
         $this->controller = $controller;
 
+        // -- Get action --
         $action = array_shift($parts);
         if(empty($action))
             return;
         $this->action = $action;
+
+        // -- Args --
         $this->args = $parts;
     }
 

@@ -24,12 +24,17 @@ class Dispatcher extends Container
     );
 
     protected $_defaultControllerNamespace = 'App\Controller';
-    protected $_current_request;
-	protected $_pre_request = array();
+    protected $_currentRequest;
+	protected $_preRequest = array();
 
 	public function __construct()
     {
 
+    }
+
+    public function getCurrentRequest()
+    {
+        return $this->_currentRequest;
     }
 
     public function getDefaultControllerNamespace()
@@ -42,9 +47,9 @@ class Dispatcher extends Container
         $this->set('defaultControllerNamespace',$namespace);
     }
 
-	public function addPreRequest($pre_request) 
+	public function addPreRequest($preRequest)
 	{
-		$this->_pre_request[] = $pre_request;
+		$this->_preRequest[] = $preRequest;
 	}
 
 	public function send()
@@ -60,11 +65,20 @@ class Dispatcher extends Container
         $routes = ConfigSupport::get('routes');
         if(!is_null($routes)) // array();
             $this->loadPreRouter($routes);
-		
-		$request = NULL;
-		foreach ($this->_pre_request as $pre_request)
+
+        // -- Load current request --
+        $this->_currentRequest = new Request($_GET['_url'], array(), $_GET['_namespace']);
+        if (!empty($_GET['_url_params']))
+            $this->_currentRequest->setArgs($_GET['_url_params']);
+
+        // -- Save current Request to Register --
+        $this->set('oRequest', $this->_currentRequest);
+
+        // -- Loop pre request --
+		$request = $this->_currentRequest;
+		foreach ($this->_preRequest as $preRequest)
 		{
-            $result = $pre_request->run();
+            $result = $preRequest->run();
 			if ($result)
 			{
 				$request = $result;
@@ -73,27 +87,17 @@ class Dispatcher extends Container
 		}
 
 		// -- If pre_request dont return 1 Request --
-		if (is_null($request)) 
-			$request = $this->getCurrentRequest();
+//		if (is_null($request))
+//			$request = $this->getCurrentRequest();
 
         // -- Save current Request to Register --
-        $this->set('oRequest', $request);
+//        $this->set('oRequest', $request);
 
         // -- Run Request --
         while ($request instanceof Request) {
             $request = $request->run();
 		}
 
-	}
-	
-	public function getCurrentRequest()
-	{
-		if (empty($this->_current_request)) {
-            $this->_current_request = new Request($_GET['_url'], array(), $_GET['_namespace']);
-            if (!empty($_GET['_url_params']))
-                $this->_current_request->setArgs($_GET['_url_params']);
-        }
-		return $this->_current_request;
 	}
 
     private function loadPreRouter($routes)

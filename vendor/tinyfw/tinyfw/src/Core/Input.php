@@ -55,9 +55,19 @@ class Input
         return !empty($_POST);
     }
 
-    public function request()
+    public function requestAll()
     {
         return $this->_request;
+    }
+
+    public function request($name,$default_value = NULL)
+    {
+        if (!isset($this->_request[$name]) || $this->_request[$name] == "")
+        {
+            return $default_value;
+        }
+        return $this->_request[$name];
+
     }
 
 	public function post($name,$default_value = NULL)
