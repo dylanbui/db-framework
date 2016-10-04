@@ -13,7 +13,7 @@ namespace TinyFw\Core;
 use TinyFw\Support\Config as ConfigSupport;
 
 
-class Dispatcher extends Container
+class Dispatcher
 {
     private $patterns = array(
         ':name'     => '[a-z\-]+',
@@ -23,13 +23,14 @@ class Dispatcher extends Container
         ':any'      => '.+'
     );
 
-    protected $_defaultControllerNamespace = 'App\Controller';
+    protected $_controllerNamespace = 'App\Controller';
     protected $_currentRequest;
+    protected $_routes = array();
 	protected $_preRequest = array();
 
-	public function __construct()
+	public function __construct($controllerNamespace)
     {
-
+        $this->_controllerNamespace = $controllerNamespace;
     }
 
     public function getCurrentRequest()
@@ -37,14 +38,21 @@ class Dispatcher extends Container
         return $this->_currentRequest;
     }
 
-    public function getDefaultControllerNamespace()
+    public function getControllerNamespace()
     {
-        return $this->get('defaultControllerNamespace');
+        return $this->_controllerNamespace;
     }
 
-    public function setDefaultControllerNamespace($namespace)
+    // -- Su dung bien router tun ben ngoai de co the de dang tach lop router khi can --
+    // -- TODO: Dung route tich hop sau, sau nay tach ra sau --
+    public function getRoutes()
     {
-        $this->set('defaultControllerNamespace',$namespace);
+        return $this->_routes;
+    }
+
+    public function setRoutes($routes)
+    {
+        return $this->_routes = $routes;
     }
 
 	public function addPreRequest($preRequest)
@@ -58,12 +66,13 @@ class Dispatcher extends Container
         $uri = empty($_GET['_url']) ? ConfigSupport::get('application')['default_uri'] : $_GET['_url'];
         $_GET['_url'] = '/'.str_replace(array('//', '../'), '/', trim($uri, '/'));
         $_GET['_url_params'] = array();
-        $_GET['_namespace'] = $this->_defaultControllerNamespace;
+        $_GET['_namespace'] = $this->_controllerNamespace;
 
 		// Load pre config router
         // Loop through the route array looking for wild-cards
         $routes = ConfigSupport::get('routes');
-        if(!is_null($routes)) // array();
+//        if(!empty($this->_routes)) // array();
+        if(!empty($routes)) // array();
             $this->loadPreRouter($routes);
 
         // -- Load current request --
@@ -72,7 +81,8 @@ class Dispatcher extends Container
             $this->_currentRequest->setArgs($_GET['_url_params']);
 
         // -- Save current Request to Register --
-        $this->set('oRequest', $this->_currentRequest);
+        Container::$_container['oRequest'] = $this->_currentRequest;
+//        $this->set('oRequest', $this->_currentRequest);
 
         // -- Loop pre request --
 		$request = $this->_currentRequest;
@@ -85,13 +95,6 @@ class Dispatcher extends Container
 				break;
 			}
 		}
-
-		// -- If pre_request dont return 1 Request --
-//		if (is_null($request))
-//			$request = $this->getCurrentRequest();
-
-        // -- Save current Request to Register --
-//        $this->set('oRequest', $request);
 
         // -- Run Request --
         while ($request instanceof Request) {
@@ -108,7 +111,7 @@ class Dispatcher extends Container
         {
             // -- Thong tin router la 1 array --
             if (!is_array($val))
-                $val = array('path' => $val, 'namespace' => $this->_defaultControllerNamespace);
+                $val = array('path' => $val, 'namespace' => $this->_controllerNamespace);
 
             $path = $val['path'];
 

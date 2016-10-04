@@ -37,7 +37,6 @@ final class Config
      */
     public function set($key, $value)
     {
-//        self::$instance->vars[$index] = $value;
         $this->config_values[$key] = $value;
     }
 
@@ -52,7 +51,6 @@ final class Config
      */
     public function get($key)
     {
-//        return (isset(self::$instance->vars[$index]) ? self::$instance->vars[$index] : NULL);
         return (isset($this->config_values[$key]) ? $this->config_values[$key] : NULL);
     }
 

@@ -13,6 +13,8 @@ use TinyFw\SessionManager\Session;
 
 class Application extends Container
 {
+    const DEFAULT_NAMESPACE = 'App\Controller';
+
     protected $appConfig;
     protected $oLoader;
 
@@ -35,6 +37,7 @@ class Application extends Container
         // -- Define variables --
         $this->initVars();
     }
+
 
     public function __get($key)
     {
@@ -87,8 +90,8 @@ class Application extends Container
         });
 
         $this->set('oDispatcher', function () {
-            // Response
-            $oDispatcher = new Dispatcher();
+            // Dispatcher
+            $oDispatcher = new Dispatcher(self::DEFAULT_NAMESPACE);
             return $oDispatcher;
         });
 
@@ -119,7 +122,6 @@ class Application extends Container
 
         // -- echo html content --
         $this->oResponse->output();
-
     }
 
 }

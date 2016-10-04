@@ -34,14 +34,6 @@ class Container {
     public function set($index, $value)
     {
         self::$_container[$index] = ($value instanceof \Closure) ? $value() : $value;
-//        if($value instanceof \Closure)
-//        {
-//            // Will be true.
-//            self::$_container[$index] = $value();
-//            return;
-//        }
-//
-//        self::$_container[$index] = $value;
     }
 
     /**

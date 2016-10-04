@@ -2,8 +2,6 @@
 
 namespace TinyFw\Core;
 
-use TinyFw\Support\Dispatcher as DispatcherSupport;
-
 class Request
 {
 	protected $class;
@@ -20,9 +18,9 @@ class Request
 	    // -- Parse router to controller, action --
 		$this->parseUri($route);
 
-        // -- Default $moduleNamespace get form Dispatcher --
+        // -- Default namespace --
         if (is_null($namespace))
-		    $this->namespace = DispatcherSupport::getDefaultControllerNamespace();
+		    $this->namespace = Application::DEFAULT_NAMESPACE;
         else
             $this->namespace = $namespace;
 
