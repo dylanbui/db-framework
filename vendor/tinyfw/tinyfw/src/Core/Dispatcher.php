@@ -71,7 +71,6 @@ class Dispatcher
 		// Load pre config router
         // Loop through the route array looking for wild-cards
         $routes = ConfigSupport::get('routes');
-//        if(!empty($this->_routes)) // array();
         if(!empty($routes)) // array();
             $this->loadPreRouter($routes);
 

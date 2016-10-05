@@ -20,7 +20,8 @@ class Request
 
         // -- Default namespace --
         if (is_null($namespace))
-		    $this->namespace = Application::DEFAULT_NAMESPACE;
+//		    $this->namespace = Application::DEFAULT_NAMESPACE;
+            $this->namespace = Container::$_container['oDispatcher']->getControllerNamespace();
         else
             $this->namespace = $namespace;
 
