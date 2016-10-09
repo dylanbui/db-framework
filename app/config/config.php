@@ -151,6 +151,11 @@ $config['routes']['links/(:any)'] = "site-index/index/links/$1";
 $config['routes']['load/(:any)-post(:num).htm'] = "site-index/index/load-router/$1/$2";
 $config['routes']['load/(:any)-post(:num).html'] = "site-index/index/load-router/$1/$2";
 
+// -- Config router for namespace --
+$config['routes']['paging'] = array('path' => 'index/index', 'namespace' => 'App\Controller\Paging');
+$config['routes']['paging/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\Paging');
+$config['routes']['paging/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Paging');
+
 
 // $config['routes']['links/(.*?)'] = "site/index/links/$1";
  
