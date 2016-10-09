@@ -2,8 +2,7 @@
 
 namespace TinyFw\Core;
 
-use TinyFw\Support\Dispatcher as SupportDispatcher;
-use TinyFw\Support\SupportInterface;
+use TinyFw\Support\Dispatcher as DispatcherSupport;
 
 class Request
 {
@@ -23,7 +22,7 @@ class Request
 
         // -- Default namespace --
         if (is_null($namespace))
-            $this->namespace = SupportInterface::getControllerNamespace();
+            $this->namespace = DispatcherSupport::getControllerNamespace();
         else
             $this->namespace = $namespace;
 
