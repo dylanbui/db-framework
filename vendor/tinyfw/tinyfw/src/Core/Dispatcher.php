@@ -10,9 +10,6 @@
 
 namespace TinyFw\Core;
 
-use TinyFw\Support\Config as ConfigSupport;
-
-
 class Dispatcher
 {
     private $patterns = array(
@@ -23,10 +20,12 @@ class Dispatcher
         ':any'      => '.+'
     );
 
+    protected $_defaultUri = 'index/index';
     protected $_controllerNamespace = 'App\Controller';
     protected $_currentRequest;
     protected $_routes = array();
 	protected $_preRequest = array();
+    protected $_postRequest = array();
 
 	public function __construct($controllerNamespace)
     {
@@ -43,8 +42,6 @@ class Dispatcher
         return $this->_controllerNamespace;
     }
 
-    // -- Su dung bien router tun ben ngoai de co the de dang tach lop router khi can --
-    // -- TODO: Dung route tich hop sau, sau nay tach ra sau --
     public function getRoutes()
     {
         return $this->_routes;
@@ -55,24 +52,38 @@ class Dispatcher
         return $this->_routes = $routes;
     }
 
-	public function addPreRequest($preRequest)
+    public function getDefaultUri()
+    {
+        return $this->_defaultUri;
+    }
+
+    public function setDefaultUri($uri)
+    {
+        return $this->_defaultUri = $uri;
+    }
+
+	public function addPreRequest(Request $preRequest)
 	{
 		$this->_preRequest[] = $preRequest;
 	}
 
+    public function addPostRequest(Request $postRequest)
+    {
+        $this->_postRequest[] = $postRequest;
+    }
+
 	public function send()
 	{
         // -- Load URL --
-        $uri = empty($_GET['_url']) ? ConfigSupport::get('application')['default_uri'] : $_GET['_url'];
+        $uri = empty($_GET['_url']) ? $this->_defaultUri : $_GET['_url'];
         $_GET['_url'] = '/'.str_replace(array('//', '../'), '/', trim($uri, '/'));
         $_GET['_url_params'] = array();
         $_GET['_namespace'] = $this->_controllerNamespace;
 
 		// Load pre config router
         // Loop through the route array looking for wild-cards
-        $routes = ConfigSupport::get('routes');
-        if(!empty($routes)) // array();
-            $this->loadPreRouter($routes);
+        if(!empty($this->_routes)) // array();
+            $this->loadPreRouter($this->_routes);
 
         // -- Load current request --
         $this->_currentRequest = new Request($_GET['_url'], array(), $_GET['_namespace']);
@@ -81,7 +92,6 @@ class Dispatcher
 
         // -- Save current Request to Register --
         Container::$_container['oRequest'] = $this->_currentRequest;
-//        $this->set('oRequest', $this->_currentRequest);
 
         // -- Loop pre request --
 		$request = $this->_currentRequest;
@@ -100,6 +110,11 @@ class Dispatcher
             $request = $request->run();
 		}
 
+        // -- Loop post request --
+        foreach ($this->_postRequest as $postRequest)
+        {
+            $postRequest->run();
+        }
 	}
 
     private function loadPreRouter($routes)

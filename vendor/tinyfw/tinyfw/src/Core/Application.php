@@ -9,6 +9,7 @@
 
 namespace TinyFw\Core;
 
+use Intervention\Image\Gd\Commands\SharpenCommand;
 use TinyFw\SessionManager\Session;
 
 class Application extends Container
@@ -89,22 +90,41 @@ class Application extends Container
             return $oResponse;
         });
 
-        $this->set('oDispatcher', function () {
+        $this->set('oDispatcher', function () use ($oConfig) {
             // Dispatcher
             $oDispatcher = new Dispatcher(self::DEFAULT_NAMESPACE);
+            // Add Hook Config
+            $hookConfig = $oConfig->get('hooks');
+            foreach (array('pre_controller', 'post_controller') as $hookName)
+            {
+                if (empty($hookConfig[$hookName]))
+                    continue;
+                foreach ($hookConfig[$hookName] as $item)
+                {
+                    $params = empty($item['params']) ? array() : $item['params'];
+                    $namespace = empty($item['namespace']) ? null : $item['namespace'];
+                    $request = new Request($item['path'], $params, $namespace);
+                    if ($hookName == 'pre_controller')
+                        $oDispatcher->addPreRequest($request);
+                    elseif ($hookName == 'post_controller')
+                        $oDispatcher->addPostRequest($request);
+                }
+            }
+            // Set Routes
+            $oDispatcher->setRoutes($oConfig->get('routes'));
+            // Set default URI
+            $oDispatcher->setDefaultUri($oConfig->get('application')['default_uri']);
             return $oDispatcher;
         });
 
         date_default_timezone_set($this->appConfig['timezone']);
 
-        // register exception handler
+        // Register exception handler
         ExceptionHandler::register();
-
     }
 
     public function run()
     {
-
         // -- Send dispatcher --
         $this->oDispatcher->send();
 
@@ -114,11 +134,6 @@ class Application extends Container
 
         if (is_null($this->oResponse->getOutput()))
             $this->oResponse->setOutput($this->oView->getContent());
-
-        //-- TODO : Hook before output content html --
-//        $this->oResponse->setOutput(
-//            $this->oView->getContent(),
-//            $this->oConfig->config_values['application']['config_compression']);
 
         // -- echo html content --
         $this->oResponse->output();

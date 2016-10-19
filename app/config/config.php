@@ -127,6 +127,26 @@ $config['cache']['life_time'] 						= 60;
 
 /*
 |--------------------------------------------------------------------------
+| HOOKS
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+$config['hooks']['pre_controller'][] = array(
+    'path' => 'common/pre-controller-first',
+    'params' => array('red', 'yellow', 'blue'),
+    'namespace' => 'App\Controller'
+);
+
+$config['hooks']['post_controller'][] = array(
+    'path' => 'common/post-controller-first',
+    'params' => array('red', 'yellow', 'blue'),
+    'namespace' => 'App\Controller'
+);
+
+/*
+|--------------------------------------------------------------------------
 | ROUTER
 |--------------------------------------------------------------------------
 |
