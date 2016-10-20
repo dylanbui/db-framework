@@ -49,7 +49,6 @@ abstract class Controller extends Container implements IController
             $this->oView->{$param_name} = RequestSupport::run($child);
 		}
 
-        return $this->oView->renderLayout($path, $this->_layout_path);
+        return $this->oView->renderLayout($path ,null ,$this->_layout_path);
 	}
-
 }

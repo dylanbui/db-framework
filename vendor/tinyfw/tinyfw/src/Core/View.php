@@ -233,8 +233,11 @@ class View
 		return isset($output) ? $output : false;
 	}
 	
-	public function renderLayout($content_path, $layout_path = null)
+	public function renderLayout($content_path, $variables = null, $layout_path = null)
 	{
+	    if (!empty($variables))
+	        $this->setVars($variables);
+
         $this->variables['main_content'] = $this->fetch($content_path);
 
         if($this->_disableLayout == true)
