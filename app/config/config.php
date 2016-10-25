@@ -4,6 +4,7 @@
 $config['application']['application_env'] 			= "development"; // Define application environment => 'production'; 'staging'; 'test'; 'development';
 //$config['application']['default_uri'] 				= "site-index/home/index";
 $config['application']['default_uri'] 				= "home/page-home";
+$config['application']['admin_default_uri'] 		= "dashboard/show";
 // $config['application']['display_error_404'] 		= FALSE;
 // $config['application']['error_reporting'] 			= 0; // Neu = 0 : Khong hien thi bat cu thong bao nao
 // $config['application']['error_reporting'] 			= E_ALL; // Neu = 0 : Khong hien thi bat cu thong bao nao
@@ -62,10 +63,15 @@ $config['database_slave']['db_prefix'] 				= "z__";
 $config['session']['driver'] 						= 'database';
 $config['session']['save_path'] 					= 'db_sessions';
 
-$config['session']['expiration'] 						= 7200;
+$config['session']['expiration'] 					= 7200;
 $config['session']['match_ip'] 						= FALSE;
-$config['session']['time_to_update'] 						= 300;
-$config['session']['regenerate_destroy'] 						= FALSE;
+$config['session']['time_to_update'] 				= 7200; //		= 300;
+$config['session']['regenerate_destroy'] 			= FALSE;
+
+//$config['session']['regenerate'] 					= 300;
+//$config['session']['expiration'] 					= 7200;
+//$config['session']['gc_probability'] 				= 100;
+
 
 
 //$config['session']['database_platform'] 				= 'mysql';

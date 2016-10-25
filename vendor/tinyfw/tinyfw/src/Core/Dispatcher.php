@@ -37,6 +37,11 @@ class Dispatcher
         return $this->_currentRequest;
     }
 
+    public function setControllerNamespace($namespace)
+    {
+        $this->_controllerNamespace = $namespace;
+    }
+
     public function getControllerNamespace()
     {
         return $this->_controllerNamespace;

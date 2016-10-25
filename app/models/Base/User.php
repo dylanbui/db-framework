@@ -27,6 +27,12 @@ class User extends Model
 		return FALSE;		
 	}
 
+	public function getAclFromGroup($groupId)
+    {
+        $objGroup = new Group();
+        return $objGroup->getAclFromGroup($groupId);
+    }
+
 }
 
 ?>

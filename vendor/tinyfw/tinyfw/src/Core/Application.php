@@ -78,8 +78,10 @@ class Application extends Container
         $this->set('oView', function () {
             // View
             $oView = new View('default/default');
-            $oView->setTemplateDir(site_path('/app/views'));
-            $oView->setLayoutDir(site_path('/app/layouts'));
+            $oView->setTemplateDir(__VIEW_PATH);
+            $oView->setLayoutDir(__LAYOUT_PATH);
+//            $oView->setTemplateDir(site_path('/app/views'));
+//            $oView->setLayoutDir(site_path('/app/layouts'));
             return $oView;
         });
 
