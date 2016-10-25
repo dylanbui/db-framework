@@ -25,7 +25,7 @@ class CommonController extends Controller
 	
 	public function checkLoginAction() 
 	{
-		if (empty(UserAuth::isLoggedIn()))
+		if (UserAuth::isLoggedIn() != true)
 		{
 			// ket thuc chuong trinh
 			// thong bao link nay khong ton tai
@@ -34,20 +34,6 @@ class CommonController extends Controller
             return $this->forward('common/login');
 		}
 
-//        echo "asdasd<pre>";
-//        print_r((int)UserAuth::isLoggedIn());
-//        echo "</pre>";
-//        exit();
-//
-//        echo "<pre>";
-//        print_r(UserAuth::currentUser());
-//        echo "</pre>";
-//        exit();
-
-//        echo "<pre>";
-//        print_r('Xong hang');
-//        echo "</pre>";
-//        exit();
 	}
 	
 	public function checkPermissionAction()
