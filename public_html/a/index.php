@@ -23,20 +23,20 @@
  	define ('__CSS_URL', __ASSET_URL.'/css');
  	define ('__JS_URL', __ASSET_URL.'/js');
 
-    define ('__TEMPLATE_URL', __PUBLIC_HTML.'a/flaty-template/');
+    define ('__TEMPLATE_URL', __PUBLIC_HTML.'a/flaty-template');
  	
 	// the application directory path 
 	define ('__APP_PATH', __SITE_PATH.'/admin');
 	define ('__VIEW_PATH', __APP_PATH.'/views');	
 	define ('__LAYOUT_PATH', __APP_PATH.'/layouts');
-	// define ('__HELPER_PATH', __APP_PATH.'/helpers');
-//	define ('__CONFIG_PATH', __APP_PATH.'/config');
+	define ('__HELPER_PATH', __APP_PATH.'/helpers');
+    define ('__CONFIG_PATH', __APP_PATH.'/config');
 
-	define ('__UPLOAD_DATA_PATH', __SITE_PATH.'/public_html/data/upload/');
-	define ('__UPLOAD_DATA_URL', __PUBLIC_HTML . 'data/upload/');
+	define ('__UPLOAD_DATA_PATH', __SITE_PATH.'/public_html/data/upload');
+	define ('__UPLOAD_DATA_URL', __PUBLIC_HTML . 'data/upload');
 	
-	define ('__DATA_PATH', __SITE_PATH . '/public_html/data/');
-	define ('__DATA_URL', __PUBLIC_HTML . 'data/');
+	define ('__DATA_PATH', __SITE_PATH . '/public_html/data');
+	define ('__DATA_URL', __PUBLIC_HTML . 'data');
 
 //    $const = get_defined_constants(true);
 //    echo "<pre>";
