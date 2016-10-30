@@ -116,7 +116,7 @@ class CommonController extends Controller
             'link_url' => site_url('common/login'),
             'authentication_error' => $authentication_error,
         );
-        $this->renderView('common/login' ,$viewData ,"admin/layout_login");
+        $this->renderView('common/login' ,$viewData ,"layout_login");
 
     }
 

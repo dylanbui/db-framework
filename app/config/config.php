@@ -1,10 +1,10 @@
 <?php  if ( ! defined('__SITE_PATH')) exit('No direct script access allowed');
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- APPLICATION ---//
-$config['application']['application_env'] 			= "development"; // Define application environment => 'production'; 'staging'; 'test'; 'development';
+// Define application environment => 'production'; 'staging'; 'test'; 'development';
+$config['application']['application_env'] 			= "development";
 //$config['application']['default_uri'] 				= "site-index/home/index";
 $config['application']['default_uri'] 				= "home/page-home";
-$config['application']['admin_default_uri'] 		= "dashboard/show";
 // $config['application']['display_error_404'] 		= FALSE;
 // $config['application']['error_reporting'] 			= 0; // Neu = 0 : Khong hien thi bat cu thong bao nao
 // $config['application']['error_reporting'] 			= E_ALL; // Neu = 0 : Khong hien thi bat cu thong bao nao
@@ -26,17 +26,6 @@ $config['database_master']['db_name'] 				= "db-cms";
 $config['database_master']['db_username'] 			= "root";
 $config['database_master']['db_password'] 			= "";
 $config['database_master']['db_port'] 				= 3306;
-
-// --- -------------------------------------------------------------------------------------------------- ---//
-// --- SLAVE DATABASE ---//
-
-$config['database_slave']['db_driver'] 				= "pdo"; // mysqli
-$config['database_slave']['db_hostname'] 			= "localhost";
-$config['database_slave']['db_name'] 				= "none-db";
-$config['database_slave']['db_username'] 			= "root";
-$config['database_slave']['db_password'] 			= "";
-$config['database_slave']['db_port'] 				= 3306;
-$config['database_slave']['db_prefix'] 				= "z__";
 
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- SESSION ---//
