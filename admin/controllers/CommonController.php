@@ -128,5 +128,26 @@ class CommonController extends Controller
 // 		redirect('dashboard/member/login');
     }
 
-	
+    public function error404Action()
+    {
+        // system show error
+        $this->_layout_path = "layout_error_404";
+        $this->renderView('common/blank');
+    }
+
+    public function error500Action()
+    {
+        // system show error
+        $this->_layout_path = "layout_error_500";
+        $this->renderView('common/blank');
+    }
+
+    public function errorDenyAction()
+    {
+        // system show error
+        $this->_layout_path = "layout_error_deny";
+        $this->renderView('common/blank');
+    }
+
+
 }

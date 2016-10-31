@@ -2,9 +2,10 @@
 
 namespace Admin\Controller\Page;
 
+use Admin\Controller\AdminBaseController;
 use App\Model\Page\Configure;
 
-class ConfigureController extends \Admin\Controller\AdminController
+class ConfigureController extends AdminBaseController
 {
 
 	public function __construct()
@@ -22,7 +23,7 @@ class ConfigureController extends \Admin\Controller\AdminController
 	public function listAction()
 	{
 		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+			return $this->forward('common/error-deny');
 				
 		$objPageConf = new Configure();
 		
@@ -38,7 +39,7 @@ class ConfigureController extends \Admin\Controller\AdminController
 	public function addAction()
 	{
 		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+			return $this->forward('common/error-deny');
 				
 		if ($this->oInput->isPost()) 
 		{
@@ -61,7 +62,7 @@ class ConfigureController extends \Admin\Controller\AdminController
 	public function updateAction($page_id)
 	{
 		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+			return $this->forward('common/error-deny');
 				
 		$this->oView->link_url = site_url('page/configure/update/'.$page_id);
 		$objPageConf = new Configure();
@@ -157,7 +158,7 @@ class ConfigureController extends \Admin\Controller\AdminController
 	public function copyAction($page_id = 0)
 	{
 		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+			return $this->forward('common/error-deny');
 				
 		$objPageConf = new Configure();
 		$rowPageConf = $objPageConf->get($page_id);
@@ -179,7 +180,7 @@ class ConfigureController extends \Admin\Controller\AdminController
 	public function deleteAction($page_id = 0)
 	{
 		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+			return $this->forward('common/error-deny');
 				
 		$objPageConf = new Configure();
 		$rowPageConf = $objPageConf->get($page_id);
@@ -196,7 +197,7 @@ class ConfigureController extends \Admin\Controller\AdminController
 	public function truncateAction()
 	{
 		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+			return $this->forward('common/error-deny');
 				
 		$objPageConf = new Configure();
 		$objPageConf->truncatePageModule();
@@ -206,7 +207,7 @@ class ConfigureController extends \Admin\Controller\AdminController
 	public function clearAllRecordAction()
 	{
 		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+			return $this->forward('common/error-deny');
 				
 		$objPageConf = new Configure();
 		$objPageConf->clearAllPageModuleData();

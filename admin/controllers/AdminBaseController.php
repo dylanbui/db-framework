@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use TinyFw\Core\Controller;
 
-class AdminController extends Controller
+class AdminBaseController extends Controller
 {
 	protected $_isModify;
 
