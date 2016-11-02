@@ -1,170 +1,184 @@
 <?php
 
-namespace Admin\Controller\Home;
+namespace Admin\Controller;
 
-use App\Model\Base\User,
-	App\Model\Base\Group;	
+use Admin\Lib\Support\UserAuth;
+use Admin\Model\Group;
+use Admin\Model\User;
+use TinyFw\Support\Input;
+use TinyFw\Support\Session;
 
-class UserController extends \Admin\Controller\AdminController	
+
+class UserController extends AdminBaseController
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->detectModifyPermission('home/user');
-		$this->oView->_isModify = $this->_isModify;
-	}
+    public function __construct()
+    {
+        parent::__construct();
+//        $this->detectModifyPermission('home/user');
+//        $this->oView->_isModify = $this->_isModify;
+    }
 
-	public function indexAction() 
-	{
-	    return $this->forward('home/user/list');
-	}	
-	
-	public function listAction() 
-	{
-		$objUser = new User();
-		$rsUsers = $objUser->getRowset();
-		$this->oView->rsUsers = $rsUsers;
-		$this->renderView('home/user/list');
-	}
-	
-	public function addAction()
-	{
-		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
-				
-		$this->oView->box_title = "Add New User";
-		$this->oView->link_url = site_url('home/user/add');		
-		$this->oView->cancel_url = site_url('home/user/list');
-		
-		$objGroup = new Group();
-		$rsGroups = $objGroup->getRowset();
-		$this->oView->rsGroups = $rsGroups;
+    public function indexAction()
+    {
+        return $this->forward('user/list');
+    }
 
-		if ($this->oInput->isPost()) 
-		{
-			// TODO : Check validate
-			$group_id = $this->oInput->post("group_id",array());
-			$group_id = implode(",", $group_id);
-			
-			$data = array(
-				"username" => $this->oInput->post("username",""),					
-				"display_name" => $this->oInput->post("display_name",""),		
-				"email" => $this->oInput->post("email",""),
-				"password" => encryption($this->oInput->post("pw","")),
-				"group_id" => $group_id,
-				"active" => $this->oInput->post("active",0)					
-			);
-			
-			$oUser = new User();
-			$oUser->insert($data);
+    public function listAction()
+    {
+        $objUser = new User();
+        $rsUsers = $objUser->getRowset();
+        $this->renderView('user/list', array('rsUsers' => $rsUsers));
+    }
 
-			// Notify insert successfully !
-			$this->oSession->set_flashdata('notify_msg',array('msg_title' => "Notify",
-					'msg_code' => "success",
-					'msg_content' => "Insert successfully !"));
+    public function addAction()
+    {
+//        if (!$this->_isModify)
+//            return $this->forward('error/error-deny');
 
-			redirect('home/user/list');	
-		}
-		
-		$this->renderView('home/user/add');
-	}
-	
-	public function editAction($user_id)
-	{
-		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
-				
-		$this->oView->box_title = "Update User";
-		$this->oView->link_url = site_url('home/user/edit/'.$user_id);
-		$this->oView->cancel_url = site_url('home/user/list');
-	
-		$objGroup = new Group();
-		$rsGroups = $objGroup->getRowset();
-		$this->oView->rsGroups = $rsGroups;
-		
-		$oUser = new User();
-		
-		if ($this->oInput->isPost())
-		{
-			// TODO : Check validate
-			$group_id = $this->oInput->post("group_id",array());
-			$group_id = implode(",", $group_id);
-			
-			$data = array(
-				"username" => $this->oInput->post("username",""),					
-				"display_name" => $this->oInput->post("display_name",""),
-				"email" => $this->oInput->post("email",""),
-				"group_id" => $group_id,
-				"active" => $this->oInput->post("active",0)
-			);			
-			
-			$reset_password = $this->oInput->post('reset_password',NULL);
-			if ($reset_password != NULL)
-			{
-				// TODO : Check validate password
-				$data['password'] = encryption($this->oInput->post("pw",""));
-			}
-				
-			$oUser->update($user_id,$data);
-			
-			$currentUser = $this->oAuth->currentUser();
-			if ($user_id == $currentUser['id'])
-			{
-				if ($reset_password != NULL || $data['username'] != $currentUser['name'])
-				{
-					// Reseted pw or change username => logout
-					// redirect("home/user/edit/".$user_id);
-					redirect("common/home/logout");
-				}
-			}
+        $viewData = array(
+            'box_title' => "Add New User",
+            'link_url' => site_url('user/add'),
+            'cancel_url' => site_url('user/list')
+        );
 
-			// Notify update successfully !
-			$this->oSession->set_flashdata('notify_msg',array('msg_title' => "Notify",
-					'msg_code' => "success",
-					'msg_content' => "Update successfully !"));
+        $objGroup = new Group();
+        $rsGroups = $objGroup->getRowset();
+        $viewData['rsGroups'] = $rsGroups;
 
-			redirect('home/user/list');
-		}		
-		
-		$rowUser = $oUser->get($user_id);
-		
-		$this->oView->rowUser = $rowUser;
-		$this->oView->arrGroupIds = explode(",",$rowUser['group_id']);
-		
-		$this->renderView('home/user/edit');
-	}
-	
-	public function deleteAction($user_id)
-	{
-		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+        if (Input::isPost())
+        {
+            // TODO : Check validate
+            $group_id = Input::post("group_id",array());
+            $group_id = implode(",", $group_id);
+
+            $data = array(
+                "username" => Input::post("username",""),
+                "display_name" => Input::post("display_name",""),
+                "email" => Input::post("email",""),
+                "password" => encryption(Input::post("pw","")),
+                "group_id" => $group_id,
+                "active" => Input::post("active",0)
+            );
+
+            $oUser = new User();
+            $oUser->insert($data);
+
+            // Notify insert successfully !
+            Session::setFlashData('notify_msg',array(
+                'msg_title' => "Notify",
+                'msg_code' => "success",
+                'msg_content' => "Insert successfully !"));
+
+            redirect('user/list');
+        }
+
+        $this->renderView('user/add', $viewData);
+    }
+
+    public function editAction($user_id)
+    {
+//        if (!$this->_isModify)
+//            return $this->forward('common/error/error-deny');
+
+        $viewData = array(
+            'box_title' => "Update User",
+            'link_url' => site_url('user/edit/'.$user_id),
+            'cancel_url' => site_url('user/list')
+        );
+
+        $objGroup = new Group();
+        $rsGroups = $objGroup->getRowset();
+        $viewData['rsGroups'] = $rsGroups;
+
+        $oUser = new User();
+
+        if (Input::isPost())
+        {
+            // TODO : Check validate
+            $group_id = Input::post("group_id",array());
+            $group_id = implode(",", $group_id);
+
+            $data = array(
+                "username" => Input::post("username",""),
+                "display_name" => Input::post("display_name",""),
+                "email" => Input::post("email",""),
+                "group_id" => $group_id,
+                "active" => Input::post("active",0)
+            );
+
+            $reset_password = Input::post('reset_password',NULL);
+            if ($reset_password != NULL)
+            {
+                // TODO : Check validate password
+                $data['password'] = encryption(Input::post("pw",""));
+            }
+
+            $oUser->update($user_id,$data);
+
+            $currentUser = UserAuth::currentUser();
+            if ($user_id == $currentUser['id'])
+            {
+                if ($reset_password != NULL || $data['username'] != $currentUser['name'])
+                {
+                    // Reseted pw or change username => logout
+                    redirect("home/logout");
+                }
+            }
+
+            // Notify update successfully !
+            Session::setFlashData('notify_msg',array(
+                'msg_title' => "Notify",
+                'msg_code' => "success",
+                'msg_content' => "Update successfully !"));
+
+            redirect('user/list');
+        }
+
+        $rowUser = $oUser->get($user_id);
+
+        $viewData['rowUser'] = $rowUser;
+        $viewData['arrGroupIds'] = explode(",",$rowUser['group_id']);
+
+        $this->renderView('user/edit', $viewData);
+    }
+
+    public function deleteAction($user_id)
+    {
+//        if (!$this->_isModify)
+//            return $this->forward('error/error-deny');
 
         // -- Cannot delete current user --
-        $currentUser = $this->oAuth->currentUser();
+        $currentUser = UserAuth::currentUser();
         if($user_id == $currentUser['id'])
-            redirect("home/user/list");
+            redirect("user/list");
 
-		$oUser = new User();
-		$rowAffected = $oUser->delete($user_id);
+        $oUser = new User();
+        $rowAffected = $oUser->delete($user_id);
+        $msg_code = 'error';
+        $msg_content = 'Error delete this row !';
         if(!empty($rowAffected))
-            // TODO : Notify delete success
-            echo "success";
-        else
-            // TODO : Notify delete error
-            echo "error";
+        {
+            $msg_code = 'success';
+            $msg_content = 'Delete successfully !';
+        }
 
-		redirect("home/user/list");
-	}
-	
-	public function activeAction($user_id)
-	{
-		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+        // Notify update successfully !
+        Session::setFlashData('notify_msg',array(
+            'msg_title' => "Notify",
+            'msg_code' => $msg_code,
+            'msg_content' => $msg_content));
 
-		$oUser = new User();
-		$oUser->setActiveField($user_id);
-		redirect("home/user/list");	
-	}	
+        redirect("user/list");
+    }
 
+    public function activeAction($user_id)
+    {
+//        if (!$this->_isModify)
+//            return $this->forward('error/error-deny');
+
+        $oUser = new User();
+        $oUser->setActiveField($user_id);
+        redirect("user/list");
+    }
 }

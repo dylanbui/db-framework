@@ -93,6 +93,14 @@ class Application extends \TinyFw\Core\Application
 
         $this->oDispatcher->setControllerNamespace('Admin\Controller');
 
+        // -- Add router for Page module --
+        $routes = array();
+        $routes['page'] = array('path' => 'index/index', 'namespace' => 'Admin\Controller\Page');
+        $routes['page/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'Admin\Controller\Page');
+        $routes['page/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'Admin\Controller\Page');
+        $this->oDispatcher->setRoutes($routes);
+        // -- End --
+
         $this->oDispatcher->addPreRequest(new \TinyFw\Core\Request('common/check-login'));
 
         $this->oDispatcher->setDefaultUri('dashboard/show');

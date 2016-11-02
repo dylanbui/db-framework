@@ -6,6 +6,8 @@ use Admin\Lib\Support\UserAuth;
 use App\Lib\Core\FrontController;
 use TinyFw\Core\Controller;
 use TinyFw\Support\Input;
+use TinyFw\Support\Session;
+use TinyFw\Support\View;
 
 class CommonController extends Controller
 {
@@ -34,6 +36,19 @@ class CommonController extends Controller
             return $this->forward('common/login');
 		}
 
+        // Den dong nay thi user da login roi, ton tai session
+        $current_user = UserAuth::currentUser();
+        $notify_msg = Session::getFlashData('notify_msg');
+        if (empty($notify_msg))
+            $notify_msg = array('msg_title' => NULL ,'msg_content' => NULL ,'msg_code' => NULL);
+
+        $shareView = array(
+            'current_user' => $current_user,
+            '_isModify' => true,
+            'notify_msg' => $notify_msg
+        );
+
+        View::setVars($shareView);
 	}
 	
 	public function checkPermissionAction()
@@ -124,8 +139,6 @@ class CommonController extends Controller
     {
         UserAuth::logout();
         redirect();
-
-// 		redirect('dashboard/member/login');
     }
 
     public function error404Action()

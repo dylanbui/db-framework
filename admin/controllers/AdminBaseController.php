@@ -10,7 +10,9 @@ class AdminBaseController extends Controller
 
 	public function __construct()
 	{
-		parent::__construct();		
+		parent::__construct();
+//        // --- Set oView Params ---//
+//        $this->oView->oConfig = $this->oConfig;
 	}
 	
 	protected function detectModifyPermission($route)

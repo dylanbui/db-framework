@@ -4,8 +4,9 @@ namespace Admin\Controller;
 
 use Admin\Lib\Support\UserAuth;
 use TinyFw\Core\Controller;
+use TinyFw\Support\View;
 
-class DashboardController extends Controller
+class DashboardController extends AdminBaseController
 {
 
 	public function __construct()
@@ -52,16 +53,15 @@ class DashboardController extends Controller
 	public function permissionFormAction()
 	{
 		$acls = new Base_ModuleAcls(__APP_PATH.'/config/acls.php');
-		
-		
 		$this->renderView('dashboard/panel/permission');
 	}	
 	
 	public function renderLeftNavAction()
 	{
 		$menuInfo = require_once(__APP_PATH.'/config/left_menus.php');
-		$this->oView->menuInfo = $menuInfo;
-		return $this->oView->fetch('dashboard/panel/nav');
+        return View::fetch('dashboard/panel/nav', array('menuInfo' => $menuInfo));
+//		$this->oView->menuInfo = $menuInfo;
+//		return $this->oView->fetch('dashboard/panel/nav');
 	}	
 
 }

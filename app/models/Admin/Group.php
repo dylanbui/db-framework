@@ -1,8 +1,6 @@
 <?php
 
-namespace Admin\Model;
-
-use TinyFw\Core\Model;
+namespace App\Model\Base;
 
 class Group extends Model
 {

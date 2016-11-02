@@ -6,44 +6,44 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Dashboard - <?php echo $oConfig->config_values['application']['admin_header_title']; ?></title>
+        <title>Dashboard - admin_header_title</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link href='<?php echo __TEMPLATE_URL; ?>img/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+        <link href='<?php echo __TEMPLATE_URL; ?>/img/favicon.ico' rel='shortcut icon' type='image/x-icon'>
 
         <!--base css styles-->
-        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/bootstrap/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/normalize/normalize.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/assets/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/assets/normalize/normalize.css">
         
         <!--upload css styles-->
-		<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>assets/bootstrap-fileupload/bootstrap-fileupload.css" />        
+		<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
 
         <!--page specific css styles-->
-        <link rel="stylesheet" href="<?php echo __CSS_URL; ?>paging.css">
+        <link rel="stylesheet" href="<?php echo __CSS_URL; ?>/paging.css">
 
         <!--flaty css styles-->
-        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>css/flaty.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/css/flaty.css">
         <!--flaty css styles : panel item dashboard -->
-        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>css/panel-item-dashboard.css">
-        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>css/custom-flaty.css">
-        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>css/flaty-responsive.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/css/panel-item-dashboard.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/css/custom-flaty.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/css/flaty-responsive.css">
         
 		<!--validation css styles-->
-		<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/jquery-validation/css/cmxform.css">                
+		<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/assets/jquery-validation/css/cmxform.css">
 
-        <link rel="shortcut icon" href="<?php echo __TEMPLATE_URL; ?>img/favicon.html">
+        <link rel="shortcut icon" href="<?php echo __TEMPLATE_URL; ?>/img/favicon.html">
         
         <!--basic scripts-->
         <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>-->
-        <script>window.jQuery || document.write('<script src="<?php echo __TEMPLATE_URL; ?>assets/jquery/jquery-1.10.1.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="<?php echo __TEMPLATE_URL; ?>/assets/jquery/jquery-1.10.1.min.js"><\/script>')</script>
         
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/modernizr/modernizr-2.6.2.min.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/modernizr/modernizr-2.6.2.min.js"></script>
 
-        <script src="<?php echo __JS_URL; ?>ckeditor/ckeditor.js"></script>
+        <script src="<?php echo __JS_URL; ?>/ckeditor/ckeditor.js"></script>
         
     </head>
     <body>
@@ -111,10 +111,10 @@
             <div class="navbar-inner">
                 <div class="container-fluid">
                     <!-- BEGIN Brand -->
-                    <a href="<?php echo site_url($oConfig->config_values['application']['admin_default_uri']); ?>" class="brand">&nbsp;
+                    <a href="<?php echo site_url('admin_default_uri'); ?>" class="brand">&nbsp;
                         <small>
                             <i class="icon-desktop"></i>
-                            <?php echo $oConfig->config_values['application']['admin_header_title']; ?>
+                            admin_header_title
                         </small>
                     </a>
                     <!-- END Brand -->
@@ -131,7 +131,7 @@
                         <!-- BEGIN Button User -->
                         <li class="user-profile">
                             <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
-                                <!-- <img class="nav-user-photo" src="<?php echo __TEMPLATE_URL?>img/demo/avatar/avatar1.jpg" alt="Penny's Photo" /> -->
+                                <!-- <img class="nav-user-photo" src="<?php echo __TEMPLATE_URL?>/img/demo/avatar/avatar1.jpg" alt="Penny's Photo" /> -->
                                 <span class="hidden-phone" id="user_info">
                                     <?php echo h($current_user['display_name']); ?>
                                 </span>
@@ -146,21 +146,21 @@
                                 </li>
 
                                 <li>
-                                    <a href="<?php echo site_url('home/user/list'); ?>">
+                                    <a href="<?php echo site_url('user/list'); ?>">
                                         <i class="icon-cog"></i>
                                         Account Settings
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="<?php echo site_url('home/group/list'); ?>">
+                                    <a href="<?php echo site_url('group/list'); ?>">
                                         <i class="icon-group"></i>
                                         Groups Settings
                                     </a>
                                 </li>                                
 
                                 <li>
-                                    <a href="<?php echo site_url('home/user/edit/'.$current_user['id']); ?>">
+                                    <a href="<?php echo site_url('user/edit/'.$current_user['id']); ?>">
                                         <i class="icon-user"></i>
                                         Edit Profile
                                     </a>
@@ -193,7 +193,7 @@
                                 <li class="divider"></li>
 
                                 <li>
-                                    <a href="<?php echo site_url("common/home/logout"); ?>">
+                                    <a href="<?php echo site_url("common/logout"); ?>">
                                         <i class="icon-off"></i>
                                         Logout
                                     </a>
@@ -217,7 +217,8 @@
         
         	<!-- BEGIN Sidebar -->        
                 <?php //echo Module::run(new Request('home/dashboard/render-left-nav')); ?>
-                <?php echo (new \App\Lib\Core\Request('home/dashboard/render-left-nav'))->run(); ?>
+                <?php //echo (new \App\Lib\Core\Request('home/dashboard/render-left-nav'))->run(); ?>
+                <?php echo \TinyFw\Support\Request::run('dashboard/render-left-nav'); ?>
             <!-- END Sidebar -->
 
             
@@ -268,7 +269,8 @@
 				<!-- END Delete Modal Content -->					
                 
                 <footer>
-                    <p><?php echo $oConfig->config_values['application']['admin_footer_title']; ?></p>
+
+                    <p>admin_footer_title</p>
                 </footer>
 
                 <a id="btn-scrollup" class="btn btn-circle btn-large" href="#"><i class="icon-chevron-up"></i></a>
@@ -278,26 +280,26 @@
         </div>
         <!-- END Container -->
 
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/bootstrap/bootstrap.min.js"></script>
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/nicescroll/jquery.nicescroll.min.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap/bootstrap.min.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/nicescroll/jquery.nicescroll.min.js"></script>
         
         <!--upload javascript -->
-		<script src="<?php echo __TEMPLATE_URL; ?>assets/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+		<script src="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
 
         <!--page specific plugin scripts-->
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/flot/jquery.flot.js"></script>
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/flot/jquery.flot.resize.js"></script>
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/flot/jquery.flot.pie.js"></script>
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/flot/jquery.flot.stack.js"></script>
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/flot/jquery.flot.crosshair.js"></script>
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/flot/jquery.flot.tooltip.min.js"></script>
-        <script src="<?php echo __TEMPLATE_URL; ?>assets/sparkline/jquery.sparkline.min.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/flot/jquery.flot.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/flot/jquery.flot.resize.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/flot/jquery.flot.pie.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/flot/jquery.flot.stack.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/flot/jquery.flot.crosshair.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/flot/jquery.flot.tooltip.min.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/assets/sparkline/jquery.sparkline.min.js"></script>
 
         <!--flaty scripts-->
-        <script src="<?php echo __TEMPLATE_URL; ?>js/flaty.js"></script>
+        <script src="<?php echo __TEMPLATE_URL; ?>/js/flaty.js"></script>
         
 		<!--validation plugin scripts-->
-		<script src="<?php echo __TEMPLATE_URL; ?>assets/jquery-validation/dist/jquery.validate.min.js"></script>        
+		<script src="<?php echo __TEMPLATE_URL; ?>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 
     </body>
 </html>
