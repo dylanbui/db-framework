@@ -2,7 +2,7 @@
 
 namespace App\Model\Page;
 
-class Model extends \App\Lib\Core\Model
+class Model extends \TinyFw\Core\Model
 {
 	var $lang;
 		

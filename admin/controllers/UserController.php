@@ -3,8 +3,8 @@
 namespace Admin\Controller;
 
 use Admin\Lib\Support\UserAuth;
-use Admin\Model\Group;
-use Admin\Model\User;
+use App\Model\Admin\Group;
+use App\Model\Admin\User;
 use TinyFw\Support\Input;
 use TinyFw\Support\Session;
 

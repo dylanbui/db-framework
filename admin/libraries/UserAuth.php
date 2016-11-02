@@ -5,7 +5,7 @@
 
 namespace Admin\Lib;
 
-use Admin\Model\User;
+use App\Model\Admin\User;
 use TinyFw\Support\Session;
 
 class UserAuth extends User

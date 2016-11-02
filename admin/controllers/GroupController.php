@@ -3,8 +3,9 @@
 namespace Admin\Controller;
 
 
-use Admin\Model\Group;
-use Admin\Model\ModuleAcls;
+use App\Model\Admin\Group;
+use App\Model\Admin\ModuleAcls;
+use App\Model\Page\Configure;
 
 class GroupController extends AdminBaseController
 {
@@ -95,7 +96,7 @@ class GroupController extends AdminBaseController
 			$objGroup = new Group();
 			$last_id = $objGroup->insert($data);
 			
-			redirect("home/group/list");
+			redirect("group/list");
 		}
 		
 		$this->oView->box_title = "Add Group";
@@ -103,10 +104,10 @@ class GroupController extends AdminBaseController
 		$acls = new ModuleAcls(__APP_PATH.'/config/acls.php');
 		
 		$this->oView->arrAcls = $acls->getModuleAcls();
-		$this->oView->link_url = site_url('home/group/add');
-		$this->oView->cancel_url = site_url('home/group/list');
-		
-		$objPageConf = new \App\Model\Page\Configure();
+		$this->oView->link_url = site_url('group/add');
+		$this->oView->cancel_url = site_url('group/list');
+
+		$objPageConf = new Configure();
 		$this->oView->rsPageConfig = $objPageConf->getRowset();
 		
 		$this->oView->arrAclResources = array('access'=>array(), 'modify'=>array());		
@@ -116,8 +117,8 @@ class GroupController extends AdminBaseController
 	
 	public function editAction($group_id)
 	{
-		if (!$this->_isModify)
-			return $this->forward('error/error-deny');
+//		if (!$this->_isModify)
+//			return $this->forward('error/error-deny');
 				
 		// TODO : Check validate
 		$objGroup = new Group();
@@ -148,18 +149,18 @@ class GroupController extends AdminBaseController
 
 			$objGroup->update($group_id,$data);
 			
-			redirect("home/group/list");
+			redirect("group/list");
 		}		
 		
 		$this->oView->box_title = "Edit Group";
 		
 		$acls = new ModuleAcls(__APP_PATH.'/config/acls.php');
 		$this->oView->arrAcls = $acls->getModuleAcls();
-		$this->oView->link_url = site_url('home/group/edit/'.$group_id);
+		$this->oView->link_url = site_url('group/edit/'.$group_id);
 		$this->oView->group_id = $group_id;
-		$this->oView->cancel_url = site_url('home/group/list');
+		$this->oView->cancel_url = site_url('group/list');
 		
-		$objPageConf = new \App\Model\Page\Configure();
+		$objPageConf = new Configure();
 		$this->oView->rsPageConfig = $objPageConf->getRowset();
 		
 		$rowGroup = $objGroup->get($group_id);
@@ -167,30 +168,30 @@ class GroupController extends AdminBaseController
 		$this->oView->rowGroup = $rowGroup;
 		$this->oView->arrAclResources = unserialize($rowGroup['acl_resources']);
 
-		$this->renderView('home/group/_form');
+		$this->renderView('group/_form');
 	}
 	
 	public function activeAction($group_id)
 	{
-		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+//		if (!$this->_isModify)
+//			return $this->forward('error/error-deny');
 				
 		// TODO : Check validate
 		$objGroup = new Group();
 		$objGroup->setActiveField($group_id);
-		redirect("home/group/list");
+		redirect("group/list");
 	}
 	
 	public function deleteAction($group_id)
 	{
-		if (!$this->_isModify)
-			return $this->forward('common/error/error-deny');
+//		if (!$this->_isModify)
+//			return $this->forward('error/error-deny');
 				
 		// TODO : Check validate
 		$objGroup = new Group();
 		$rowGroup = $objGroup->delete($group_id);
 	
-		redirect("home/group/list");
+		redirect("group/list");
 	}	
 
 }

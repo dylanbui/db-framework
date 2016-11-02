@@ -7,7 +7,7 @@ class Configure extends Model
 	protected $_table_name = TB_PAGE_CONFIGURE;
 	protected $_primary_key = 'id';
 	
-	function Page_Configure()
+	function __construct()
 	{
 		parent::__construct();
 	}
