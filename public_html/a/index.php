@@ -18,13 +18,12 @@
  	
  	// ---- Khong Thay Doi ---- // 	
  	define ('__ASSET_URL', __PUBLIC_HTML.'assets');
-    define ('__COMPONENT_URL', __ASSET_URL.'/plugins');
- 	define ('__IMAGE_URL', __ASSET_URL.'/images');
- 	define ('__CSS_URL', __ASSET_URL.'/css');
- 	define ('__JS_URL', __ASSET_URL.'/js');
 
     define ('__TEMPLATE_URL', __PUBLIC_HTML.'a/flaty-template');
- 	
+    define ('__IMAGE_URL', __PUBLIC_HTML.'a/images/');
+    define ('__CSS_URL', __PUBLIC_HTML.'a/stylesheets/');
+    define ('__JS_URL', __PUBLIC_HTML.'a/javascripts/');
+
 	// the application directory path 
 	define ('__APP_PATH', __SITE_PATH.'/admin');
 	define ('__VIEW_PATH', __APP_PATH.'/views');	

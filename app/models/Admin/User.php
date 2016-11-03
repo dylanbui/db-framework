@@ -2,8 +2,6 @@
 
 namespace App\Model\Admin;
 
-use TinyFw\Core\Model;
-
 class User extends Model
 {
 	protected $_table_name = TB_USER;

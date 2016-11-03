@@ -16,6 +16,10 @@ $config['application']['config_compression'] 		= 5; //; config_compression = 0 -
 $config['application']['show_benchmark']			= TRUE;
 $config['application']['enable_seo_url'] 			= TRUE;
 
+$config['application']['admin_default_uri'] 		= "dashboard/show";
+$config['application']['admin_header_title'] 		= "FLATY Admin";
+$config['application']['admin_footer_title'] 		= "2016 © FLATY Admin Template.";
+
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- MASTER DATABASE ---//
 

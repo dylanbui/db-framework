@@ -59,7 +59,7 @@ class DashboardController extends AdminBaseController
 	public function renderLeftNavAction()
 	{
 		$menuInfo = require_once(__APP_PATH.'/config/left_menus.php');
-        return View::fetch('dashboard/panel/nav', array('menuInfo' => $menuInfo));
+        return View::fetch('dashboard/nav', array('menuInfo' => $menuInfo));
 //		$this->oView->menuInfo = $menuInfo;
 //		return $this->oView->fetch('dashboard/panel/nav');
 	}	

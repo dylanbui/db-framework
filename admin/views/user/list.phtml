@@ -61,8 +61,7 @@
                                         <td><?php echo h($rowUser['email']); ?></td>
                                         <td>
                                             <?php
-                                            $obj = new \Admin\Model\Group();
-                                            $rsGroup = $obj->getRowset("id IN ({$rowUser['group_id']})", NULL, 'level DESC');
+                                            $rsGroup = $objGroup->getRowset("id IN ({$rowUser['group_id']})", NULL, 'level DESC');
                                             foreach ($rsGroup as $group)
                                                 echo "<span class='badge badge-success'>{$group['group_name']}</span>&nbsp;";
                                             ?>

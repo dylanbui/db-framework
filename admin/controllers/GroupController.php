@@ -2,10 +2,11 @@
 
 namespace Admin\Controller;
 
-
 use App\Model\Admin\Group;
 use App\Model\Admin\ModuleAcls;
 use App\Model\Page\Configure;
+use TinyFw\Helper\Text;
+use TinyFw\Support\Input;
 
 class GroupController extends AdminBaseController
 {
@@ -68,27 +69,23 @@ class GroupController extends AdminBaseController
 //		if (!$this->_isModify)
 //			return $this->forward('error/error-deny');
 				
-		// TODO : Check validate
 		if ($this->oInput->isPost())
 		{
-			$group_name = $this->oInput->post('group_name','');
-			$role = str2url(trim($group_name),"_");
+			$group_name = Input::post('group_name','');
+			$role = Text::strToUrl(trim($group_name),"_");
 			
-			$permission = $this->oInput->post('permission',NULL);
-			$is_admin = $this->oInput->post('is_admin','0');
+			$permission = Input::post('permission',NULL);
+			$is_admin = Input::post('is_admin','0');
 			
 			// TODO : Check validate
-			if ($permission == NULL)
-			{
-				
-			}
+			if ($permission == NULL) { }
 			
 			$permission = serialize($permission);
 			
 			$data = array(
 				"role" => $role,					
 				"group_name" => $group_name,
-				"level" => $this->oInput->post('level','0'),
+				"level" => Input::post('level','0'),
 				"is_admin" => $is_admin,
 				"acl_resources" => $permission					
 			);
@@ -98,21 +95,19 @@ class GroupController extends AdminBaseController
 			
 			redirect("group/list");
 		}
-		
-		$this->oView->box_title = "Add Group";
+
+        $viewData['box_title'] = "Add Group";
 		
 		$acls = new ModuleAcls(__APP_PATH.'/config/acls.php');
-		
-		$this->oView->arrAcls = $acls->getModuleAcls();
-		$this->oView->link_url = site_url('group/add');
-		$this->oView->cancel_url = site_url('group/list');
+        $viewData['arrAcls'] = $acls->getModuleAcls();
+        $viewData['link_url'] = site_url('group/add');
+        $viewData['cancel_url'] = site_url('group/list');
 
 		$objPageConf = new Configure();
-		$this->oView->rsPageConfig = $objPageConf->getRowset();
-		
-		$this->oView->arrAclResources = array('access'=>array(), 'modify'=>array());		
+        $viewData['rsPageConfig'] = $objPageConf->getRowset();
+        $viewData['arrAclResources'] = array('access'=>array(), 'modify'=>array());
 
-		$this->renderView('group/_form');
+		$this->renderView('group/_form', $viewData);
 	}
 	
 	public function editAction($group_id)
@@ -125,50 +120,45 @@ class GroupController extends AdminBaseController
 		
 		if ($this->oInput->isPost())
 		{
-			$group_name = $this->oInput->post('group_name','');
+			$group_name = Input::post('group_name','');
             // -- Khong cho thay doi role --
-			$permission = $this->oInput->post('permission',NULL);
-			$is_admin = $this->oInput->post('is_admin','0');
-            $active = $this->oInput->post('active','0');
+			$permission = Input::post('permission',NULL);
+			$is_admin = Input::post('is_admin','0');
+            $active = Input::post('active','0');
 				
 			// TODO : Check validate
-			if ($permission == NULL)
-			{
-		
-			}
+			if ($permission == NULL){}
 				
 			$permission = serialize($permission);
 				
 			$data = array(
 					"group_name" => $group_name,
-					"level" => $this->oInput->post('level','0'),
+					"level" => Input::post('level','0'),
 					"is_admin" => $is_admin,
                     "active" => $active,
 					"acl_resources" => $permission
 			);
 
 			$objGroup->update($group_id,$data);
-			
 			redirect("group/list");
 		}		
 		
-		$this->oView->box_title = "Edit Group";
+        $viewData['box_title'] = "Edit Group";
 		
 		$acls = new ModuleAcls(__APP_PATH.'/config/acls.php');
-		$this->oView->arrAcls = $acls->getModuleAcls();
-		$this->oView->link_url = site_url('group/edit/'.$group_id);
-		$this->oView->group_id = $group_id;
-		$this->oView->cancel_url = site_url('group/list');
-		
-		$objPageConf = new Configure();
-		$this->oView->rsPageConfig = $objPageConf->getRowset();
-		
-		$rowGroup = $objGroup->get($group_id);
-		
-		$this->oView->rowGroup = $rowGroup;
-		$this->oView->arrAclResources = unserialize($rowGroup['acl_resources']);
+        $viewData['arrAcls'] = $acls->getModuleAcls();
+        $viewData['link_url'] = site_url('group/edit/'.$group_id);
+        $viewData['group_id'] = $group_id;
+        $viewData['cancel_url'] = site_url('group/list');
 
-		$this->renderView('group/_form');
+		$objPageConf = new Configure();
+        $viewData['rsPageConfig'] = $objPageConf->getRowset();
+
+		$rowGroup = $objGroup->get($group_id);
+        $viewData['rowGroup'] = $rowGroup;
+        $viewData['arrAclResources'] = unserialize($rowGroup['acl_resources']);
+
+		$this->renderView('group/_form', $viewData);
 	}
 	
 	public function activeAction($group_id)

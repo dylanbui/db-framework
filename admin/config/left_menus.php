@@ -95,21 +95,21 @@ return array(
 							"name" => "Fb Members",
 							"dashboard_btn" => "btn-primary",
 							"icon" => "icon-facebook",
-							"link" => "home/member/list"
+							"link" => "member/list"
 					),
 					array(
 							"key" => "home/user",
 							"name" => "Users",
 							"dashboard_btn" => "btn-primary",
 							"icon" => "icon-user",
-							"link" => "home/user/list"
+							"link" => "user/list"
 					),
 					array(
 							"key" => "home/group",
 							"name" => "Groups",
 							"dashboard_btn" => "btn-primary",
 							"icon" => "icon-group",
-							"link" => "home/group/list"
+							"link" => "group/list"
 					),										
 					array(
 							"key" => "page/configure",
@@ -123,14 +123,14 @@ return array(
 							"name" => "Backup Database",
 							"dashboard_btn" => "btn-primary",
 							"icon" => "icon-cloud-download",
-							"link" => "home/config-system/backup-db"
+							"link" => "config-system/backup-db"
 					),					
 					array(
 							"key" => "home/config-system",
 							"name" => "Configure System",
 							"dashboard_btn" => "btn-primary",
 							"icon" => "icon-gears",
-							"link" => "home/config-system/list"
+							"link" => "config-system/list"
 					)										
 			),			
 			

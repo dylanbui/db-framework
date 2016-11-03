@@ -2,8 +2,6 @@
 
 namespace App\Model\Admin;
 
-use TinyFw\Core\Model;
-
 class Group extends Model
 {
 	protected $_table_name = TB_USER_GROUP;

@@ -28,7 +28,10 @@ class UserController extends AdminBaseController
     {
         $objUser = new User();
         $rsUsers = $objUser->getRowset();
-        $this->renderView('user/list', array('rsUsers' => $rsUsers));
+        $this->renderView('user/list', array(
+            'rsUsers' => $rsUsers,
+            'objGroup' => new Group()
+        ));
     }
 
     public function addAction()

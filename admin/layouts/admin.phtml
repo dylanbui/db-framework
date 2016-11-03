@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Dashboard - admin_header_title</title>
+        <title>Dashboard - <?= $admin_header_title; ?></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -111,10 +111,10 @@
             <div class="navbar-inner">
                 <div class="container-fluid">
                     <!-- BEGIN Brand -->
-                    <a href="<?php echo site_url('admin_default_uri'); ?>" class="brand">&nbsp;
+                    <a href="<?php echo site_url($admin_default_uri); ?>" class="brand">&nbsp;
                         <small>
                             <i class="icon-desktop"></i>
-                            admin_header_title
+                            <?= $admin_header_title; ?>
                         </small>
                     </a>
                     <!-- END Brand -->
@@ -269,8 +269,7 @@
 				<!-- END Delete Modal Content -->					
                 
                 <footer>
-
-                    <p>admin_footer_title</p>
+                    <p><?= $admin_footer_title; ?></p>
                 </footer>
 
                 <a id="btn-scrollup" class="btn btn-circle btn-large" href="#"><i class="icon-chevron-up"></i></a>

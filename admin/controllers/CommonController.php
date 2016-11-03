@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use Admin\Lib\Support\UserAuth;
 use App\Lib\Core\FrontController;
 use TinyFw\Core\Controller;
+use TinyFw\Support\Config;
 use TinyFw\Support\Input;
 use TinyFw\Support\Session;
 use TinyFw\Support\View;
@@ -42,7 +43,12 @@ class CommonController extends Controller
         if (empty($notify_msg))
             $notify_msg = array('msg_title' => NULL ,'msg_content' => NULL ,'msg_code' => NULL);
 
+        $configApp = Config::get('application');
+
         $shareView = array(
+            'admin_default_uri' => $configApp['admin_default_uri'],
+            'admin_header_title' => $configApp['admin_header_title'],
+            'admin_footer_title' => $configApp['admin_footer_title'],
             'current_user' => $current_user,
             '_isModify' => true,
             'notify_msg' => $notify_msg

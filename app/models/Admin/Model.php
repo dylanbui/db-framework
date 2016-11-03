@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Base;
+namespace App\Model\Admin;
 
 class Model extends \TinyFw\Core\Model
 {
