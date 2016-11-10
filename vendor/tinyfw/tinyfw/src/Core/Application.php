@@ -54,10 +54,10 @@ class Application extends Container
     {
         // Create configure object
         $oConfig = new Config();
-
         // -- Load default config file --
-        if(file_exists(site_path('/app/config/config.php')))
-            $oConfig->load(site_path('/app/config/config.php'));
+        $oConfig->load(site_path('/app/config/config.php'));
+        // -- Load routes config file --
+        $oConfig->load(site_path('/app/config/routes.php'), 'routes');
 
         $this->set('oConfig', $oConfig);
         $this->appConfig = $oConfig->get('application');

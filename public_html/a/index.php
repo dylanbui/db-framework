@@ -82,6 +82,11 @@ class Application extends \TinyFw\Core\Application
         // -- Register namesapce --
         $this->oLoader->register();
 
+        // -- Load acls file --
+        $this->oConfig->load(site_path('/admin/config/acls.php'), 'acls');
+        // -- Load left_menu file --
+        $this->oConfig->load(site_path('/admin/config/left_menus.php'), 'left_menus');
+
         $this->set('oUserAuth', function () {
             // $oUserAuth
             $oUserAuth = new \Admin\Lib\UserAuth();
