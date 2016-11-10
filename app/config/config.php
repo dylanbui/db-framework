@@ -165,29 +165,33 @@ $config['hooks']['post_controller'][] = array(
 |
 */
 
+// http://www.codeigniter.com/user_guide/general/routing.html
+
 // $config['routes'][''] 								= "";
 // $config['routes']['(:any)'] = "router/$1";
 // $config['routes']['products/(:any)'] = "category/$1";
 // $config['routes']['products/([a-z]+)/(\d+).html'] = "$1/abc_$2";
 // $config['routes']['links/([a-zA-Z0-9_-]+)'] = "site/index/links/$1";
 
-$config['routes']['email/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Email');
-
-$config['routes']['site-index/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\SiteIndex');
-$config['routes']['site-index/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\SiteIndex');
+//$config['routes']['email/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Email');
+//
+//$config['routes']['site-index/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\SiteIndex');
+//$config['routes']['site-index/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\SiteIndex');
 
 //$config['routes']['links/chuyen-tieng-viet/(:num)'] = "site-index/index/links-item";
 //$config['routes']['links/chuyen-tieng-viet'] = "site-index/index/links-item";
 
-$config['routes']['links/(:any)'] = "site-index/index/links/$1";
-$config['routes']['load/(:any)-post(:num).htm'] = "site-index/index/load-router/$1/$2";
-$config['routes']['load/(:any)-post(:num).html'] = "site-index/index/load-router/$1/$2";
-
+$config['routes']['links/(:any)'] = "site-index/links?link=$1";
+$config['routes']['links/(:any).html'] = "site-index/links?html=$1";
+$config['routes']['my-site/(:name)/(:any).html'] = "site-index/links/$2?html=$1";
+//
+//$config['routes']['load/(:any)-post(:num).htm'] = "site-index/index/load-router/$1/$2";
+//$config['routes']['load/(:any)-post(:num).html'] = "site-index/index/load-router/$1/$2";
+//
 // -- Config router for namespace --
 $config['routes']['paging'] = array('path' => 'index/index', 'namespace' => 'App\Controller\Paging');
 $config['routes']['paging/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\Paging');
 $config['routes']['paging/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Paging');
-
 
 // $config['routes']['links/(.*?)'] = "site/index/links/$1";
  
@@ -195,6 +199,23 @@ $config['routes']['paging/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3',
 // $config['routes']['blog/joe'] 						= "blogs/users/34";
 // $config['routes']['product/(:any)/(:any)'] 			= "catalog/product_lookup/$1/$2";
 // $config['routes']['product/(:num)'] 				= "catalog/product_lookup_by_id/$1";
+
+$config['routes']['blog/(:num)'] 						= function ($id)
+{
+    return 'catalog/product_view/' . $id;
+};
+
+$config['routes']['blog/(:name)/(:num)'] 				= function ($product_type, $id)
+{
+    $result['namespace'] = 'App\Controller\SiteIndex';
+    $result['path'] = 'catalog/product_edit/'.strtolower($product_type).'/'.$id.'/'.$_GET['title'];
+    return $result;
+};
+
+$config['routes']['product/(:any)']['GET']             = "catalog/product_lookup_by_id_get/$1";
+$config['routes']['product/(:any)']['POST']             = "catalog/product_lookup_by_id_post/$1";
+$config['routes']['product/(:any)']['PUT']             = "catalog/product_lookup_by_id_put/$1";
+$config['routes']['product/(:any)']['DELETE']             = "catalog/product_lookup_by_id_delete/$1";
 
 
 return $config;

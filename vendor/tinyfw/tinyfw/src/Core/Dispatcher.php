@@ -2,7 +2,7 @@
 
 /**
  *
- * @Front Controller class
+ * @Dispatcher Controller class
  *
  * @package Core
  *
@@ -19,6 +19,8 @@ class Dispatcher
         ':other'    => '[/]{0,1}[A-Za-z0-9\-\\/\.]+', // => maybe same (:any)
         ':any'      => '.+'
     );
+
+    private $segments = array();
 
     protected $_defaultUri = 'index/index';
     protected $_controllerNamespace = 'App\Controller';
@@ -81,9 +83,8 @@ class Dispatcher
 	{
         // -- Load URL --
         $uri = empty($_GET['_url']) ? $this->_defaultUri : $_GET['_url'];
-        $_GET['_url'] = '/'.str_replace(array('//', '../'), '/', trim($uri, '/'));
-        $_GET['_url_params'] = array();
-        $_GET['_namespace'] = $this->_controllerNamespace;
+        $this->segments['_url'] = '/'.str_replace(array('//', '../'), '/', trim($uri, '/'));
+        $this->segments['_namespace'] = $this->_controllerNamespace;
 
 		// Load pre config router
         // Loop through the route array looking for wild-cards
@@ -91,9 +92,10 @@ class Dispatcher
             $this->loadPreRouter($this->_routes);
 
         // -- Load current request --
-        $this->_currentRequest = new Request($_GET['_url'], array(), $_GET['_namespace']);
-        if (!empty($_GET['_url_params']))
-            $this->_currentRequest->setArgs($_GET['_url_params']);
+        $this->_currentRequest = new Request($this->segments['_url'], array(), $this->segments['_namespace']);
+        // -- Khong su dung _url_params lam params --
+//        if (!empty($this->segments['_url_params']))
+//            $this->_currentRequest->setArgs($this->segments['_url_params']);
 
         // -- Save current Request to Register --
         Container::$_container['oRequest'] = $this->_currentRequest;
@@ -124,15 +126,31 @@ class Dispatcher
 
     private function loadPreRouter($routes)
     {
-        $uri = trim($_GET['_url'],'/');
+        $uri = trim($this->segments['_url'],'/');
+
+        // Get HTTP verb
+        $http_verb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
 
         foreach ($routes as $key => $val)
         {
+
+            // Check if route format is using HTTP verbs
+            if (is_array($val))
+            {
+                $val = array_change_key_case($val, CASE_LOWER);
+                if (isset($val[$http_verb]))
+                {
+                    $val = $val[$http_verb];
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
             // -- Thong tin router la 1 array --
             if (!is_array($val))
                 $val = array('path' => $val, 'namespace' => $this->_controllerNamespace);
-
-            $path = $val['path'];
 
             // Convert wildcards to RegEx
             $key = str_replace(array_keys($this->patterns), array_values($this->patterns), $key);
@@ -140,19 +158,30 @@ class Dispatcher
             // Does the RegEx match?
             if (preg_match('#^'.$key.'$#', $uri, $matches))
             {
-                // Do we have a back-reference?
-                if (strpos($path, '$') !== FALSE AND strpos($key, '(') !== FALSE)
+                // Remove the original string from the matches array.
+                array_shift($matches);
+
+                // Are we using callbacks to process back-references?
+                if ( ! is_string($val['path']) && is_callable($val['path']))
                 {
-                    $path = preg_replace('#^'.$key.'$#', $path, $uri);
+                    // Execute the callback using the values in matches as its parameters.
+                    $result = call_user_func_array($val['path'], $matches);
+                    if (is_array($result))
+                        $val = $result;
+                    else
+                        $val['path'] = $result;
+                }
+                else if (strpos($val['path'], '$') !== FALSE AND strpos($key, '(') !== FALSE) // Do we have a back-reference?
+                {
+                    $val['path'] = preg_replace('#^'.$key.'$#', $val['path'], $uri);
                 }
 
                 // -- Save namespace --
-                $_GET['_namespace'] = $val['namespace'];
+                $this->segments['_namespace'] = $val['namespace'];
                 // -- Save path --
-                $_GET['_url'] = $path;
-                // -- Remove item first --
-                array_shift($matches);
-                $_GET['_url_params'] = $matches;
+                $this->segments['_url'] = $val['path'];
+                // -- Matches as its parameters --
+                $this->segments['_url_params'] = $matches;
 
                 // -- Lay cai match dau tien --
                 return;

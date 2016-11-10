@@ -19,6 +19,14 @@ Class PageController Extends Controller
 	    $this->oView->title = 'Welcome to Bui Van Tien Duc MVC';
 	    $this->renderView('paging/page/index');
 	}
+
+    public function showAction()
+    {
+        echo "<pre>";
+        print_r($_GET);
+        echo "</pre>";
+        exit();
+    }
 	
 	public function paginatorAction($offset = 0) 
 	{
