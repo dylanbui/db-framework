@@ -25,9 +25,9 @@ final class Config
             return false;
 
         if (is_null($key))
-            $this->config_values = require_once($file_config);
+            $this->config_values = require($file_config);
         else
-            $this->config_values[$key] = require_once($file_config);
+            $this->config_values[$key] = require($file_config);
 
         return true;
     }
@@ -53,13 +53,14 @@ final class Config
      * @get variables
      *
      * @param mixed $key
+     * @param mixed $default
      *
      * @return mixed
      *
      */
-    public function get($key)
+    public function get($key, $default = null)
     {
-        return (isset($this->config_values[$key]) ? $this->config_values[$key] : NULL);
+        return (isset($this->config_values[$key]) ? $this->config_values[$key] : $default);
     }
 
 	/**

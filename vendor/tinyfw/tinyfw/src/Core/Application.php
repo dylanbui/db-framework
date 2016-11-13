@@ -80,8 +80,6 @@ class Application extends Container
             $oView = new View('default/default');
             $oView->setTemplateDir(__VIEW_PATH);
             $oView->setLayoutDir(__LAYOUT_PATH);
-//            $oView->setTemplateDir(site_path('/app/views'));
-//            $oView->setLayoutDir(site_path('/app/layouts'));
             return $oView;
         });
 
@@ -96,7 +94,7 @@ class Application extends Container
             // Dispatcher
             $oDispatcher = new Dispatcher(self::DEFAULT_NAMESPACE);
             // Add Hook Config
-            $hookConfig = $oConfig->get('hooks');
+            $hookConfig = $oConfig->get('hooks', array());
             foreach (array('pre_controller', 'post_controller') as $hookName)
             {
                 if (empty($hookConfig[$hookName]))
@@ -113,7 +111,7 @@ class Application extends Container
                 }
             }
             // Set Routes
-            $oDispatcher->setRoutes($oConfig->get('routes'));
+            $oDispatcher->setRoutes($oConfig->get('routes', array()));
             // Set default URI
             $oDispatcher->setDefaultUri($oConfig->get('application')['default_uri']);
             return $oDispatcher;

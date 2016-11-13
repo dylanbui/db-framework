@@ -27,7 +27,7 @@ class ModuleAcls {
 	 */
 	public function __construct($acls_file_path = null)
 	{
-		$this->_acls = require_once($acls_file_path);
+		$this->_acls = require($acls_file_path);
 	}
 	
 	/**

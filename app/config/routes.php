@@ -34,6 +34,11 @@ $routes['paging'] = array('path' => 'index/index', 'namespace' => 'App\Controlle
 $routes['paging/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\Paging');
 $routes['paging/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Paging');
 
+
+
+
+
+
 // $routes['links/(.*?)'] = "site/index/links/$1";
  
 // $routes['journals'] 						= "blogs";
