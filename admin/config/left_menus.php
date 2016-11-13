@@ -86,13 +86,13 @@ return array(
 	),
 		
 	"config-system" => array(
-			"name" => "Configure System",
+			"name" => "Functions System",
 			"icon" => "icon-gears",
             // primary, green, red, yellow
 			"sub_menus" => array(
 					array(
 							"key" => "home/member",
-							"name" => "Fb Members",
+							"name" => "Members",
 							"dashboard_btn" => "btn-primary",
 							"icon" => "icon-facebook",
 							"link" => "member/list"
