@@ -1,16 +1,16 @@
 <!-- Add fancyBox main JS and CSS files -->
-<script type="text/javascript" src="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.js?v=2.1.5"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.css?v=2.1.5" media="screen" />
+<script type="text/javascript" src="<?php echo __JS_URL; ?>/fancyBox/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo __JS_URL; ?>/fancyBox/jquery.fancybox.css?v=2.1.5" media="screen" />
 
 <!--page specific css styles-->
-<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/css/prettyPhoto.css">
+<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>/assets/prettyPhoto/css/prettyPhoto.css">
 
 <!--bootstrap-datepicker-->
-<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>assets/bootstrap-datepicker/css/datepicker.css" />
-<script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap-datepicker/css/datepicker.css" />
+<script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 <!-- Add MultiFile library -->
-<script type="text/javascript" src="<?php echo __JS_URL; ?>jquery.MultiFile.js"></script>
+<script type="text/javascript" src="<?php echo __JS_URL; ?>/jquery.MultiFile.js"></script>
 
 <div class="content">
 
@@ -26,7 +26,7 @@
     <div class="container-fluid">
         <div class="row-fluid">
 
-            <?php //echo \App\Helper\AdFunc::showMessage($notify_msg['msg_title'], $notify_msg['msg_code'] ,$notify_msg['msg_content']); ?>
+            <?php //echo \Admin\Helper\AdFunc::showMessage($notify_msg['msg_title'], $notify_msg['msg_code'] ,$notify_msg['msg_content']); ?>
 
             <form id="validation-form" method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered" action="<?php echo $form_link; ?>">
 
@@ -78,7 +78,7 @@
                                             </label>
                                             <div class="controls">
                                                 <?php
-                                                echo \App\Helper\AdFunc::loadDefineInput($fValue, "main_field[{$fKey}]", df($dataContent['main_field'][$fKey]));
+                                                echo \Admin\Helper\AdFunc::loadDefineInput($fValue, "main_field[{$fKey}]", df($dataContent['main_field'][$fKey]));
                                                 ?>
                                             </div>
                                         </div>
@@ -123,7 +123,7 @@
                                                                 ?>
                                                             </label>
                                                             <div class="controls">
-                                                                <?php echo \App\Helper\AdFunc::loadDefineInput($fValue, "ln_field[{$code}][{$fKey}]", df($dataContent['ln_field'][$code][$fKey])); ?>
+                                                                <?php echo \Admin\Helper\AdFunc::loadDefineInput($fValue, "ln_field[{$code}][{$fKey}]", df($dataContent['ln_field'][$code][$fKey])); ?>
                                                             </div>
                                                         </div>
 
@@ -223,7 +223,7 @@
                                 <div class="control-group">
                                     <label class="control-label text-info">Active</label>
                                     <div class="controls">
-                                        <input type="checkbox" id="main_field[active]" name="main_field[active]" value="1" <?php echo \App\Helper\AdFunc::checkOrSelectInput($dataContent['main_field']['active']); ?>>
+                                        <input type="checkbox" id="main_field[active]" name="main_field[active]" value="1" <?php echo \Admin\Helper\AdFunc::checkOrSelectInput($dataContent['main_field']['active']); ?>>
                                     </div>
                                 </div>
 
@@ -321,4 +321,4 @@
 
 
 <!--page specific plugin scripts-->
-<script src="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>
+<script src="<?php echo __TEMPLATE_URL; ?>/assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>

@@ -2,12 +2,14 @@
 
 namespace Admin\Controller\Page;
 
+use Admin\Controller\AdminBaseController;
 use App\Model\Page\Configure,
 	App\Model\Page\Gallery,
 	App\Lib\UploadLib,
 	App\Lib\ImageLib;
+use TinyFw\Support\Response;
 
-class GalleryController extends \Admin\Controller\AdminController
+class GalleryController extends AdminBaseController
 {
 	var $_cfg_upload_file;
 
@@ -16,7 +18,7 @@ class GalleryController extends \Admin\Controller\AdminController
 		parent::__construct();
 		
 		$this->_cfg_upload_file = array();
-		$this->_cfg_upload_file['upload_path'] = __UPLOAD_GALLERY_PATH;
+		$this->_cfg_upload_file['upload_path'] = __UPLOAD_GALLERY_PATH.'/';
 		$this->_cfg_upload_file['allowed_types'] = 'gif|jpg|png';
 		
 	}
@@ -44,12 +46,12 @@ class GalleryController extends \Admin\Controller\AdminController
 		foreach ($rsGaImgs as $image)
 		{
 			$image['page_id'] = $page_id;
-			$strHtml .= $this->oView->fetch("page/gallery/image_item",$image);
+			$strHtml .= $this->oView->fetch("page/gallery/_image_item",$image);
 		}
 		
 		$this->oView->strHtml = $strHtml;
         $this->oView->numberImages = count($rsGaImgs);
-		$this->renderView('page/gallery/show', "admin/layout_iframe");
+		$this->renderView('page/gallery/show', array(), "layout_iframe");
 	}
 	
 	public function uploadImageAction($page_id, $content_id)
@@ -80,7 +82,7 @@ class GalleryController extends \Admin\Controller\AdminController
 			exit();
 		}
 	
-		$this->renderView('page/gallery/test-upload', "admin/layout_iframe");
+		$this->renderView('page/gallery/test-upload', array(), "layout_iframe");
 	}
 
 	public function deleteImageAction($page_id, $content_id, $gallery_id)
@@ -98,12 +100,13 @@ class GalleryController extends \Admin\Controller\AdminController
         // TODO : Validate Params
         $objGallery = new Gallery();
         $objGallery->deleteImageGallery($gallery_id);
-        echo "Done";
-        exit();
+
+        Response::setOutputJson(array('msg' => 'Done'));
     }
 
 	public function sortOrderAction()
 	{
+	    $arr = array('msg' => 'Fail');
 		if($this->oInput->isPost())
 		{
 			$i = 0;
@@ -114,9 +117,9 @@ class GalleryController extends \Admin\Controller\AdminController
 				$data['sort_order'] = $i;
 				$objGallery->update($id, $data);
 			}
-			echo "Done";
+            $arr['msg'] = 'Done';
 		}
-		exit();
+        Response::setOutputJson($arr);
 	}
 	
 	public function testUploadAction($page_id, $content_id)
@@ -154,7 +157,7 @@ class GalleryController extends \Admin\Controller\AdminController
 	private function doUploadAndCrop()
 	{
 		$config = array();
-		$config['upload_path'] = __UPLOAD_DATA_PATH;
+		$config['upload_path'] = __UPLOAD_DATA_PATH.'/';
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['file_name']  = 'test_'.time();
 		$config['overwrite'] = TRUE;
@@ -172,7 +175,7 @@ class GalleryController extends \Admin\Controller\AdminController
 	
 		$upload_data = $uploadLib->data();
 		$image_config["source_image"] = $upload_data["full_path"];
-		$image_config['new_image'] = $upload_data["file_path"] . 'crop_' . $upload_data['file_name'];
+		$image_config['new_image'] = $upload_data["file_path"].'/crop_'.$upload_data['file_name'];
 		$image_config['maintain_ratio'] = FALSE;		
 		$image_config['quality'] = "100%";
 		$image_config['width'] = 250;

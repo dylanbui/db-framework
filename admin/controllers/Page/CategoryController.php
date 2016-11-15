@@ -2,12 +2,13 @@
 
 namespace Admin\Controller\Page;
 
+use Admin\Controller\AdminBaseController;
 use App\Model\Page\Category,
 	App\Model\Page\Configure,
 	App\Lib\UploadLib,
 	App\Lib\ImageLib;
 
-class CategoryController extends \Admin\Controller\AdminController
+class CategoryController extends AdminBaseController
 {
 	var $_confLn;
 	

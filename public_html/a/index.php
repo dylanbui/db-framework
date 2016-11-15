@@ -20,9 +20,9 @@
  	define ('__ASSET_URL', __PUBLIC_HTML.'assets');
 
     define ('__TEMPLATE_URL', __PUBLIC_HTML.'a/flaty-template');
-    define ('__IMAGE_URL', __PUBLIC_HTML.'a/images/');
-    define ('__CSS_URL', __PUBLIC_HTML.'a/stylesheets/');
-    define ('__JS_URL', __PUBLIC_HTML.'a/javascripts/');
+    define ('__IMAGE_URL', __PUBLIC_HTML.'a/images');
+    define ('__CSS_URL', __PUBLIC_HTML.'a/stylesheets');
+    define ('__JS_URL', __PUBLIC_HTML.'a/javascripts');
 
 	// the application directory path 
 	define ('__APP_PATH', __SITE_PATH.'/admin');
@@ -33,6 +33,9 @@
 
 	define ('__UPLOAD_DATA_PATH', __SITE_PATH.'/public_html/data/upload');
 	define ('__UPLOAD_DATA_URL', __PUBLIC_HTML . 'data/upload');
+
+    define ('__UPLOAD_GALLERY_PATH', __UPLOAD_DATA_PATH . '/gallery');
+    define ('__UPLOAD_GALLERY_URL', __UPLOAD_DATA_URL . '/gallery');
 	
 	define ('__DATA_PATH', __SITE_PATH . '/public_html/data');
 	define ('__DATA_URL', __PUBLIC_HTML . 'data');
@@ -91,6 +94,18 @@ class Application extends \TinyFw\Core\Application
             // $oUserAuth
             $oUserAuth = new \Admin\Lib\UserAuth();
             return $oUserAuth;
+        });
+
+//        $configSystem = new \App\Model\Base\ConfigureSystem();
+//        $configure_mod = $configSystem->getConfigureData();
+//        $configure_mod['default_global_lang'] = $lang;
+//        $registry->oConfigureSystem = $configure_mod;
+
+        $this->set('oConfigureSystem', function () {
+            $configSystem = new \App\Model\Admin\ConfigureSystem();
+            $configure_mod = $configSystem->getConfigureData();
+            $configure_mod['default_global_lang'] = 'en';
+            return $configure_mod;
         });
 
         $this->oView->setLayoutPath('admin');
