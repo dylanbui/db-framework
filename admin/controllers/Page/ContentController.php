@@ -2,6 +2,7 @@
 
 namespace Admin\Controller\Page;
 
+use Admin\Controller\AdminBaseController;
 use App\Model\Page\Category,
 	App\Model\Page\Configure,
 	App\Model\Page\Content,
@@ -9,8 +10,9 @@ use App\Model\Page\Category,
 	App\Lib\UploadLib,
 	App\Lib\ImageLib,
 	App\Lib\Paginator;
+use TinyFw\Support\Response;
 
-class ContentController extends \Admin\Controller\AdminController
+class ContentController extends AdminBaseController
 {
 	var $_cfg_upload_file;
 	var $_cfg_thumb_image;	
@@ -33,7 +35,7 @@ class ContentController extends \Admin\Controller\AdminController
 		$this->oView->configure_languages = $this->_confLn;
 
 		$this->_cfg_upload_file = array();
-		$this->_cfg_upload_file['upload_path'] = __UPLOAD_DATA_PATH;
+		$this->_cfg_upload_file['upload_path'] = __UPLOAD_DATA_PATH.'/';
 		$this->_cfg_upload_file['allowed_types'] = 'gif|jpg|png';
 		$this->_cfg_upload_file['max_size']	= '2000';
 		$this->_cfg_upload_file['max_width']  = '2048';
@@ -169,16 +171,16 @@ class ContentController extends \Admin\Controller\AdminController
             // -- Delete old image if upload data succes --
             // -- Neu ton tai hinh anh up len thi xoa hinh anh cu --
             foreach ($arrMainImageField as $key => $value) {
-                @unlink(__UPLOAD_DATA_PATH . $dataContent['main_field'][$key]);
-                @unlink(__UPLOAD_DATA_PATH . 'thumb_' . $dataContent['main_field'][$key]);
+                @unlink(__UPLOAD_DATA_PATH.'/'.$dataContent['main_field'][$key]);
+                @unlink(__UPLOAD_DATA_PATH.'/'.'thumb_' . $dataContent['main_field'][$key]);
             }
 
             $arrLnImageField = $this->_upload_ln_image($arrLnImage);
             // -- Neu ton tai hinh anh trong content language up len thi xoa hinh anh cu --
             foreach ($arrLnImageField as $key => $valueArr) {
                 foreach ($valueArr as $field => $value) {
-                    @unlink(__UPLOAD_DATA_PATH . $dataContent['ln_field'][$key][$field]);
-                    @unlink(__UPLOAD_DATA_PATH . 'thumb_' . $dataContent['ln_field'][$key][$field]);
+                    @unlink(__UPLOAD_DATA_PATH.'/'.$dataContent['ln_field'][$key][$field]);
+                    @unlink(__UPLOAD_DATA_PATH.'/'.'thumb_' . $dataContent['ln_field'][$key][$field]);
                 }
             }
 
@@ -273,30 +275,29 @@ class ContentController extends \Admin\Controller\AdminController
                 if ($result)
                 {
                     // Delete image , get info from $rowContent
-                    @unlink(__UPLOAD_DATA_PATH.$rowContent['main_field']['icon']);
-                    @unlink(__UPLOAD_DATA_PATH.$rowContent['main_field']['image']);
-                    @unlink(__UPLOAD_DATA_PATH.'thumb_'.$rowContent['main_field']['image']);
+                    @unlink(__UPLOAD_DATA_PATH.'/'.$rowContent['main_field']['icon']);
+                    @unlink(__UPLOAD_DATA_PATH.'/'.$rowContent['main_field']['image']);
+                    @unlink(__UPLOAD_DATA_PATH.'/'.'thumb_'.$rowContent['main_field']['image']);
                     foreach ($rowContent['ln_field'] as $ln => $value) {
-                        @unlink(__UPLOAD_DATA_PATH.$value['ln_icon']);
-                        @unlink(__UPLOAD_DATA_PATH.$value['ln_image']);
-                        @unlink(__UPLOAD_DATA_PATH.'thumb_'.$value['ln_image']);
+                        @unlink(__UPLOAD_DATA_PATH.'/'.$value['ln_icon']);
+                        @unlink(__UPLOAD_DATA_PATH.'/'.$value['ln_image']);
+                        @unlink(__UPLOAD_DATA_PATH.'/'.'thumb_'.$value['ln_image']);
                     }
                 }
                 $returnVal['result'] = true;
             }
         }
+
         // -- Demo sleep --
         sleep(1);
-
-        echo json_encode($returnVal);
-        exit();
+        Response::setOutputJson($returnVal);
     }
 
 
 	public function deleteAction($page_code, $content_id)
 	{
 		// Load permission
-		$this->detectModifyPermission('page/content/'.$page_code);		
+		$this->detectModifyPermission('page/content/'.$page_code);
 		if (!$this->_isModify)
 			return $this->forward('common/error/error-deny');
 
@@ -307,13 +308,13 @@ class ContentController extends \Admin\Controller\AdminController
 			if ($result)
 			{
 				// Delete image , get info from $rowContent
-                @unlink(__UPLOAD_DATA_PATH.$rowContent['main_field']['icon']);
-                @unlink(__UPLOAD_DATA_PATH.$rowContent['main_field']['image']);
-                @unlink(__UPLOAD_DATA_PATH.'thumb_'.$rowContent['main_field']['image']);
+                @unlink(__UPLOAD_DATA_PATH.'/'.$rowContent['main_field']['icon']);
+                @unlink(__UPLOAD_DATA_PATH.'/'.$rowContent['main_field']['image']);
+                @unlink(__UPLOAD_DATA_PATH.'/'.'thumb_'.$rowContent['main_field']['image']);
                 foreach ($rowContent['ln_field'] as $ln => $value) {
-                    @unlink(__UPLOAD_DATA_PATH.$value['ln_icon']);
-                    @unlink(__UPLOAD_DATA_PATH.$value['ln_image']);
-                    @unlink(__UPLOAD_DATA_PATH.'thumb_'.$value['ln_image']);
+                    @unlink(__UPLOAD_DATA_PATH.'/'.$value['ln_icon']);
+                    @unlink(__UPLOAD_DATA_PATH.'/'.$value['ln_image']);
+                    @unlink(__UPLOAD_DATA_PATH.'/'.'thumb_'.$value['ln_image']);
                 }
 			}
 		}
@@ -336,10 +337,8 @@ class ContentController extends \Admin\Controller\AdminController
         }
 
         // -- Demo sleep --
-        sleep(1);
-
-        echo json_encode($returnVal);
-        exit();
+//        sleep(1);
+        Response::setOutputJson($returnVal);
     }
 
 	public function activeAction($page_code, $content_id, $offset = 0)
@@ -449,7 +448,7 @@ class ContentController extends \Admin\Controller\AdminController
 
 	private function _upload_files_gallery($field, $arrGalleryField)
 	{
-		$this->_cfg_upload_file['upload_path'] = __UPLOAD_GALLERY_PATH;
+		$this->_cfg_upload_file['upload_path'] = __UPLOAD_GALLERY_PATH.'/';
 		$this->_cfg_upload_file['file_name']  = 'img_'.strtolower(create_uniqid(5)).'_'.time();
 		
 		$uploadLib = new UploadLib($this->_cfg_upload_file);
@@ -466,7 +465,7 @@ class ContentController extends \Admin\Controller\AdminController
 	
 	private function _do_upload_file($field, $s_width, $s_height)
 	{
-		$this->_cfg_upload_file['upload_path'] = __UPLOAD_DATA_PATH;
+		$this->_cfg_upload_file['upload_path'] = __UPLOAD_DATA_PATH.'/';
 		$this->_cfg_upload_file['file_name']  = 'img_'.strtolower(create_uniqid(5)).'_'.time();
 		$uploadLib = new UploadLib($this->_cfg_upload_file);
 	
@@ -651,9 +650,7 @@ class ContentController extends \Admin\Controller\AdminController
 
         // -- Demo sleep 3 second --
 //        sleep(3);
-
-        echo json_encode($output);
-        exit();
+        Response::setOutputJson($output);
     }
 
     // TODO : Xoa nhung hinh anh khong co trong DB --

@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use Admin\Lib\Support\UserAuth;
 use TinyFw\Core\Controller;
 
 class AdminBaseController extends Controller
@@ -17,7 +18,8 @@ class AdminBaseController extends Controller
 	
 	protected function detectModifyPermission($route)
 	{
-		if ($this->oAuth->hasPermission('modify',$route))
+//		if ($this->oAuth->hasPermission('modify',$route))
+        if (UserAuth::hasPermission('modify',$route))
 			$this->_isModify = TRUE;
 		
 		return $this->_isModify;

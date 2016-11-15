@@ -11,8 +11,8 @@ class ConfigureController extends AdminBaseController
 	public function __construct()
 	{
 		parent::__construct();
-//		$this->detectModifyPermission('page/configure');
-//		$this->oView->_isModify = $this->_isModify;
+		$this->detectModifyPermission('page/configure');
+		$this->oView->_isModify = $this->_isModify;
 	}
 
 	public function indexAction() 
