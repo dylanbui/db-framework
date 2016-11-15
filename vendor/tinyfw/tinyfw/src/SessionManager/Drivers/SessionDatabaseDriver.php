@@ -245,7 +245,8 @@ class SessionDatabaseDriver extends SessionDriver implements \SessionHandlerInte
 
         // -- Khi reload lien tuc, khi update session se bi loi, se thow Exception  --
 //        return $this->_fail();
-        $this->_success;
+        return $this->_success;
+
     }
 
     // ------------------------------------------------------------------------
