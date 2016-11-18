@@ -96,11 +96,6 @@ class Application extends \TinyFw\Core\Application
             return $oUserAuth;
         });
 
-//        $configSystem = new \App\Model\Base\ConfigureSystem();
-//        $configure_mod = $configSystem->getConfigureData();
-//        $configure_mod['default_global_lang'] = $lang;
-//        $registry->oConfigureSystem = $configure_mod;
-
         $this->set('oConfigureSystem', function () {
             $configSystem = new \App\Model\Admin\ConfigureSystem();
             $configure_mod = $configSystem->getConfigureData();
@@ -123,6 +118,14 @@ class Application extends \TinyFw\Core\Application
         $this->oDispatcher->addPreRequest(new \TinyFw\Core\Request('common/check-login'));
 
         $this->oDispatcher->setDefaultUri('dashboard/show');
+
+        // Register exception handler
+        \TinyFw\Core\ExceptionHandler::register(__LAYOUT_PATH.'/custom_error_templates');
+
+        // -- Ta co the tao cac throw \Exception de bat cac loi xay ra --
+//        throw new \Exception(null, 500);
+//        throw new \Exception('Thong tin loi', 404);
+
     }
 
     function run()
