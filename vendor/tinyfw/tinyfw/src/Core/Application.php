@@ -62,12 +62,31 @@ class Application extends Container
         $this->set('oConfig', $oConfig);
         $this->appConfig = $oConfig->get('application');
 
+        // -- Start Session Object --
         $sessionConfig = $oConfig->get('session');
         $this->set('oSession', function () use ($sessionConfig) {
             // SessionManager
             $oSession = new Session($sessionConfig);
             return $oSession;
         });
+
+        // -- Start Cookie Object --
+        $this->set('oCookie', function () use ($sessionConfig) {
+//            // Cookie
+//            $oCookie = new Cookie(
+//                $sessionConfig['cookie_name'],
+//                null,
+//                0,
+//                $sessionConfig['cookie_path'],
+//                $sessionConfig['cookie_domain'],
+//                $sessionConfig['cookie_secure'],
+//                $sessionConfig['cookie_httponly']
+//                );
+//            return $oCookie;
+            $oCookie = new Cookie('cookies_site');
+            return $oCookie;
+        });
+
 
         $this->set('oInput', function () {
             // Input
