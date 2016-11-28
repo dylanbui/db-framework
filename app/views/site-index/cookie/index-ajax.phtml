@@ -1,0 +1,38 @@
+<h1>Add cookie by ajax</h1>
+
+<form action="<?= site_url('cookie/add-cookie-by-ajax'); ?>" id="frmQuick">
+    <div class="form-group">
+        <label>Cookie name:</label>
+        <input type="text" class="form-control" id="cname" name="cname">
+    </div>
+    <div class="form-group">
+        <label>Cookie value:</label>
+        <input type="text" class="form-control" id="cvalue" name="cvalue">
+    </div>
+    <button type="button" id="btnSubmit" class="btn btn-default">Submit</button>
+</form>
+
+<script language="JavaScript">
+
+    jQuery(document).ready(function ($) {
+
+        $('#btnSubmit').on('click', function () {
+            console.log('Click');
+            console.log($('#frmQuick').serialize());
+            // AJAX Upload file
+            $.ajax({
+                url: $('#frmQuick').attr('action'),
+                type: "post",
+                data: $('#frmQuick').serialize(),
+            }).success(function (response) {
+                console.log(response);
+            }).always(function () {
+                console.log('Post Ajax xong');
+            });
+
+        })
+    });
+
+
+</script>
+

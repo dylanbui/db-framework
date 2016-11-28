@@ -80,7 +80,7 @@ class Cookie
      * @param bool   $secure
      * @param bool   $httpOnly
      */
-    public function clearCookie($name, $path = '/', $domain = null, $secure = false, $httpOnly = true)
+    public function clear($name, $path = '/', $domain = null, $secure = false, $httpOnly = true)
     {
         $this->setCookieObject(new Cookie($name, null, 1, $path, $domain, $secure, $httpOnly));
     }
@@ -103,7 +103,7 @@ class Cookie
 
     public function __call($method, $arguments)
     {
-        if($method == 'get') {
+        if($method == 'set') {
             if(count($arguments) == 1) {
                 return call_user_func_array(array($this,'setCookieObject'), $arguments);
             }

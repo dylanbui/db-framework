@@ -46,10 +46,10 @@ final class Response
         return $this;
     }
 
+    // -- Only one cookie header in response --
     public function withCookie(Cookie $cookie)
     {
         $this->addHeader("Set-Cookie: ".$cookie);
-        return $this;
     }
 
     public function setOutputJson($output, $level = 0)
