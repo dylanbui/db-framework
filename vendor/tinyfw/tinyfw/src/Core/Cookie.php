@@ -66,9 +66,9 @@ class Cookie
         return $this;
     }
 
-    public function get($cookieName)
+    public function get($cookieName, $default = null)
     {
-        return $_COOKIE[$cookieName];
+        return isset($_COOKIE[$cookieName]) ? $_COOKIE[$cookieName] : $default;
     }
 
     /**
@@ -96,8 +96,6 @@ class Cookie
 
     public function setCookiePrams($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true, $raw = false)
     {
-//        $cookie = new self($name, $value, $expire, $path, $domain, $secure, $httpOnly, $raw);
-//        $this->setCookieObject($cookie);
         $this->setCookieObject(new Cookie($name, $value, $expire, $path, $domain, $secure, $httpOnly, $raw));
     }
 

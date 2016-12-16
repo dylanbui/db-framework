@@ -1,3 +1,11 @@
-<h1>Welcome to Duc Bui</h1>
+<h1>Welcome to Ma hoa chuoi</h1>
+<?php
+    $string = json_encode(array('title' => 'test page', 'name' => 'tien duc', 'age' => 123456));
+    $encrypt_string = encrypt($string, '12345');
+    $decrypt_string = decrypt($string, '12345');
+?>
 
-<?php echo $title; ?>
+Chuoi can ma hoa : <?= $string; ?><br>
+Khoa : <?= "112211"; ?><br>
+Ma hoa : <?= $encrypt_string; ?><br>
+Ma hoa : <?= $decrypt_string; ?><br>

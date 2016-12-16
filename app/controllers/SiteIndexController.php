@@ -15,6 +15,7 @@ class SiteIndexController extends Controller
 
 	public function indexAction() 
 	{
+	    $this->renderView('site-index/index/index');
 	}
 
     public function homeAction()
