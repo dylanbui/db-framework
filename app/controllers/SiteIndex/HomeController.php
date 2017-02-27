@@ -93,12 +93,9 @@ class HomeController extends Controller
 // 			exit();
 		}
 		
-// 		$this->oView->title = 'Welcome to Bui Van Tien Duc MVC RENDER';
-// 		$this->renderView('site/home/ckeditor');
+        $this->_children[] = new Request('home/child-first', NULL, 'App\Controller\SiteIndex');
+        $this->_children[] = new Request('home/child-second', array('Title duoc truyen vao site/home/child-second'), 'App\Controller\SiteIndex');
 
-		$this->_children[] = new Request('site-index/home/child-first');
-		$this->_children[] = new Request('site-index/home/child-second',array('Title duoc truyen vao site/home/child-second'));		
-		
 		$this->oView->title = 'Welcome to Bui Van Tien Duc MVC RENDER';
 		$this->renderView('site-index/home/ckeditor');		
 	}

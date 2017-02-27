@@ -37,7 +37,7 @@ $config['database_master']['db_port'] 				= 3306;
 //$config['session']['match_ip'] 						= FALSE;
 //$config['session']['match_fingerprint'] 			= TRUE;
 //$config['session']['match_token'] 					= FALSE;
-//$config['session']['session_name'] 					= "simple_mvc_session";
+
 //$config['session']['cookie_path'] 					= "/";
 //$config['session']['cookie_domain'] 				= NULL;
 //$config['session']['cookie_secure'] 				= NULL;
@@ -55,6 +55,7 @@ $config['database_master']['db_port'] 				= 3306;
 
 $config['session']['driver'] 						= 'database';
 $config['session']['save_path'] 					= 'db_sessions';
+$config['session']['session_name'] 		            = "simple_mvc_session";
 
 $config['session']['expiration'] 					= 7200;
 $config['session']['match_ip'] 						= FALSE;
@@ -65,12 +66,9 @@ $config['session']['regenerate_destroy'] 			= FALSE;
 //$config['session']['expiration'] 					= 7200;
 //$config['session']['gc_probability'] 				= 100;
 
-
-
 //$config['session']['database_platform'] 				= 'mysql';
 //$config['session']['database_table_name'] 					= "z__sessions";
 //$config['session']['database_primary_key'] 					= "session_id";
-
 
 $config['session']['cookie_name'] 						= 'ci_session';
 $config['session']['cookie_prefix'] 						= '';
@@ -79,11 +77,11 @@ $config['session']['cookie_path'] 						= '/';
 $config['session']['cookie_secure'] 						= FALSE;
 $config['session']['cookie_httponly'] 						= FALSE;
 
-
-
-
-
-
+// -- Share session for Kcfinder --
+$config['session_for_kcfinder']['session_name'] 		= $config['session']['session_name'];
+$config['session_for_kcfinder']['table_name'] 			= "db_sessions";
+$config['session_for_kcfinder']['primary_key'] 			= "id";
+$config['session_for_kcfinder']['expiration'] 			= 7200;
 
 // --- -------------------------------------------------------------------------------------------------- ---//
 // --- MAIL ---//

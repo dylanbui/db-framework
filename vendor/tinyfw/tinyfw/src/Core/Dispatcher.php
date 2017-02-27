@@ -17,7 +17,8 @@ class Dispatcher
         ':num'      => '[0-9]+',
         ':slug'     => '[A-Za-z-0-9\-]+',
         ':other'    => '[/]{0,1}[A-Za-z0-9\-\\/\.]+', // => maybe same (:any)
-        ':any'      => '.+'
+        ':any'      => '.+',
+        ':extant'   => '[/]{0,1}.+',
     );
 
     private $segments = array();

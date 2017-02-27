@@ -1,11 +1,16 @@
 <h1>Welcome to Ma hoa chuoi</h1>
 <?php
+    $key = "112233";
+    $hash = "khong co em";
     $string = json_encode(array('title' => 'test page', 'name' => 'tien duc', 'age' => 123456));
-    $encrypt_string = encrypt($string, '12345');
-    $decrypt_string = decrypt($string, '12345');
+    $string .= ' ------ \'Đây là chồng tôi\', bà Nguyen Thi Xuan chỉ vào một chiếc gối được quấn trong lá cờ Việt Nam cùng một chiếc áo quân phục Nhật Bản được gấp bên trong';
+    $encrypt_string = encrypt($string, $key, $hash, true);
+    $decrypt_string = decrypt($encrypt_string, $key, $hash, true);
 ?>
 
 Chuoi can ma hoa : <?= $string; ?><br>
-Khoa : <?= "112211"; ?><br>
-Ma hoa : <?= $encrypt_string; ?><br>
-Ma hoa : <?= $decrypt_string; ?><br>
+Chieu dai chuoi ma hoa : <?= strlen($encrypt_string); ?><br>
+Khoa : <?= $key; ?><br>
+Khoa : <?= $hash; ?><br>
+Ma hoa  : <?= $encrypt_string; ?><br>
+Giai ma : <?= $decrypt_string; ?><br>

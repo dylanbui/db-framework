@@ -30,14 +30,24 @@ $routes['my-site/(:name)/(:any).html'] = "site-index/links/$2?html=$1";
 //$routes['load/(:any)-post(:num).html'] = "site-index/index/load-router/$1/$2";
 //
 // -- Config router for namespace --
-$routes['paging'] = array('path' => 'index/index', 'namespace' => 'App\Controller\Paging');
-$routes['paging/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\Paging');
-$routes['paging/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Paging');
+//$routes['paging'] = array('path' => 'index/index', 'namespace' => 'App\Controller\Paging');
+//$routes['paging/(:name)'] = array('path' => '$1/index', 'namespace' => 'App\Controller\Paging');
+//$routes['paging/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\Paging');
+//$routes['paging/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Paging');
 
+$routes['paging/(:other)'] = array('path' => '$1', 'namespace' => 'App\Controller\Paging');
 
+// -- Config router for namespace (FULL) --
+//$routes['database'] = array('path' => 'index/index', 'namespace' => 'App\Controller\Database');
+//$routes['database/(:name)'] = array('path' => '$1/index', 'namespace' => 'App\Controller\Database');
+//$routes['database/(:name)/(:name)'] = array('path' => '$1/$2', 'namespace' => 'App\Controller\Database');
+//$routes['database/(:name)/(:name)/(:any)'] = array('path' => '$1/$2/$3', 'namespace' => 'App\Controller\Database');
 
+// -- Config router for namespace (SIMPLE) vd: database/model --
+$routes['database/(:other)'] = array('path' => '$1', 'namespace' => 'App\Controller\Database');
 
-
+// -- Namespace : App\Controller\SiteIndex --
+$routes['site-index/(:other)'] = array('path' => '$1', 'namespace' => 'App\Controller\SiteIndex');
 
 // $routes['links/(.*?)'] = "site/index/links/$1";
  
@@ -58,13 +68,11 @@ $routes['blog/(:name)/(:num)'] 				= function ($product_type, $id)
     return $result;
 };
 
+// -- Demo REST FULL Api --
 $routes['product/(:any)']['GET']             = "catalog/product_lookup_by_id_get/$1";
 $routes['product/(:any)']['POST']             = "catalog/product_lookup_by_id_post/$1";
 $routes['product/(:any)']['PUT']             = "catalog/product_lookup_by_id_put/$1";
 $routes['product/(:any)']['DELETE']             = "catalog/product_lookup_by_id_delete/$1";
-
-
-
 
 
 return $routes;

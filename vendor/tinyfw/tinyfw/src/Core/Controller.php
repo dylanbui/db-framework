@@ -31,9 +31,9 @@ abstract class Controller extends Container implements IController
 	    parent::set($key, $value);
 	}
 
-	protected function forward($route, $args = array()) 
+	protected function forward($route, $args = array(), $namespace = NULL)
 	{
-		return new Request($route, $args);
+		return new Request($route, $args, $namespace);
 	}
 	
 	protected function renderView($path, $variables = array(), $layout_path = NULL)

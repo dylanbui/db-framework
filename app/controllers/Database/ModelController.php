@@ -182,9 +182,27 @@ Class ModelController Extends Controller
 		
 		$this->oView->data = $data;
 		$this->renderView('database/model/_form');
-	}	
-	
-	
+	}
+
+
+	public function multiVarsAction($var_1, $var_2)
+    {
+        $data = array(
+            'var_1' => $var_1,
+            'var_2' => $var_2
+        );
+
+        echo "<pre>";
+        print_r($_GET);
+        echo "</pre>";
+
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        exit();
+
+    }
+
 }
 
 ?>

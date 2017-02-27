@@ -12,6 +12,7 @@ namespace TinyFw\Core;
 
 use TinyFw\Support\Config as ConfigSupport;
 
+// -- Khong su dung --
 
 class FrontController
 {
@@ -44,7 +45,7 @@ class FrontController
 		foreach ($routes as $key => $val)
 		{
 			// Convert wildcards to RegEx
-            $key = str_replace(array(':other', ':any', ':num'), array('[/]{0,1}[A-Za-z0-9\-\\/\.]+', '.+', '[0-9]+'), $key);
+            $key = str_replace(array(':other', ':any', ':num', ':extant'), array('[/]{0,1}[A-Za-z0-9\-\\/\.]+', '.+', '[0-9]+', '[/]{0,1}.+'), $key);
 
 			// Does the RegEx match?
 			if (preg_match('#^'.$key.'$#', $uri, $matches))

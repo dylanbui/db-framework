@@ -216,11 +216,11 @@ class SessionSaveHandler
         // set the timezone
         date_default_timezone_set($configuration['application']['timezone']);
 
-        $this->sessionName = $configuration['session']['session_name'];
-		$this->sessionTableName = $configuration['session']['table_name'];
-		$this->sessionPrimaryKey = $configuration['session']['primary_key'];
+        $this->sessionName = $configuration['session_for_kcfinder']['session_name'];
+		$this->sessionTableName = $configuration['session_for_kcfinder']['table_name'];
+		$this->sessionPrimaryKey = $configuration['session_for_kcfinder']['primary_key'];
 
-		$expiration = (isset($configuration['session']['expiration'])) ? $configuration['session']['expiration'] : $this->sessionExpiration;
+		$expiration = (isset($configuration['session_for_kcfinder']['expiration'])) ? $configuration['session_for_kcfinder']['expiration'] : $this->sessionExpiration;
 		$this->sessionExpiration = $expiration;
 
 		$this->db = $configuration['database_master'];
@@ -250,8 +250,8 @@ class SessionSaveHandler
 			$dbh->query("SET NAMES 'UTF8'");
 					
 			$time = date('Y-m-d H:i:s', time() - $this->sessionExpiration);
-			$statement = $dbh->prepare("SELECT data FROM {$this->sessionTableName} WHERE {$this->sessionPrimaryKey} = '{$id}' AND last_activity > '{$time}' ");
-			
+			$statement = $dbh->prepare("SELECT data FROM {$this->sessionTableName} WHERE {$this->sessionPrimaryKey} = '{$id}' AND 'timestamp' > '{$time}' ");
+
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$result = $statement->execute();
 			if ($result) {

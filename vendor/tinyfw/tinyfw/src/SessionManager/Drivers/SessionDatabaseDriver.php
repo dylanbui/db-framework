@@ -372,7 +372,6 @@ class SessionDatabaseDriver extends SessionDriver implements \SessionHandlerInte
             $row = $this->_db->selectOneRow("SELECT RELEASE_LOCK('".$this->_lock."') AS ci_session_lock");
             if ($row['ci_session_lock'])
             {
-                exit();
                 $this->_lock = FALSE;
                 return TRUE;
             }

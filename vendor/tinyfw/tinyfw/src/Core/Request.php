@@ -17,6 +17,9 @@ class Request
 
 	public function __construct($route  = 'index/index', $args = array(), $namespace = NULL)
 	{
+	    if (empty($args))
+            $args = array();
+
 	    // -- Parse router to controller, action --
 		$this->parseUri($route);
 
