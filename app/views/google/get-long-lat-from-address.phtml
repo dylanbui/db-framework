@@ -1,0 +1,16 @@
+<h1>Get lat-long From Address</h1>
+<?php
+    $key = "112233";
+    $hash = "khong co em";
+    $string = json_encode(array('title' => 'test page', 'name' => 'tien duc', 'age' => 123456));
+    $string .= ' ------ \'Đây là chồng tôi\', bà Nguyen Thi Xuan chỉ vào một chiếc gối được quấn trong lá cờ Việt Nam cùng một chiếc áo quân phục Nhật Bản được gấp bên trong';
+    $encrypt_string = encrypt($string, $key, $hash, true);
+    $decrypt_string = decrypt($encrypt_string, $key, $hash, true);
+?>
+
+Chuoi can ma hoa : <?= $string; ?><br>
+Chieu dai chuoi ma hoa : <?= strlen($encrypt_string); ?><br>
+Khoa : <?= $key; ?><br>
+Khoa : <?= $hash; ?><br>
+Ma hoa  : <?= $encrypt_string; ?><br>
+Giai ma : <?= $decrypt_string; ?><br>

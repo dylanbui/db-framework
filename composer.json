@@ -10,6 +10,8 @@
     "iignatov/lightopenid": "*",
     "intervention/image": "^2.3",
     "phpmailer/phpmailer": "^5.2",
-    "tinyfw/tinyfw": "*"
+    "tinyfw/tinyfw": "*",
+    "willdurand/geocoder": "^3.3",
+    "guzzlehttp/guzzle": "^6.2"
   }
 }

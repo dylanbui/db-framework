@@ -8,11 +8,16 @@ class ComposerStaticInita539d105cefca39d59d4dda3faf096fe
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'a16312f9300fed4a097923eacb0ba814' => __DIR__ . '/..' . '/igorw/get-in/src/get_in.php',
         '7e702cccdb9dd904f2ccf22e5f37abae' => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook/polyfills.php',
         '0e822fb64627625f14750a03fadea573' => __DIR__ . '/..' . '/tinyfw/tinyfw/src/functions_include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Z' => 
+        array (
+            'Zend\\Diactoros\\' => 15,
+        ),
         'T' => 
         array (
             'TinyFw\\' => 7,
@@ -23,6 +28,7 @@ class ComposerStaticInita539d105cefca39d59d4dda3faf096fe
         ),
         'I' => 
         array (
+            'Ivory\\HttpAdapter\\' => 18,
             'Intervention\\Image\\' => 19,
         ),
         'G' => 
@@ -36,6 +42,10 @@ class ComposerStaticInita539d105cefca39d59d4dda3faf096fe
     );
 
     public static $prefixDirsPsr4 = array (
+        'Zend\\Diactoros\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-diactoros/src',
+        ),
         'TinyFw\\' => 
         array (
             0 => __DIR__ . '/..' . '/tinyfw/tinyfw/src',
@@ -43,6 +53,10 @@ class ComposerStaticInita539d105cefca39d59d4dda3faf096fe
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Ivory\\HttpAdapter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/egeloen/http-adapter/src',
         ),
         'Intervention\\Image\\' => 
         array (
@@ -55,6 +69,16 @@ class ComposerStaticInita539d105cefca39d59d4dda3faf096fe
         'Facebook\\' => 
         array (
             0 => __DIR__ . '/..' . '/facebook/php-sdk-v4/src/Facebook',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'G' => 
+        array (
+            'Geocoder' => 
+            array (
+                0 => __DIR__ . '/..' . '/willdurand/geocoder/src',
+            ),
         ),
     );
 
@@ -76,6 +100,7 @@ class ComposerStaticInita539d105cefca39d59d4dda3faf096fe
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInita539d105cefca39d59d4dda3faf096fe::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInita539d105cefca39d59d4dda3faf096fe::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita539d105cefca39d59d4dda3faf096fe::$prefixesPsr0;
             $loader->classMap = ComposerStaticInita539d105cefca39d59d4dda3faf096fe::$classMap;
 
         }, null, ClassLoader::class);

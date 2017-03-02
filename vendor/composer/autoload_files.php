@@ -7,6 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'a0edc8309cc5e1d60e3047b5df6b7052' => $vendorDir . '/guzzlehttp/psr7/src/functions_include.php',
+    'c964ee0ededf28c96ebd9db5099ef910' => $vendorDir . '/guzzlehttp/promises/src/functions_include.php',
+    '37a3dc5111fe8f707ab4c132ef1dbc62' => $vendorDir . '/guzzlehttp/guzzle/src/functions_include.php',
+    'a16312f9300fed4a097923eacb0ba814' => $vendorDir . '/igorw/get-in/src/get_in.php',
     '7e702cccdb9dd904f2ccf22e5f37abae' => $vendorDir . '/facebook/php-sdk-v4/src/Facebook/polyfills.php',
     '0e822fb64627625f14750a03fadea573' => $vendorDir . '/tinyfw/tinyfw/src/functions_include.php',
 );
