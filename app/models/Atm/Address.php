@@ -2,7 +2,7 @@
 
 namespace App\Model\Atm;
 
-use App\Lib\Core\Model;
+use TinyFw\Core\Model;
 
 class Address extends Model
 {

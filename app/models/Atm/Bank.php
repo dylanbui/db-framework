@@ -2,11 +2,11 @@
 
 namespace App\Model\Atm;
 
-use App\Lib\Core\Model;
+use TinyFw\Core\Model;
 
 class Bank extends Model
 {
-	protected $_table_name = TB_BANKS;
+	protected $_table_name = TB_ATM_BANK;
 	protected $_primary_key = 'bank_id';
 	
 	public function __construct()
@@ -14,6 +14,11 @@ class Bank extends Model
 		parent::__construct();
 	}
 
+	public function getRelationBankWithBank($bankId)
+    {
+        $rowBank = $this->getRow('bank_id = ?', array($bankId));
+        return $this->getRowset("bank_id IN (".$rowBank['relation_bank_id'].")");
+    }
 	
 }
 

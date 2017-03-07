@@ -50,6 +50,14 @@ define('TB_EX_PRODUCT', _TB_PREFIX . '_ex_product');
 define('TB_EX_PRODUCT_CAT', _TB_PREFIX . '_ex_product_cat');
 
 
+// --- -------------------------------------------------------------------------------------------------- ---//
+// --- EXAMPLE MODULE TABLE ---//
+
+define('TB_ATM_ADDRESS', _TB_PREFIX . 'atm_addresses');
+define('TB_ATM_BANK', _TB_PREFIX . 'banks');
+
+
+
 // define('TB_OPTIONS', _TB_PREFIX . 'options');
 // define('TB_OPTIONS_LN', _TB_PREFIX . 'options_ln');
 // define('TB_HTML', _TB_PREFIX . 'html');
