@@ -8,6 +8,8 @@
 */
 
 // http://www.codeigniter.com/user_guide/general/routing.html
+// Khong nen tao router thanh 1 class vi co the khong toi uu
+// Tham khoa class router co ban : http://codereview.stackexchange.com/questions/101364/simple-router-class
 
 // $routes['(:any)'] = "router/$1";
 // $routes['products/(:any)'] = "category/$1";
