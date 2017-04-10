@@ -37,13 +37,13 @@ class PhotoManagerController extends AdminBaseController
 	
 	public function listAction($subPath = null)
 	{
-        $albums = array_diff(scandir($this->galleryPath), array('..', '.', '.DS_Store', '.htaccess'));
-        $this->sort_array($albums, $this->galleryPath, TRUE);
-
-        echo "<pre>";
-        print_r($albums);
-        echo "</pre>";
-        exit();
+//        $albums = array_diff(scandir($this->galleryPath), array('..', '.', '.DS_Store', '.htaccess'));
+//        $this->sort_array($albums, $this->galleryPath, TRUE);
+//
+//        echo "<pre>";
+//        print_r($albums);
+//        echo "</pre>";
+//        exit();
 
 //		$this->oView->title = 'Member';
 //		$this->oView->box_title = 'List Member';

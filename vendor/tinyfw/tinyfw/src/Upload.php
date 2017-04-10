@@ -11,6 +11,8 @@
 
 namespace TinyFw;
 
+use TinyFw\Helper\File as FileHandler;
+
 class Upload {
 
 	/**
@@ -248,6 +250,13 @@ class Upload {
 
 	// --------------------------------------------------------------------
 
+    /**
+     * File object
+     *
+     * @var	object
+     */
+    private $_fileHandler = NULL;
+
 	/**
 	 * Constructor
 	 *
@@ -262,6 +271,7 @@ class Upload {
 		}
 
 		$this->mimes =& $this->get_mimes();
+        $this->_fileHandler = new FileHandler();
 	}
 
 	// --------------------------------------------------------------------
@@ -939,7 +949,7 @@ class Upload {
 			return FALSE;
 		}
 
-		if ( ! is_really_writable($this->upload_path))
+		if ( ! $this->_fileHandler->is_really_writable($this->upload_path))
 		{
 			$this->set_error('upload_not_writable');
 			return FALSE;

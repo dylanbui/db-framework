@@ -4,10 +4,11 @@ namespace Admin\Controller\Page;
 
 use Admin\Controller\AdminBaseController;
 use App\Model\Page\Configure,
-	App\Model\Page\Gallery,
-	App\Lib\UploadLib,
-	App\Lib\ImageLib;
+	App\Model\Page\Gallery;
 use TinyFw\Support\Response;
+use TinyFw\Upload as UploadLib;
+use TinyFw\Image as ImageLib;
+
 
 class GalleryController extends AdminBaseController
 {
@@ -19,7 +20,7 @@ class GalleryController extends AdminBaseController
 		
 		$this->_cfg_upload_file = array();
 		$this->_cfg_upload_file['upload_path'] = __UPLOAD_GALLERY_PATH.'/';
-		$this->_cfg_upload_file['allowed_types'] = 'gif|jpg|png';
+		$this->_cfg_upload_file['allowed_types'] = 'gif|jpg|png|jpeg';
 		
 	}
 
@@ -78,7 +79,7 @@ class GalleryController extends AdminBaseController
 			$rowGallery = $objGallery->insertImageGallery($content_id, $returnValue, $arrGalleryField);
 				
 			$rowGallery['page_id'] = $page_id;
-			echo $this->oView->fetch("page/gallery/image_item",$rowGallery);
+			echo $this->oView->fetch("page/gallery/_image_item",$rowGallery);
 			exit();
 		}
 	
