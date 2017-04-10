@@ -38,7 +38,7 @@
     define ('__UPLOAD_GALLERY_URL', __UPLOAD_DATA_URL . '/gallery');
 	
 	define ('__DATA_PATH', __SITE_PATH . '/public_html/data');
-	define ('__DATA_URL', __PUBLIC_HTML . 'data');
+	define ('__DATA_URL', __PUBLIC_HTML . '/data');
 
 //    $const = get_defined_constants(true);
 //    echo "<pre>";

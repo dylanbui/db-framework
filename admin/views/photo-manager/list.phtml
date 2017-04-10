@@ -1,0 +1,247 @@
+<!--page specific css styles-->
+<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/assets/prettyPhoto/css/prettyPhoto.css">
+<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>/assets/chosen-bootstrap/chosen.min.css" />
+
+<script src="<?php echo __TEMPLATE_URL; ?>/assets/nicescroll/jquery.nicescroll.min.js"></script>
+
+<!--page specific plugin scripts-->
+<script src="<?php echo __TEMPLATE_URL; ?>/assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>
+<script src="<?php echo __TEMPLATE_URL; ?>/assets/chosen-bootstrap/chosen.jquery.min.js"></script>
+
+
+<div class="content">
+
+    <!-- BEGIN Page Title -->
+    <div class="page-title">
+        <div>
+            <h1><i class="icon-file-alt"></i> Gallery</h1>
+            <h4>Responsive photo gallery using colorbox</h4>
+        </div>
+    </div>
+    <!-- END Page Title -->
+
+    <!-- BEGIN Breadcrumb -->
+    <div id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="index.html">Home</a>
+                <span class="divider"><i class="icon-angle-right"></i></span>
+            </li>
+            <li class="active">Gallery</li>
+        </ul>
+    </div>
+    <!-- END Breadcrumb -->
+
+    <!-- BEGIN Main Content -->
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="box">
+                <div class="box-title">
+                    <h3><i class="icon-picture"></i> Gallery</h3>
+                    <div class="box-tool">
+                        <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                        <a data-action="close" href="#"><i class="icon-remove"></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <div class="btn-toolbar btn-toolbar-gallery">
+                                <div class="btn-group">
+                                    <select name="cat" id="cat" class="chosen chzn-done" data-placeholder="Filter category" style="display: none;">
+                                        <option value=""> </option>
+                                        <option value="opt-1">Category-1</option>
+                                        <option value="opt-2">Category-2</option>
+                                        <option value="opt-3">Category-3</option>
+                                        <option value="opt-4">Category-4</option>
+                                        <option value="opt-5">Category-5</option>
+                                    </select><div id="cat_chzn" class="chzn-container chzn-container-single" style="width: 220px;" title=""><a href="javascript:void(0)" class="chzn-single chzn-default" tabindex="-1"><span>Filter category</span><div><b></b></div></a><div class="chzn-drop"><div class="chzn-search"><input autocomplete="off" type="text"></div><ul class="chzn-results"><li id="cat_chzn_o_1" class="active-result" style="">Category-1</li><li id="cat_chzn_o_2" class="active-result" style="">Category-2</li><li id="cat_chzn_o_3" class="active-result" style="">Category-3</li><li id="cat_chzn_o_4" class="active-result" style="">Category-4</li><li id="cat_chzn_o_5" class="active-result" style="">Category-5</li></ul></div></div>
+                                </div>
+                                <div class="btn-group">
+                                    <select name="sort" id="sort" class="chosen chzn-done" data-placeholder="Sort by" data-nosearch="true" style="display: none;">
+                                        <option value=""> </option>
+                                        <option value="sort-1">Date</option>
+                                        <option value="sort-2">Author</option>
+                                        <option value="sort-3">Category</option>
+                                    </select><div id="sort_chzn" class="chzn-container chzn-container-single" style="width: 220px;" title=""><a href="javascript:void(0)" class="chzn-single chzn-default" tabindex="-1"><span>Sort by</span><div><b></b></div></a><div class="chzn-drop"><div class="chzn-search"><input autocomplete="off" type="text"></div><ul class="chzn-results"><li id="sort_chzn_o_1" class="active-result" style="">Date</li><li id="sort_chzn_o_2" class="active-result" style="">Author</li><li id="sort_chzn_o_3" class="active-result" style="">Category</li></ul></div></div>
+                                </div>
+                                <div class="btn-group">
+                                    <a href="#" class="btn btn-success show-tooltip" title="" data-original-title="Apply filter"><i class="icon-ok"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <div class="btn-toolbar">
+                                <div class="btn-group">
+                                    <a href="#" class="btn btn-primary show-tooltip" title="" data-original-title="Upload new images"><i class="icon-cloud-upload"></i> Upload</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <ul class="gallery">
+                        <li>
+                            <a href="#" title="Description of folder">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/folder.png" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/a/flaty-template/img/demo/gallery/1.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/1_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="/a/flaty-template/img/demo/gallery/2.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/2_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="img/demo/gallery/3.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/3_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="img/demo/gallery/4.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/4_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="img/demo/gallery/5.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/5_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="img/demo/gallery/6.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/6_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="img/demo/gallery/7.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/7_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="img/demo/gallery/8.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/8_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="img/demo/gallery/9.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/9_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="img/demo/gallery/10.jpg" rel="prettyPhoto" title="Description of image">
+                                <div>
+                                    <img src="/a/flaty-template/img/demo/gallery/10_thumb.jpg" alt="">
+                                    <i></i>
+                                </div>
+                            </a>
+                            <div class="gallery-tools">
+                                <a href="#"><i class="icon-link"></i></a>
+                                <a href="#"><i class="icon-paper-clip"></i></a>
+                                <a href="#"><i class="icon-pencil"></i></a>
+                                <a href="#"><i class="icon-trash"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Main Content -->
+
+
+
+
+
+</div>
+
+
+
