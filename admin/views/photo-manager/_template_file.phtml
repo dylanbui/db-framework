@@ -1,20 +1,50 @@
 <!-- File template -->
-<li>
-    <a href="/a/flaty-template/img/demo/gallery/1.jpg" rel="prettyPhoto" title="Description of image">
-        <div>
-            <img src="/a/flaty-template/img/demo/gallery/1_thumb.jpg" alt="">
+<!--<li>-->
+<!--    <a href="/a/flaty-template/img/demo/gallery/1.jpg" rel="prettyPhoto" title="Description of image">-->
+<!--        <div>-->
+<!--            <img src="/a/flaty-template/img/demo/gallery/1_thumb.jpg" alt="">-->
+<!--            <i></i>-->
+<!--        </div>-->
+<!--    </a>-->
+<!--    <div class="gallery-tools">-->
+<!--        <a href="#"><i class="icon-link"></i></a>-->
+<!--        <a href="#"><i class="icon-paper-clip"></i></a>-->
+<!--        <a href="#"><i class="icon-pencil"></i></a>-->
+<!--        <a href="#"><i class="icon-trash"></i></a>-->
+<!--    </div>-->
+<!--</li>-->
+<!--<li id="item-54" class="ui-state-default">-->
+<!--    <img src="/data/upload/gallery/gal_img_ue1ij_1491883576.jpg" alt="" width="120">-->
+<!--    <div class="gallery-tools">-->
+<!--        <a href="#"><i class="icon-link"></i></a>-->
+<!--        <a href="#"><i class="icon-pencil"></i></a>-->
+<!--        <a href="/data/upload/gallery/img_ue1ij_1491883576.jpg" rel="prettyPhoto[pp_gal]" title="Description image">-->
+<!--            <i class="icon-paper-clip"></i>-->
+<!--        </a>-->
+<!--        <a href="javascript:confimDeleteModal({'image_id':'item-54','url':'/a/page/gallery/delete-ajax-image/2/10/54'});">-->
+<!--            <i class="icon-trash"></i>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</li>-->
+<!--
+.gallery>li {
+    display: inline-block;
+    margin: 5px;
+    overflow: hidden;
+    position: relative;
+    <img src="<?= rtrim($currentThumbUrl, '/').'/'.$itemName; ?>" alt="" width="120">
+-->
+
+<li style="float: left; height:100px; width:100px; background: url('<?= rtrim($currentThumbUrl, '/').'/'.$itemName; ?>') no-repeat 50%;">
+    <a href="#" rel="prettyPhoto" title="Description of image">
+        <div style="height:100px; width:100px;">
+            <img src="" alt="">
             <i></i>
         </div>
     </a>
     <div class="gallery-tools">
-        <a href="#"><i class="icon-link"></i></a>
-        <a href="#"><i class="icon-paper-clip"></i></a>
         <a href="#"><i class="icon-pencil"></i></a>
         <a href="#"><i class="icon-trash"></i></a>
     </div>
 </li>
-
-
-
-
 

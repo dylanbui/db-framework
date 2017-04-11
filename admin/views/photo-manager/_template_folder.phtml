@@ -1,12 +1,19 @@
-
-<li>
-    <a href="#" title="Description of folder">
-        <div>
-            <img src="/a/flaty-template/img/demo/folder.png" alt="">
-            <i></i>
-        </div>
-    </a>
-</li>
+<!-- Folder template -->
+<?php if (!empty($getParent)) : ?>
+    <li style="float: left; height:100px; width:100px; background: url('<?= __TEMPLATE_URL.'/img/parent-folder.png'; ?>') no-repeat 50%;">
+        <a href="javascript:gotoDirectory('<?= dirname($currentDir); ?>');"
+           title="Description of folder">
+            <div style="height:100px; width:100px;"><i></i></div>
+        </a>
+    </li>
+<?php else : ?>
+    <li style="float: left; height:100px; width:100px; background: url('<?= __TEMPLATE_URL.'/img/folder.png'; ?>') no-repeat 50%;">
+        <a href="javascript:gotoDirectory('<?= (empty($currentDir)?'':$currentDir.'/').$itemName; ?>');"
+           title="Description of folder">
+            <div style="height:100px; width:100px;"><i></i></div>
+        </a>
+    </li>
+<?php endif; ?>
 
 
 

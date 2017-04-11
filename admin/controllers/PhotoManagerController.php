@@ -4,6 +4,8 @@ namespace Admin\Controller;
 
 use App\Lib\Paginator,
 	App\Model\Admin\Member;
+use TinyFw\Support\Input;
+use TinyFw\Support\Response;
 use TinyFw\Support\View;
 
 class PhotoManagerController extends AdminBaseController
@@ -67,6 +69,49 @@ class PhotoManagerController extends AdminBaseController
 		
 		$this->renderView('photo-manager/list');
 	}
+
+    public function getFolderAction()
+    {
+        $currentDir = Input::post('dir', '.');
+
+        $currentPath = $this->galleryPath.'/'.$currentDir;
+        $currentUrl = $this->galleryUrl.'/'.$currentDir;
+        $currentThumbUrl = $this->galleryThumbUrl.'/'.$currentDir;
+
+        $arrVars = array(
+            'currentDir' => $currentDir,
+            'currentUrl' => $currentUrl,
+            'currentThumbUrl' => $currentThumbUrl,
+        );
+
+        $foldersArr = array_diff(scandir($currentPath), array('..', '.', '.DS_Store', '.htaccess'));
+        $this->sort_array($foldersArr, $currentPath, TRUE);
+
+        $html = '';
+        if ($currentDir != '.') {
+            $arrVars['getParent'] = TRUE;
+            $html .= View::fetch('photo-manager/_template_folder',$arrVars);
+        }
+        $arrVars['getParent'] = FALSE;
+        foreach ($foldersArr as $item) {
+            $arrVars['itemName'] = $item;
+            if (is_dir($currentPath.'/'.$item)) { // Folder
+                $html .= View::fetch('photo-manager/_template_folder',$arrVars);
+            } else { // File
+                $html .= View::fetch('photo-manager/_template_file',$arrVars);
+            }
+        }
+
+        $returnVal = array(
+            'currentPath' => $currentDir,
+            'currentUrl' => $currentUrl,
+            'html' => $html
+        );
+
+        return Response::setOutputJson($returnVal);
+    }
+
+
 
     // return array sorted by date or name
     private function sort_array(&$array ,$dir ,$sort_by_date)

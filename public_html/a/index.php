@@ -14,15 +14,16 @@
     define ('__SITE_URL', str_replace(basename($tmp), '', $tmp));
 
  	// Co thu muc public_html
-    define ('__PUBLIC_HTML', str_replace('//', '/', dirname(__SITE_URL).'/'));
+//    define ('__PUBLIC_HTML', str_replace('//', '/', dirname(__SITE_URL).'/'));
+    define ('__PUBLIC_HTML', str_replace(array('//' ,'/'), '', dirname(__SITE_URL).'/'));
  	
  	// ---- Khong Thay Doi ---- // 	
- 	define ('__ASSET_URL', __PUBLIC_HTML.'assets');
+ 	define ('__ASSET_URL', __PUBLIC_HTML.'/assets');
 
-    define ('__TEMPLATE_URL', __PUBLIC_HTML.'a/flaty-template');
-    define ('__IMAGE_URL', __PUBLIC_HTML.'a/images');
-    define ('__CSS_URL', __PUBLIC_HTML.'a/stylesheets');
-    define ('__JS_URL', __PUBLIC_HTML.'a/javascripts');
+    define ('__TEMPLATE_URL', __PUBLIC_HTML.'/a/flaty-template');
+    define ('__IMAGE_URL', __PUBLIC_HTML.'/a/images');
+    define ('__CSS_URL', __PUBLIC_HTML.'/a/stylesheets');
+    define ('__JS_URL', __PUBLIC_HTML.'/a/javascripts');
 
 	// the application directory path 
 	define ('__APP_PATH', __SITE_PATH.'/admin');
@@ -32,7 +33,7 @@
     define ('__CONFIG_PATH', __APP_PATH.'/config');
 
 	define ('__UPLOAD_DATA_PATH', __SITE_PATH.'/public_html/data/upload');
-	define ('__UPLOAD_DATA_URL', __PUBLIC_HTML . 'data/upload');
+	define ('__UPLOAD_DATA_URL', __PUBLIC_HTML . '/data/upload');
 
     define ('__UPLOAD_GALLERY_PATH', __UPLOAD_DATA_PATH . '/gallery');
     define ('__UPLOAD_GALLERY_URL', __UPLOAD_DATA_URL . '/gallery');
