@@ -1,7 +1,10 @@
 <?php  if ( ! defined('__SITE_PATH')) exit('No direct script access allowed');
 
-define('_FB_APP_ID', '534956693276758');
-define('_FB_APP_SECRET', '2e23283d32b30b1c53e978b68d32c40b');
+//define('_FB_APP_ID', '534956693276758');
+//define('_FB_APP_SECRET', '2e23283d32b30b1c53e978b68d32c40b');
+
+define('_FB_APP_ID', '1929939133909580');
+define('_FB_APP_SECRET', 'aad6f2dfa941312a54706680b1a435d3');
 
 define('_TB_PREFIX', "z__");
 

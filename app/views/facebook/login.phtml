@@ -1,0 +1,107 @@
+<h1>Demo login facebook</h1>
+
+<!--<fb:login-button-->
+<!--    scope="public_profile,email"-->
+<!--    onlogin="checkLoginState();">-->
+<!--</fb:login-button>-->
+<br><br>
+
+<a href="javascript:void(0);" onclick="doLoginFb();">LOGIN Facebook</a>
+<br><br>
+
+<a href="javascript:void(0);" onclick="doLogoutFb();">Logout Facebook</a>
+<br><br>
+
+<a href="javascript:void(0);" onclick="doShareFb();">SHARE Facebook</a>
+<br><br>
+
+<a href="javascript:void(0);" onclick="doShareLinkFb();">SHARE LINK Facebook</a>
+
+<script language="JavaScript">
+
+    function checkLoginState() {
+        console.log("Nut login tu facebook");
+//        FB.getLoginStatus(function(response) {
+//            // -- Dung thang nay cho login, no se chay 2 lan --
+//            console.log("Nut login tu facebook");
+//            console.log(response);
+//        });
+    }
+
+    function doLoginFb() {
+        console.log("Login FB");
+        // Cai nay se goi UI.Facebook.afterLogin
+        UI.Facebook.login();
+        // Cai nay se khong goi UI.Facebook.afterLogin
+//        UI.Facebook.login(function (responseLogin) {
+//            console.log(responseLogin);
+//        });
+    }
+
+    function doLogoutFb() {
+        console.log('doLogoutFb');
+        UI.Facebook.logout(function (responseLogout) {
+            console.log(responseLogout);
+            // -- Logout dont reload page --
+            return false;
+        });
+    }
+
+    function doShareFb() {
+        var publish_data = {
+          'message': '',
+          'name': 'Nhà bán đường  Thích Bửu Đăng. - Quận Gò Vấp - 16106',
+          'picture': 'https://cdn.propzy.vn/thumbnail_for_similar/87e2641c068574ed60c12ad543e43ce3_image.jpg',
+          'link': 'https://propzy.vn/chi-tiet/nha-rieng/quan-go-vap/nha-trong-hem-khu-dan-cu-co-nhieu-tien-ich-16106',
+          'description': 'Cần bán bất động sản nhà riêng, giá 3.9 tỷ,  Đường Thích Bửu Đăng, Phường 1, Quận Gò Vấp. Hẻm trước nhà rộng 1.85m, đường đi vào là 3.45m nằm trong khu vực an ninh an toàn, yên tĩnh thích hợp để ở hoặc đầu tư cho thuê. Sổ hồng chính chủ. Tặng toàn bộ nội thất  trong nhà: ghế, tủ lạnh, tivi, máy lạnh, máy giặt, tủ, kệ...'
+         }
+
+        UI.Facebook.shareFacebook(publish_data, function (response) {
+            console.log('Share Facebook');
+            console.log(response);
+        });
+    }
+
+    function doShareLinkFb() {
+        var caption_data = 'Thông tin mua bán nhà - Propzy.vn';
+        var link_data = 'https://propzy.vn/chi-tiet/nha-rieng/quan-binh-thanh/nha-hem-rong-khu-dan-cu-yen-tinh-16176';
+        UI.Facebook.shareLink(caption_data, link_data, function (response) {
+            console.log('Share Link Facebook');
+            console.log(response);
+        });
+    }
+
+    function showUserInfo() {
+        console.log(UI.Facebook.accessToken);
+        console.log(UI.Facebook.totalFriends);
+        console.log(UI.Facebook.permissions);
+        console.log(UI.Facebook.userInfo);
+        console.log(UI.Facebook.userInfo.name);
+        console.log(UI.Facebook.userInfo.email);
+    }
+
+    $(document).ready(function() {
+
+        UI.Facebook.getLoadPageLoginStatus = function (response) {
+            console.log("Load lai trang de kiem tra login");
+            console.log('UI.Facebook.appId:'+UI.Facebook.appId);
+            console.log(response);
+            if (response.authResponse) {
+                console.log("Da login roi, thong tin user cung da duoc load ve");
+                showUserInfo();
+                return;
+            }
+            console.log("Chua login, tien hanh login neu can");
+        }
+
+        UI.Facebook.afterLogin = function(response) {
+            console.log("Sau khi login thanh cong");
+            console.log("Thong tin login duoc luu vao trong bien (UI.Facebook.userInfo) : ");
+            showUserInfo();
+        }
+
+    });
+
+
+</script>
+

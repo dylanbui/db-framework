@@ -436,8 +436,23 @@ UI.Facebook.init = function (facebook_appid)
             // Full docs on the response object can be found in the documentation
             // for FB.getLoginStatus().
 
-            if (typeof UI.Facebook.getLoadPageLoginStatus == 'function')
-                UI.Facebook.getLoadPageLoginStatus(response);
+
+            // -- Neu da login roi, thi tien hanh load lai du lieu --
+            if (response.status === 'connected') {
+                UI.Facebook.accessToken = response.authResponse.accessToken;
+
+                UI.Facebook.getUserPermissions(function (permissions) {
+                    UI.Facebook.permissions = permissions.data;
+                });
+                UI.Facebook.getUserInfo(function (respnoseUserInfo) {
+                    if (typeof UI.Facebook.getLoadPageLoginStatus == 'function')
+                        UI.Facebook.getLoadPageLoginStatus(response);
+                });
+            } else {
+                if (typeof UI.Facebook.getLoadPageLoginStatus == 'function')
+                    UI.Facebook.getLoadPageLoginStatus(response);
+            }
+
 
 //           if (response.status === 'connected') {
 //               // Logged into your app and Facebook.
@@ -516,35 +531,20 @@ UI.Facebook.login = function (callBackFunc)
     {
         if (response.status === 'connected')
         {
-            console.log(response);
+            // console.log(response);
             UI.Facebook.accessToken = response.authResponse.accessToken;
 
             UI.Facebook.getUserPermissions(function (permissions) {
                 UI.Facebook.permissions = permissions.data;
             });
 
-            FB.api('/me?fields=id,name,email,birthday,gender,picture.width(160).height(160)', function (response)
-            {
-                UI.Facebook.userInfo = response;
-
-                console.debug(UI.Facebook.userInfo);
-                FB.api(
-                    "/me/friends",
-                    function (data) {
-                        if (data && !data.error) {
-                            console.log('Friend count = ', data.data.length);
-                            UI.Facebook.totalFriends = data.data.length;
-                        }
-                        if (callBackFunc != null)
-                            callBackFunc(response);
-                        else
-                        {
-                            if (typeof UI.Facebook.afterLogin == 'function')
-                                UI.Facebook.afterLogin(response);
-                        }
-                    }
-                );
-
+            UI.Facebook.getUserInfo(function (response) {
+                if (callBackFunc != null) {
+                    callBackFunc(response);
+                }
+                else if (typeof UI.Facebook.afterLogin == 'function') {
+                    UI.Facebook.afterLogin(response);
+                }
             });
         }
         else
@@ -554,9 +554,11 @@ UI.Facebook.login = function (callBackFunc)
             else
                 console.debug(response);
             // alert('Login FB Error');
-
         }
-    }, { scope: 'email, user_friends, publish_actions, user_birthday, read_stream' });
+    }, { scope: 'email, public_profile, publish_actions, user_friends, user_birthday' });
+    // -- Login mac dinh chi cho phep lay email , neu co thong bao cu bo qua --
+    // Cac thong tin khac phai co permission (upload & review app)
+    // }, { scope: 'email, user_friends, publish_actions, user_birthday' });
 };
 
 UI.Facebook.loginWithCallbackLink = function (postDataLink, sucessFunc)
@@ -575,15 +577,23 @@ UI.Facebook.loginWithCallbackLink = function (postDataLink, sucessFunc)
     });
 }
 
-UI.Facebook.logout = function ()
+UI.Facebook.logout = function (callBackFunc)
 {
-    FB.logout(function ()
+    // -- Set default value --
+    callBackFunc = callBackFunc || null;
+
+    FB.logout(function (response)
     {
-        document.location.reload();
+        var reloadPage = true;
+        if (callBackFunc != null)
+            reloadPage = callBackFunc(response);
+
         if (typeof UI.Facebook.afterLogout == 'function')
-            UI.Facebook.afterLogout();
-        else
-            document.location.reload();
+            UI.Facebook.afterLogout(response);
+        else {
+            if (reloadPage)
+                document.location.reload();
+        }
     });
 };
 
@@ -592,9 +602,21 @@ UI.Facebook.getUserInfo = function (afterGetUserInfo)
     FB.api('/me?fields=id,name,email,birthday,gender,picture.width(160).height(160)', function (response)
     {
         UI.Facebook.userInfo = response;
-
-        if (afterGetUserInfo != null)
-            afterGetUserInfo(response);
+        // console.debug(UI.Facebook.userInfo);
+        // -- Get friends --
+        FB.api(
+            "/me/friends",
+            function (data) {
+                // console.debug("Get friends list");
+                // console.debug(data);
+                if (data && !data.error) {
+                    // console.log('Friend count = ', data.data.length);
+                    UI.Facebook.totalFriends = data.data.length;
+                }
+                if (afterGetUserInfo != null)
+                    afterGetUserInfo(response);
+            }
+        );
     });
 };
 
@@ -633,10 +655,11 @@ UI.Facebook.postPhotoFacebook = function (picture , type)
 
 UI.Facebook.shareFacebook = function (publish_data , callback)
 {
-    FB.login(function (response) {
+    // -- Check login first : Bat buoc phai login truoc, vi public_data la gia tri nhap vao, khac voi share link  --
+    FB.getLoginStatus(function (response)
+    {
         if (response.status === 'connected')
         {
-            var accessToken = response.authResponse.accessToken;
             //var publish_data = {
             //  'message': '',
             //  'name': 'name',
@@ -644,14 +667,14 @@ UI.Facebook.shareFacebook = function (publish_data , callback)
             //  'link': facebook_canvas + "&app_data=" + photo_id,
             //  'description': 'description'
             // }
-            FB.api('/me/feed', 'post', publish_data, function (response) {
-                callback(response);
+            FB.api('/me/feed', 'post', publish_data, function (responseFeed) {
+                callback(responseFeed);
             });
         }
         else {
             callback(response);
         }
-    }, { scope: 'email, user_friends, publish_actions, user_birthday, read_stream' });
+    });
 };
 
 UI.Facebook.shareFacebook_old = function (img , photo_id)
@@ -692,14 +715,16 @@ UI.Facebook.shareLink = function (caption_data, link_data, callback)
      Rat de bi cache fb phai tao link co title de phan biet
      link: siteUrl + '/index.php/title/how-to-clear-the-facebook-share-cache-or-update-a/id/'+photo_id,
      */
-    // Share link
-    FB.ui({
-        method: 'feed',
-        //link: siteUrl + '/samsung-spirit/index.php/home/share-facebook/cover/'+photo_id,
-        link: link_data,
-        caption: caption_data
-    }, function(response){
-        callback(response);
+    // -- Check login first : Neu chua login thi hien popup login --
+    UI.Facebook.login(function (responseLogin) {
+        // Share link
+        FB.ui({
+            method: 'feed',
+            link: link_data, //link: siteUrl + '/samsung-spirit/index.php/home/share-facebook/cover/'+photo_id,
+            caption: caption_data
+        }, function(responseFeed){
+            callback(responseFeed);
+        });
     });
 };
 

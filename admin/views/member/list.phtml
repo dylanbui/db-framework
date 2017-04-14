@@ -60,9 +60,9 @@
                                     <td>
                                         <div class="loading-fb-img">
                                             <?php if (!empty($rowMember['fbid'])) : ?>
-                                                <a href="http://graph.facebook.com/<?php echo h($rowMember['fbid']); ?>/picture?type=large&width=500&height=500" target="window">
+                                                <a href="https://graph.facebook.com/<?php echo h($rowMember['fbid']); ?>/picture?type=large&width=500&height=500" target="window">
                                                     <!-- html image tag -->
-                                                    <img class="img_lazy" data-src="http://graph.facebook.com/<?php echo h($rowMember['fbid']); ?>/picture"
+                                                    <img class="img_lazy" data-src="https://graph.facebook.com/<?php echo h($rowMember['fbid']); ?>/picture"
                                                          src="<?php echo __IMAGE_URL.'/loading.gif'; ?>"
                                                          border="0" width="50" alt="Lazy Image" />
                                                 </a>
