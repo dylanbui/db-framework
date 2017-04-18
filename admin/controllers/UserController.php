@@ -5,18 +5,29 @@ namespace Admin\Controller;
 use Admin\Lib\Support\UserAuth;
 use App\Model\Admin\Group;
 use App\Model\Admin\User;
+use TinyFw\Helper\File;
+use TinyFw\Image;
 use TinyFw\Support\Input;
 use TinyFw\Support\Session;
+use TinyFw\Upload;
 
 
 class UserController extends AdminBaseController
 {
+    var $_cfg_upload_file;
+    var $_cfg_thumb_image;
 
     public function __construct()
     {
         parent::__construct();
-//        $this->detectModifyPermission('home/user');
-//        $this->oView->_isModify = $this->_isModify;
+        $this->detectModifyPermission('home/user');
+
+        $this->_cfg_upload_file = array();
+        $this->_cfg_upload_file['upload_path'] = __UPLOAD_DATA_PATH.'/user/';
+        $this->_cfg_upload_file['allowed_types'] = 'gif|jpg|png';
+        $this->_cfg_upload_file['max_size']	= 2000;
+        $this->_cfg_upload_file['max_width']  = 2048;
+        $this->_cfg_upload_file['max_height']  = 1536;
     }
 
     public function indexAction()
@@ -36,8 +47,8 @@ class UserController extends AdminBaseController
 
     public function addAction()
     {
-//        if (!$this->_isModify)
-//            return $this->forward('error/error-deny');
+        if (!$this->_isModify)
+            return $this->forward('error/error-deny');
 
         $viewData = array(
             'box_title' => "Add New User",
@@ -64,6 +75,19 @@ class UserController extends AdminBaseController
                 "active" => Input::post("active",0)
             );
 
+            // -- Upload icon file --
+            if (!empty(Input::file('iconUser')))
+            {
+                $this->_cfg_upload_file['file_name']  = 'img_'.strtolower(create_uniqid(5)).'_'.time();
+                $uploadObj = new Upload($this->_cfg_upload_file);
+                if (!$uploadObj->do_upload_and_resize('iconUser', 200, 200))
+                {
+                    echo $uploadObj->display_errors();
+                    exit();
+                }
+                $data['icon'] = $uploadObj->data('file_name');
+            }
+
             $oUser = new User();
             $oUser->insert($data);
 
@@ -81,8 +105,8 @@ class UserController extends AdminBaseController
 
     public function editAction($user_id)
     {
-//        if (!$this->_isModify)
-//            return $this->forward('common/error/error-deny');
+        if (!$this->_isModify)
+            return $this->forward('common/error/error-deny');
 
         $viewData = array(
             'box_title' => "Update User",
@@ -96,6 +120,11 @@ class UserController extends AdminBaseController
 
         $oUser = new User();
 
+        $rowUser = $oUser->get($user_id);
+        if (empty($rowUser)) {
+            // TODO : User validate
+        }
+
         if (Input::isPost())
         {
             // TODO : Check validate
@@ -107,7 +136,8 @@ class UserController extends AdminBaseController
                 "display_name" => Input::post("display_name",""),
                 "email" => Input::post("email",""),
                 "group_id" => $group_id,
-                "active" => Input::post("active",0)
+                "active" => Input::post("active",0),
+                "icon" => Input::post('iconUserOld')
             );
 
             $reset_password = Input::post('reset_password',NULL);
@@ -115,6 +145,19 @@ class UserController extends AdminBaseController
             {
                 // TODO : Check validate password
                 $data['password'] = encryption(Input::post("pw",""));
+            }
+
+            // -- Upload icon file --
+            if (!empty(Input::file('iconUser')))
+            {
+                $this->_cfg_upload_file['file_name']  = 'img_'.strtolower(create_uniqid(5)).'_'.time();
+                $uploadObj = new Upload($this->_cfg_upload_file);
+                if (!$uploadObj->do_upload_and_resize('iconUser', 200, 200))
+                {
+                    echo $uploadObj->display_errors();
+                    exit();
+                }
+                $data['icon'] = $uploadObj->data('file_name');
             }
 
             $oUser->update($user_id,$data);
@@ -137,8 +180,6 @@ class UserController extends AdminBaseController
 
             redirect('user/list');
         }
-
-        $rowUser = $oUser->get($user_id);
 
         $viewData['rowUser'] = $rowUser;
         $viewData['arrGroupIds'] = explode(",",$rowUser['group_id']);

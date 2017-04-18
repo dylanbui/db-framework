@@ -131,7 +131,9 @@
                         <!-- BEGIN Button User -->
                         <li class="user-profile">
                             <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
-                                <!-- <img class="nav-user-photo" src="<?php echo __TEMPLATE_URL?>/img/demo/avatar/avatar1.jpg" alt="Penny's Photo" /> -->
+                                <img class="nav-user-photo"
+                                     src="<?= empty($current_user['icon']) ? __IMAGE_URL.'/icon_user.jpg': __UPLOAD_DATA_URL.'/user/'.$current_user['icon'] ;?>"
+                                     alt="<?php echo h($current_user['display_name']); ?>" />
                                 <span class="hidden-phone" id="user_info">
                                     <?php echo h($current_user['display_name']); ?>
                                 </span>

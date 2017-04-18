@@ -540,6 +540,35 @@ class Upload {
 		return TRUE;
 	}
 
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Perform the file upload
+     *
+     * @param	string	$field
+     * @param	int	$tb_width
+     * @param	int	$tb_height
+     * @return	bool
+     */
+    public function do_upload_and_resize($field = 'userfile', $tb_width, $tb_height)
+    {
+        $upload = $this->do_upload($field);
+        if ($upload == FALSE)
+            return $upload;
+
+        $image_config['source_image'] = $image_config['new_image'] =$this->data('full_path');
+        $image_config['width'] = $tb_width;
+        $image_config['height'] = $tb_height;
+        $imageLib = new Image($image_config);
+        if(!$imageLib->resize_and_crop())
+        {
+            print_r($imageLib->display_errors());
+            exit();
+        }
+        return $upload;
+    }
+
 	// --------------------------------------------------------------------
 
 	/**

@@ -31,7 +31,7 @@ class UserAuth extends User
         //The following are general columns in the database which are
         //stored in the Session, for easily displaying some information
         //about the user:
-        $this->miscFields='id,group_id,is_admin,display_name,first_name,last_name,email,username,password,data,acl_resources,active,last_login,create_at,last_update'; 
+        $this->miscFields='id,group_id,is_admin,display_name,first_name,last_name,email,username,password,icon,data,acl_resources,active,last_login,create_at,last_update';
 
         /* If there is a no lastLoggedIn field in the table which is updated
                to the current DATETIME whenever the user logs in, set the next

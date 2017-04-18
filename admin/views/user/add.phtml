@@ -2,6 +2,9 @@
 <!--page specific css styles-->
 <link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>/assets/chosen-bootstrap/chosen.min.css" />
 
+<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+
+
 <!-- BEGIN Page Title -->
 <div class="page-title">
     <div>
@@ -19,84 +22,105 @@
             <h3><i class="icon-user"></i> <?php echo $box_title; ?></h3>
         </div>
         <div class="box-content">
+            <form method="POST" id="frmContent" class="form-horizontal form-bordered" action="<?php echo $link_url; ?>" enctype="multipart/form-data">
 
-            <form method="POST" id="frmContent" class="form-horizontal form-bordered" action="<?php echo $link_url; ?>">
-
-                <div class="control-group">
-                    <label for="textfield4" class="control-label">Display Name</label>
-                    <div class="controls">
-                        <input type="text" name="display_name" id="display_name" value="" class="input-xlarge"
-                               data-rule-required="true" data-msg-required="Vui lòng nhập tên hiển thị">
+            <div class="row-fluid">
+                <div class="span3">
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <div class="fileupload-new thumbnail">
+                            <img src="<?= __IMAGE_URL; ?>/icon_user.jpg" alt="">
+                        </div>
+                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 200px; line-height: 20px;"></div>
+                        <div>
+                            <span class="btn btn-file">
+                                <span class="fileupload-new">Select image</span>
+                                <span class="fileupload-exists">Change</span>
+                                <input type="file" class="default" id="iconUser" name="iconUser" />
+                            </span>
+                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                        </div>
                     </div>
                 </div>
+                <div class="span9">
 
-                <div class="control-group">
-                    <label for="textfield4" class="control-label">Username</label>
-                    <div class="controls">
-                        <input type="text" name="username" id="username" value="" class="input-xlarge"
-                               data-rule-required="true" data-msg-required="Vui lòng nhập tên đăng nhập">
-                    </div>
+                        <div class="control-group">
+                            <label for="textfield4" class="control-label">Display Name</label>
+                            <div class="controls">
+                                <input type="text" name="display_name" id="display_name" value="" class="input-xlarge"
+                                       data-rule-required="true" data-msg-required="Vui lòng nhập tên hiển thị">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="textfield4" class="control-label">Username</label>
+                            <div class="controls">
+                                <input type="text" name="username" id="username" value="" class="input-xlarge"
+                                       data-rule-required="true" data-msg-required="Vui lòng nhập tên đăng nhập">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="textfield4" class="control-label">Email</label>
+                            <div class="controls">
+                                <input type="email" name="email" id="email" value="" class="input-xlarge"
+                                       data-rule-required="true" data-msg-required="Vui lòng nhập email">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="password4" class="control-label">Password</label>
+                            <div class="controls">
+                                <input type="password" name="pw" id="pw" class="input-xlarge">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="password4" class="control-label">Re Password</label>
+                            <div class="controls">
+                                <input type="password" name="re_pw" id="re_pw" class="input-xlarge">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">Group Name</label>
+                            <div class="controls">
+                                <select id="group_id[]" name="group_id[]" data-placeholder="Your Group Permission" class="chosen span6" multiple="multiple" tabindex="6">
+                                    <option value=""> </option>
+
+                                    <?php foreach ($rsGroups as $rowGroup) :?>
+
+                                        <option value="<?php echo $rowGroup['id']; ?>">
+                                            <?php echo h($rowGroup['group_name']); ?>
+                                        </option>
+
+                                    <?php endforeach; ?>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group last">
+                            <label for="password4" class="control-label"></label>
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="active" name="active" value="1">Activated
+                                </label>
+                            </div>
+                        </div>
+
+                        <?php if ($_isModify) : ?>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+                                <a href="<?php echo $cancel_url; ?>" class="btn btn-primary"><i class="icon-remove"></i> Cancel</a>
+                            </div>
+                        <?php endif; ?>
+
+
+
                 </div>
-
-                <div class="control-group">
-                    <label for="textfield4" class="control-label">Email</label>
-                    <div class="controls">
-                        <input type="email" name="email" id="email" value="" class="input-xlarge"
-                               data-rule-required="true" data-msg-required="Vui lòng nhập email">
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label for="password4" class="control-label">Password</label>
-                    <div class="controls">
-                        <input type="password" name="pw" id="pw" class="input-xlarge">
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label for="password4" class="control-label">Re Password</label>
-                    <div class="controls">
-                        <input type="password" name="re_pw" id="re_pw" class="input-xlarge">
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label">Group Name</label>
-                    <div class="controls">
-                        <select id="group_id[]" name="group_id[]" data-placeholder="Your Group Permission" class="chosen span6" multiple="multiple" tabindex="6">
-                            <option value=""> </option>
-
-                            <?php foreach ($rsGroups as $rowGroup) :?>
-
-                                <option value="<?php echo $rowGroup['id']; ?>">
-                                    <?php echo h($rowGroup['group_name']); ?>
-                                </option>
-
-                            <?php endforeach; ?>
-
-                        </select>
-                    </div>
-                </div>
-
-                <div class="control-group last">
-                    <label for="password4" class="control-label"></label>
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" id="active" name="active" value="1">Activated
-                        </label>
-                    </div>
-                </div>
-
-                <?php if ($_isModify) : ?>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
-                        <a href="<?php echo $cancel_url; ?>" class="btn btn-primary"><i class="icon-remove"></i> Cancel</a>
-                    </div>
-                <?php endif; ?>
+            </div>
 
             </form>
-
-
         </div>
 
 
@@ -106,6 +130,7 @@
 <!-- END Main Content -->
 
 <script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>/assets/chosen-bootstrap/chosen.jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>/assets/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
 
 <script type="text/javascript">
 
